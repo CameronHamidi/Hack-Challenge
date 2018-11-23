@@ -9,6 +9,17 @@
 import UIKit
 import Foundation
 
+enum Skill: String { //wip
+    case python
+    case java
+    case swift
+    case html_css
+    case javascript
+    case design
+    case SQL
+    case C
+}
+
 class Profile {
     
     var name: String
@@ -16,12 +27,12 @@ class Profile {
     var major: String
     
     var email: String
-    var skills: [String]
+    var skills: [Skill]
     var posts: [Post]
     
 //    var projects: [Project]
     
-    init(name: String, picture: UIImage, major: String, email: String, skills: [String], posts: [Post]) {
+    init(name: String, picture: UIImage, major: String, email: String, skills: [Skill], posts: [Post]) {
         self.name = name
         self.picture = picture
         self.major = major
