@@ -61,32 +61,32 @@ class ProfileViewController: UINavigationController {
         view.addSubview(segControl)
         
         // add container
-        containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(containerView)
-        
-        let controller = storyboard!.instantiateViewController(withIdentifier: "Second")
-        addChild(controller)
-        controller.view.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(controller.view)
-        
-        controller.didMove(toParent: self)
+//        containerView = UIView()
+//        containerView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(containerView)
+//
+//        let controller = storyboard!.instantiateViewController(withIdentifier: "Second")
+//        addChild(controller)
+//        controller.view.translatesAutoresizingMaskIntoConstraints = false
+//        containerView.addSubview(controller.view)
+//
+//        controller.didMove(toParent: self)
         
         //Segmented subviews
-//        aboutContainer = UIView()
-//        aboutContainer.translatesAutoresizingMaskIntoConstraints = false
-//        aboutContainer.backgroundColor = .red
-//        view.addSubview(aboutContainer)
-//
-//        projectsContainer = UIView()
-//        projectsContainer.translatesAutoresizingMaskIntoConstraints = false
-//        projectsContainer.backgroundColor = .green
-//        view.addSubview(projectsContainer)
-//
-//        postsContainer = UIView()
-//        postsContainer.translatesAutoresizingMaskIntoConstraints = false
-//        postsContainer.backgroundColor = .blue
-//        view.addSubview(postsContainer)
+        aboutContainer = UIView()
+        aboutContainer.translatesAutoresizingMaskIntoConstraints = false
+        aboutContainer.backgroundColor = .red
+        view.addSubview(aboutContainer)
+
+        projectsContainer = UIView()
+        projectsContainer.translatesAutoresizingMaskIntoConstraints = false
+        projectsContainer.backgroundColor = .green
+        view.addSubview(projectsContainer)
+
+        postsContainer = UIView()
+        postsContainer.translatesAutoresizingMaskIntoConstraints = false
+        postsContainer.backgroundColor = .blue
+        view.addSubview(postsContainer)
         
 //        segmentedControlContainer = UIView()
 //        segmentedControlContainer.backgroundColor = UIColor.white
@@ -94,12 +94,12 @@ class ProfileViewController: UINavigationController {
 //        self.segmentedControlContainer = segmentedControlContainer
         
         setupConstraints()
-        NSLayoutConstraint.activate([
-            controller.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            controller.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            controller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
-            controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-            ])
+//        NSLayoutConstraint.activate([
+//            controller.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+//            controller.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+//            controller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+//            controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+//            ])
     }
     
     func setupConstraints() {
@@ -129,12 +129,12 @@ class ProfileViewController: UINavigationController {
             segControl.heightAnchor.constraint(equalToConstant: 32)
             ])
         
-        NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
-            ])
+//        NSLayoutConstraint.activate([
+//            containerView.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
+//            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+//            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+//            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+//            ])
         
 //        NSLayoutConstraint.activate([
 //            segmentedControlContainer.topAnchor.constraint(equalTo: control.bottomAnchor, constant: padding),
@@ -143,26 +143,26 @@ class ProfileViewController: UINavigationController {
 //            segmentedControlContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
 //            ])
         
-//        NSLayoutConstraint.activate([
-//            aboutContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-//            aboutContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-//            aboutContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-//            aboutContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//            projectsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-//            projectsContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-//            projectsContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-//            projectsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//            postsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-//            postsContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-//            postsContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-//            postsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
-//            ])
+        NSLayoutConstraint.activate([
+            aboutContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
+            aboutContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            aboutContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            aboutContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+            ])
+
+        NSLayoutConstraint.activate([
+            projectsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
+            projectsContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            projectsContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            projectsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+            ])
+
+        NSLayoutConstraint.activate([
+            postsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
+            postsContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            postsContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            postsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+            ])
     }
     
     @IBAction func showComponents(sender: AnyObject) {
