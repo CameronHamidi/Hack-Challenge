@@ -17,16 +17,16 @@ class SkillsCollectionViewCell: UICollectionViewCell {
         skillLabel = UILabel()
         skillLabel.font = UIFont.systemFont(ofSize: 15)
         skillLabel.textAlignment = .center
-        skillLabel.textColor = .black
+        skillLabel.textColor = .gray
         skillLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(skillLabel)
         contentView.backgroundColor = .lightGray
         
-        contentView.layer.cornerRadius = 5
+        contentView.layer.cornerRadius = 2.5
     }
     
-    func configure(roleName: String) {
-        skillLabel.text = roleName
+    func configure(skillName: String) {
+        skillLabel.text = skillName
         
         NSLayoutConstraint.activate([
             skillLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -34,6 +34,18 @@ class SkillsCollectionViewCell: UICollectionViewCell {
             skillLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             skillLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                contentView.backgroundColor = .gray
+                skillLabel.textColor = .black
+            } else {
+                contentView.backgroundColor = .lightGray
+                skillLabel.textColor = .gray
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
