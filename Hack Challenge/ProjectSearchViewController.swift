@@ -12,6 +12,8 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
 
     var rolesCollectionView: UICollectionView!
     var roles = ["Developer", "Designer", "Backend Developer", "Frontend Developer"]
+    let NUM_ROLES_DEFAULT = 4
+    var selectedRoles: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,56 +25,70 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         
         var rolesLayout = UICollectionViewFlowLayout()
         rolesLayout.scrollDirection = .horizontal
-        rolesLayout.minimumLineSpacing = 8
-        rolesLayout.minimumInteritemSpacing = 8
+        rolesLayout.minimumLineSpacing = 4
+        rolesLayout.minimumInteritemSpacing = 4
         rolesLayout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        rolesLayout.estimatedItemSize = CGSize(width: 50, height: 25)
+        //rolesLayout.estimatedItemSize = CGSize(width: 50, height: 25)
         
         rolesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: rolesLayout)
-        rolesCollectionView.backgroundColor = .white
+//        rolesCollectionView.backgroundColor = .white
         rolesCollectionView.delegate = self
         rolesCollectionView.dataSource = self
         rolesCollectionView.register(RolesCollectionViewCell.self, forCellWithReuseIdentifier: "role")
+        rolesCollectionView.register(CustomEnterCollectionViewCell.self, forCellWithReuseIdentifier: "custom")
         rolesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(rolesCollectionView)
         rolesCollectionView.reloadData()
+        rolesCollectionView.backgroundColor = .lightGray
+        rolesCollectionView.allowsMultipleSelection = true
         
-        let newView = UIView()
-        newView.backgroundColor = .black
-        newView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(newView)
-        NSLayoutConstraint.activate([
-            newView.widthAnchor.constraint(equalToConstant: 50),
-            newView.heightAnchor.constraint(equalToConstant: 50),
-            newView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            newView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-            ])
         
         setupConstraints()
         
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       // if collectionView == self.rolesCollectionView {
-        print("return")
-        print(roles.count)
-        return roles.count
-       // } else {
-          //  return 0
-      //  }
+        if collectionView == rolesCollectionView {
+            return roles.count + 1
+        } else {
+            return 0
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print("section")
         return 1
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == rolesCollectionView {
+            if selectedRoles.count == 0 {
+                if indexPath.row == NUM_ROLES_DEFAULT - 1 {
+                    
+                }
+                selectedRoles.append(roles[indexPath.row])
+            } else {
+                if selectedRoles.contains(roles[indexPath.row]) {
+                    for i in 0..<selectedRoles.count {
+                        if selectedRoles[i] == roles[indexPath.row] {
+                            selectedRoles.remove(at: i)
+                        }
+                    }
+                } else {
+                    selectedRoles.append(roles[indexPath.row])
+                }
+            }
+        }
+       // collectionView.reloadData()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cell for item at")
         if collectionView == self.rolesCollectionView {
+            if indexPath.row == NUM_ROLES_DEFAULT {
+                var cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "custom", for: indexPath) as! CustomEnterCollectionViewCell
+                cell.customTextField.placeholder = "Enter custom role"
+            }
             var cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "role", for: indexPath) as! RolesCollectionViewCell
             cell.configure(roleName: roles[indexPath.row])
-            print(roles[indexPath.row])
             return cell
         } else {
             return UICollectionViewCell()
@@ -80,19 +96,26 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //if collectionView == self.rolesCollectionView {
-        print("size")
-        print("test: \(collectionView == rolesCollectionView)")
-        return CGSize(width: 15.0, height: 15.0)
-      //  }
+        if collectionView == self.rolesCollectionView {
+            if indexPath.row == NUM_ROLES_DEFAULT {
+                return CGSize(width: 200.0, height: 15.0)
+            } else {
+                print("test: \(collectionView == rolesCollectionView)")
+                var width = ceil((Double)(roles[indexPath.row].count) / 10.0 * 75.0)
+                print(width)
+                return CGSize(width: width, height: 15.0)
+            }
+        } else {
+            return CGSize()
+        }
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            rolesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            rolesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            rolesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8)
-            //rolesCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bot)
+            rolesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            rolesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            rolesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            rolesCollectionView.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     

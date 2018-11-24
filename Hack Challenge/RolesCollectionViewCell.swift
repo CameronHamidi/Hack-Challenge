@@ -15,9 +15,12 @@ class RolesCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         roleLabel = UILabel()
+        roleLabel.font = UIFont.systemFont(ofSize: 12)
+        roleLabel.textAlignment = .center
         roleLabel.textColor = .black
         roleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(roleLabel)
+        contentView.backgroundColor = .white
     }
     
     func configure(roleName: String) {
@@ -29,6 +32,19 @@ class RolesCollectionViewCell: UICollectionViewCell {
             roleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             roleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                contentView.backgroundColor = .blue
+                roleLabel.textColor = .white
+            } else {
+                contentView.backgroundColor = .white
+                roleLabel.textColor = .black
+            }
+            print("didset")
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
