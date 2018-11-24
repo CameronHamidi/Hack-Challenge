@@ -17,8 +17,9 @@ class RolesCollectionViewCell: UICollectionViewCell {
         roleLabel = UILabel()
         roleLabel.font = UIFont.systemFont(ofSize: 15)
         roleLabel.textAlignment = .center
-        roleLabel.textColor = .black
+        roleLabel.textColor = .gray
         roleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         contentView.addSubview(roleLabel)
         contentView.backgroundColor = .lightGray
         
@@ -34,6 +35,19 @@ class RolesCollectionViewCell: UICollectionViewCell {
             roleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             roleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
             ])
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                contentView.backgroundColor = .gray
+                roleLabel.textColor = .black
+                print("selected")
+            } else {
+                contentView.backgroundColor = .lightGray
+                roleLabel.textColor = .gray
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

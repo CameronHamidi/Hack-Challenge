@@ -66,7 +66,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         view.addSubview(skillsTextField)
         
         rolesLabel = UILabel()
-        rolesLabel.text = "Skills"
+        rolesLabel.text = "Roles"
         rolesLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
         rolesLabel.textAlignment = .left
         rolesLabel.textColor = .black
@@ -89,7 +89,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         
         rolesTextField = UITextField()
         rolesTextField.placeholder = "Enter your own"
-        rolesTextField.textColor = .lightGray
+        rolesTextField.textColor = .gray
         rolesTextField.font = UIFont.systemFont(ofSize: 15.0)
         rolesTextField.borderStyle = .roundedRect
         rolesTextField.delegate = self
@@ -142,10 +142,12 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
                 for i in 0..<selectedRoles.count {
                     if selectedRoles[i] == roles[indexPath.row] {
                         selectedRoles.remove(at: i)
+                        break
                     }
                 }
             }
         }
+        print(selectedRoles)
         collectionView.reloadData()
     }
     
@@ -171,7 +173,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             print(width)
             return CGSize(width: width, height: 25.0)
         } else if collectionView == rolesCollectionView {
-            var width = collectionView.frame.width - 2 * padding
+            var width = collectionView.frame.width
             var height = CGFloat(integerLiteral: 25)
             return CGSize(width: width, height: height)
         } else {

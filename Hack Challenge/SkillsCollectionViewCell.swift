@@ -36,18 +36,6 @@ class SkillsCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                contentView.backgroundColor = .gray
-                skillLabel.textColor = .black
-            } else {
-                contentView.backgroundColor = .lightGray
-                skillLabel.textColor = .gray
-            }
-        }
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
