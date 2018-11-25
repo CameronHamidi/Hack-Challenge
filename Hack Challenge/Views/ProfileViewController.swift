@@ -8,14 +8,17 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var avatar: UIImageView! //user's picture
     var caption: UILabel! //major, minor, or any one-line intro user wants to display
     var name: UILabel! //user's name
     
+    var postsTableView: UITableView!
+    var postsArray: [Post] = [Post]()
+    
     var segControl: UISegmentedControl!
-    var containerView: UIView!
+//    var containerView: UIView!
     var aboutContainer: UIView!
     var projectsContainer: UIView!
     var postsContainer: UIView!
@@ -37,7 +40,7 @@ class ProfileViewController: UIViewController {
 //        avatar.layer.borderWidth = 1
 //        avatar.layer.masksToBounds = false
         avatar.backgroundColor = .blue
-        avatar.layer.cornerRadius = avatar.frame.width/2 //circular image view - doesn't work
+        avatar.layer.cornerRadius = avatarSize/2
         avatar.clipsToBounds = true
         view.addSubview(avatar)
         
@@ -82,12 +85,27 @@ class ProfileViewController: UIViewController {
         projectsContainer = UIView()
         projectsContainer.translatesAutoresizingMaskIntoConstraints = false
         projectsContainer.backgroundColor = .green
+        projectsContainer.alpha = 0
         view.addSubview(projectsContainer)
 
         postsContainer = UIView()
         postsContainer.translatesAutoresizingMaskIntoConstraints = false
         postsContainer.backgroundColor = .blue
+        postsContainer.alpha = 0
         view.addSubview(postsContainer)
+        
+        //Hardcoded data TODO - get posts info from backend
+        createPosts()
+        
+        //Set up and add tableViews to their respective container views
+        postsTableView = UITableView()
+        postsTableView.translatesAutoresizingMaskIntoConstraints = false
+        postsTableView.register(PostCell.self, forCellReuseIdentifier: "postCellID")
+        postsTableView.backgroundColor = .white
+//        postsTableView.separatorStyle = .none
+        postsTableView.delegate = self
+        postsTableView.dataSource = self
+        postsContainer.addSubview(postsTableView)
         
 //        segmentedControlContainer = UIView()
 //        segmentedControlContainer.backgroundColor = UIColor.white
@@ -164,8 +182,45 @@ class ProfileViewController: UIViewController {
             postsContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
             postsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
             ])
+        
+        NSLayoutConstraint.activate([
+            postsTableView.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
+            postsTableView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
+            postsTableView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
+            postsTableView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor)
+            ])
     }
     
+    func createPosts() {
+        let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+        let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+        postsArray = [newPost, ezraCornell]
+    }
+    
+    // MARK: - TABLEVIEW METHODS
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "postCellID", for: indexPath) as! PostCell
+        let post = postsArray[indexPath.row]
+        cell.configure(for: post)
+//        cell.backgroundColor = .white
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return postsArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    //Toggles between the segmented views (about, projects, posts)
     @IBAction func showComponents(sender: AnyObject) {
         if(sender.selectedSegmentIndex == 0) {
             UIView.animate(withDuration: 0.5, animations: {

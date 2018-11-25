@@ -28,15 +28,15 @@ class PostCell: UITableViewCell {
         iconView = UIImageView()
         iconView.translatesAutoresizingMaskIntoConstraints = false
 //        iconView.contentMode = .scaleAspectFill
-        iconView.backgroundColor = .gray
-        iconView.layer.cornerRadius = iconView.frame.width/2
+        iconView.backgroundColor = .lightGray
+        iconView.layer.cornerRadius = 25
         addSubview(iconView)
         
         //User's name
         nameLabel = UILabel()
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = .systemFont(ofSize: subTextSize)
-        nameLabel.textColor = .lightGray
+        nameLabel.textColor = .gray
 //        nameLabel.text = "Name Here" //placeholder - get name data from backend
         addSubview(nameLabel)
         
@@ -44,7 +44,7 @@ class PostCell: UITableViewCell {
         dateLabel = UILabel()
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.font = .systemFont(ofSize: subTextSize)
-        dateLabel.textColor = .lightGray
+        dateLabel.textColor = .gray
 //        dateLabel.text = "Nov 20" //placeholder - get name data from backend
         addSubview(dateLabel)
         
@@ -67,6 +67,14 @@ class PostCell: UITableViewCell {
         setConstraints()
     }
     
+    func configure(for post: Post) {
+        iconView.image = post.icon
+        nameLabel.text = post.name
+        dateLabel.text = post.date
+        titleLabel.text = post.title
+        blurbText.text = post.blurb
+    }
+    
     func setConstraints() {
         iconView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         iconView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
@@ -77,7 +85,7 @@ class PostCell: UITableViewCell {
         nameLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: padding/2).isActive = true
         nameLabel.heightAnchor.constraint(equalToConstant: 14).isActive = true
 
-        dateLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        dateLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: padding/2).isActive = true
         dateLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
         dateLabel.heightAnchor.constraint(equalToConstant: 14).isActive = true
         
@@ -88,6 +96,7 @@ class PostCell: UITableViewCell {
         blurbText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding).isActive = true
         blurbText.leadingAnchor.constraint(equalTo: iconView.leadingAnchor).isActive = true
         blurbText.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        blurbText.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
