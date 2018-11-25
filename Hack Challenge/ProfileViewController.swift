@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UINavigationController {
+class ProfileViewController: UIViewController {
     
     var avatar: UIImageView! //user's picture
     var caption: UILabel! //major, minor, or any one-line intro user wants to display
