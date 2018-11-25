@@ -1,5 +1,5 @@
 //
-//  RolesCollectionViewCell.swift
+//  SkillsCollectionViewCell.swift
 //  Hack Challenge
 //
 //  Created by Cameron Hamidi on 11/22/18.
