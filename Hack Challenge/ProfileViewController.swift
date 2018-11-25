@@ -10,9 +10,9 @@ import UIKit
 
 class ProfileViewController: UINavigationController {
     
-    var avatar: UIImageView!
-    var caption: UILabel!
-    var name: UILabel!
+    var avatar: UIImageView! //user's picture
+    var caption: UILabel! //major, minor, or any one-line intro user wants to display
+    var name: UILabel! //user's name
     
     var segControl: UISegmentedControl!
     var containerView: UIView!
@@ -27,16 +27,17 @@ class ProfileViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .gray
+        view.backgroundColor = .white
         title = "Profile"
         
         // TODO - revamp to get profile info from backend
         avatar = UIImageView()
+//        let avatar = UIView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
         avatar.translatesAutoresizingMaskIntoConstraints = false
-        avatar.layer.borderWidth = 1
-        avatar.layer.masksToBounds = false
+//        avatar.layer.borderWidth = 1
+//        avatar.layer.masksToBounds = false
         avatar.backgroundColor = .blue
-        avatar.layer.cornerRadius = avatar.frame.width/2
+        avatar.layer.cornerRadius = avatar.frame.width/2 //circular image view - doesn't work
         avatar.clipsToBounds = true
         view.addSubview(avatar)
         
