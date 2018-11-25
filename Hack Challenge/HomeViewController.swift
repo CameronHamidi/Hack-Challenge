@@ -10,19 +10,19 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
-    var searchButton: UIButton!
+    var searchProjectsButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = .white
         
-        searchButton = UIButton()
-        searchButton.setTitle("Search", for: .normal)
-        searchButton.translatesAutoresizingMaskIntoConstraints = false
-        searchButton.setTitleColor(.black, for: .normal)
-        searchButton.addTarget(self, action: #selector(showSearchView), for: .touchUpInside)
-        view.addSubview(searchButton)
+        searchProjectsButton = UIButton()
+        searchProjectsButton.setTitle("Search projects", for: .normal)
+        searchProjectsButton.translatesAutoresizingMaskIntoConstraints = false
+        searchProjectsButton.setTitleColor(.black, for: .normal)
+        searchProjectsButton.addTarget(self, action: #selector(showSearchView), for: .touchUpInside)
+        view.addSubview(searchProjectsButton)
         
         setupConstraints()
     }
@@ -34,8 +34,8 @@ class HomeViewController: UIViewController {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            searchButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            searchButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+            searchProjectsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            searchProjectsButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
             ])
     }
 
