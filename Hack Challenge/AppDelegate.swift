@@ -20,8 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = HomeViewController()
         
         // for easy testing
-        //        window?.rootViewController = ProfileViewController()
-        //        window?.rootViewController = NewPitchViewController()
+//                window?.rootViewController = ProfileViewController()
+//        window?.rootViewController = NewPitchViewController()
+//        window?.rootViewController = NewRequestViewController()
         
         window?.makeKeyAndVisible()
         return true

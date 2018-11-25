@@ -22,14 +22,16 @@ class NewPitchViewController: UIViewController {
     var imageLabel: UILabel!
     var cameraButton: UIButton!
     var libButton: UIButton! //library
+    var lineSeparator: UIView!
     
 //    var tagLabel: UILabel!
 //    var tagInput:
     
-    let padding: CGFloat = 12
+    let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
     let textInputHeight: CGFloat = 32
-    var textSize: CGFloat = 14
+    let textSize: CGFloat = 14
+    let buttonSize: CGFloat = 72
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +54,7 @@ class NewPitchViewController: UIViewController {
         titleInput.translatesAutoresizingMaskIntoConstraints = false
         titleInput.placeholder = "Enter a title here"
         titleInput.font = .systemFont(ofSize: textSize)
+        titleInput.borderStyle = .roundedRect
 //        titleInput.underlined()
         view.addSubview(titleInput)
         
@@ -65,6 +68,8 @@ class NewPitchViewController: UIViewController {
         descrInput.translatesAutoresizingMaskIntoConstraints = false
         descrInput.placeholder = "Write your description here"
         descrInput.font = .systemFont(ofSize: textSize)
+        descrInput.textAlignment = .left
+        descrInput.borderStyle = .roundedRect
 //        descrInput.underlined()
         view.addSubview(descrInput)
         
@@ -73,6 +78,11 @@ class NewPitchViewController: UIViewController {
         imageLabel.text = "Images"
         imageLabel.font = .boldSystemFont(ofSize: labelHeight)
         view.addSubview(imageLabel)
+        
+        lineSeparator = UIView()
+        lineSeparator.translatesAutoresizingMaskIntoConstraints = false
+        lineSeparator.backgroundColor = .lightGray
+        view.addSubview(lineSeparator)
         
         cameraButton = UIButton()
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
@@ -109,40 +119,54 @@ class NewPitchViewController: UIViewController {
             ])
         
         NSLayoutConstraint.activate([
-            descrLabel.topAnchor.constraint(equalTo: titleInput.bottomAnchor, constant: padding),
+            descrLabel.topAnchor.constraint(equalTo: titleInput.bottomAnchor, constant: padding*2),
             descrLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             descrLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
             descrLabel.heightAnchor.constraint(equalToConstant: labelHeight)
             ])
         
         NSLayoutConstraint.activate([
-            descrInput.topAnchor.constraint(equalTo: descrLabel.bottomAnchor, constant: padding/2),
+            descrInput.topAnchor.constraint(equalTo: descrLabel.bottomAnchor, constant: padding),
             descrInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             descrInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            descrInput.heightAnchor.constraint(equalToConstant: 120)
+            descrInput.heightAnchor.constraint(equalToConstant: 200)
             ])
         
         NSLayoutConstraint.activate([
-            imageLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding),
+            imageLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
             imageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             imageLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
             imageLabel.heightAnchor.constraint(equalToConstant: labelHeight)
             ])
         
         NSLayoutConstraint.activate([
+            lineSeparator.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: padding),
+            lineSeparator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lineSeparator.widthAnchor.constraint(equalToConstant: 1),
+            lineSeparator.heightAnchor.constraint(equalToConstant: 72)
+            ])
+        
+        // Some maths to align buttons
+        let buttonPadding: CGFloat = view.bounds.width/4 - buttonSize/2
+        
+        NSLayoutConstraint.activate([
             cameraButton.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: padding),
-            cameraButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            cameraButton.widthAnchor.constraint(equalToConstant: 72),
-            cameraButton.heightAnchor.constraint(equalToConstant: 72)
+            cameraButton.trailingAnchor.constraint(equalTo: lineSeparator.leadingAnchor, constant: -buttonPadding),
+            cameraButton.widthAnchor.constraint(equalToConstant: buttonSize),
+            cameraButton.heightAnchor.constraint(equalTo: cameraButton.widthAnchor)
             ])
         
         NSLayoutConstraint.activate([
             libButton.topAnchor.constraint(equalTo: cameraButton.topAnchor),
-            libButton.leadingAnchor.constraint(equalTo: cameraButton.trailingAnchor, constant: padding),
+            libButton.leadingAnchor.constraint(equalTo: lineSeparator.trailingAnchor, constant: buttonPadding),
             libButton.widthAnchor.constraint(equalTo: cameraButton.widthAnchor),
             libButton.heightAnchor.constraint(equalTo: cameraButton.heightAnchor)
             ])
 
+    }
+    
+    @objc func dismissViewController() {
+        dismiss(animated: true, completion: nil)
     }
     
     //Alert Pop-up
@@ -158,22 +182,26 @@ class NewPitchViewController: UIViewController {
     
     @objc func dismissViewControllerAndSaveText() {
         
+        // Alerts user if title is empty on submit
         guard let titleText = titleInput.text, !titleText.isEmpty else {
             displayMyAlertMessage(userMessage: "Please input a title.")
             return
         }
         
-    @objc func dismissViewController() {
-        dismiss(animated: true, completion: nil)
+        // Alerts user if description is empty on submit
+        guard let descrText = descrInput.text, !descrText.isEmpty else {
+            displayMyAlertMessage(userMessage: "Please fill out the description.")
+            return
         }
         
-//        delegate?.newPitchTitle(newTitle: titleText)
+        //Delegate to another view
+        //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
 //        navigationController?.popViewController(animated: true)
     }
     
 }
 
-    //to give UITextFields a bottom border (underline)
+//to give UITextFields a bottom border (underline) - does not work
 //    extension UITextField {
 //
 //        func underlined(){
