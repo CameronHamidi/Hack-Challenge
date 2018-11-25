@@ -30,6 +30,11 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
     var keywords = [String]()
     var keywordsTextField: UITextField!
     
+    var groupSizeLabel: UILabel!
+    var groupSizeCollectionView: UICollectionView!
+    var groupSizes = ["1-2", "2-4", "5+"]
+    var selectedSizes = [String]()
+    
     var submitButton: UIButton!
     
     override func viewDidLoad() {
@@ -109,7 +114,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         scrollView.addSubview(rolesTextField)
         
         keywordsLabel = UILabel()
-        keywordsLabel.text = "Roles"
+        keywordsLabel.text = "Keywords"
         keywordsLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
         keywordsLabel.textAlignment = .left
         keywordsLabel.textColor = .black
@@ -143,6 +148,27 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         submitButton.addTarget(self, action: #selector(performSearch), for: .touchUpInside)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(submitButton)
+        
+        groupSizeLabel = UILabel()
+        groupSizeLabel.text = "Group Size"
+        groupSizeLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
+        groupSizeLabel.textAlignment = .left
+        groupSizeLabel.textColor = .black
+        groupSizeLabel.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(groupSizeLabel)
+        
+        var groupSizeLayout = UICollectionViewFlowLayout()
+        groupSizeLayout.scrollDirection = .horizontal
+        groupSizeLayout.minimumLineSpacing = 4
+        groupSizeLayout.minimumInteritemSpacing = 4
+        groupSizeLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        groupSizeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: groupSizeLayout)
+        groupSizeCollectionView.register(GroupSizeCollectionViewCell.self, forCellWithReuseIdentifier: "size")
+        groupSizeCollectionView.backgroundColor = .white
+        groupSizeCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        groupSizeCollectionView.delegate = self
+        groupSizeCollectionView.dataSource = self
+        scrollView.addSubview(groupSizeCollectionView)
         
         setupConstraints()
         
@@ -180,6 +206,8 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             return roles.count
         } else if collectionView == keywordsCollectionView {
             return keywords.count
+        } else if collectionView == groupSizeCollectionView {
+            return groupSizes.count
         } else {
             return 0
         }
@@ -193,9 +221,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         if collectionView == skillsCollectionView {
             skills.remove(at: indexPath.row)
         } else if collectionView == rolesCollectionView {
-            if selectedRoles.count == 0 {
-                selectedRoles.append(roles[indexPath.row])
-            } else if !selectedRoles.contains(roles[indexPath.row]) {
+            if selectedRoles.count == 0 || !selectedRoles.contains(roles[indexPath.row]) {
                 selectedRoles.append(roles[indexPath.row])
             } else {
                 for i in 0..<selectedRoles.count {
@@ -207,6 +233,16 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             }
         } else if collectionView == keywordsCollectionView {
             keywords.remove(at: indexPath.row)
+        } else if collectionView == groupSizeCollectionView {
+            if selectedSizes.count == 0 || !selectedSizes.contains(groupSizes[indexPath.row]) {
+                selectedSizes.append(groupSizes[indexPath.row])
+            } else {
+                for i in 0..<selectedSizes.count {
+                    if selectedSizes[i] == groupSizes[indexPath.row] {
+                        selectedSizes.remove(at: i)
+                    }
+                }
+            }
         }
         collectionView.reloadData()
     }
@@ -223,6 +259,10 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         } else if collectionView == keywordsCollectionView {
             var cell = keywordsCollectionView.dequeueReusableCell(withReuseIdentifier: "keyword", for: indexPath) as! SkillsCollectionViewCell
             cell.configure(skillName: keywords[indexPath.row])
+            return cell
+        } else if collectionView == groupSizeCollectionView {
+            var cell = groupSizeCollectionView.dequeueReusableCell(withReuseIdentifier: "size", for: indexPath) as! GroupSizeCollectionViewCell
+            cell.configure(sizeName: groupSizes[indexPath.row])
             return cell
         } else {
             return UICollectionViewCell()
@@ -242,7 +282,11 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         } else if collectionView == keywordsCollectionView {
             var width = ceil((Double)(keywords[indexPath.row].count) / 10.0 * 75.0 + 10.0)
             return CGSize(width: width, height: 25.0)
-        } else {
+        } else if collectionView == groupSizeCollectionView {
+            var width = (groupSizeCollectionView.frame.width - (CGFloat)((groupSizes.count - 1) * 4)) / (CGFloat)(groupSizes.count)
+            return CGSize(width: width, height: 25.0)
+        }
+        else {
             return CGSize()
         }
     }
@@ -295,7 +339,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             ])
         
         NSLayoutConstraint.activate([
-            keywordsLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: 8),
+            keywordsLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: 16),
             keywordsLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             keywordsLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
         ])
@@ -314,7 +358,20 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         ])
         
         NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: keywordsTextField.bottomAnchor, constant: 20),
+            groupSizeLabel.topAnchor.constraint(equalTo: keywordsTextField.bottomAnchor, constant: 16),
+            groupSizeLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            groupSizeLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
+            ])
+        
+        NSLayoutConstraint.activate([
+            groupSizeCollectionView.topAnchor.constraint(equalTo: groupSizeLabel.bottomAnchor, constant: 8),
+            groupSizeCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            groupSizeCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
+            groupSizeCollectionView.heightAnchor.constraint(equalToConstant: 25)
+            ])
+        
+        NSLayoutConstraint.activate([
+            submitButton.topAnchor.constraint(equalTo: groupSizeCollectionView.bottomAnchor, constant: 20),
             submitButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             submitButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             submitButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),

@@ -162,14 +162,15 @@ class NewPitchViewController: UIViewController {
             displayMyAlertMessage(userMessage: "Please input a title.")
             return
         }
+    }
         
     @objc func dismissViewController() {
         dismiss(animated: true, completion: nil)
-        }
+    }
         
 //        delegate?.newPitchTitle(newTitle: titleText)
 //        navigationController?.popViewController(animated: true)
-    }
+
     
 }
 

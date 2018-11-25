@@ -15,6 +15,7 @@
 		E61F4F1521A76F530096BAE1 /* ProjectSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F4F1421A76F530096BAE1 /* ProjectSearchViewController.swift */; };
 		E61F4F1721A772F70096BAE1 /* SkillsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F4F1621A772F70096BAE1 /* SkillsCollectionViewCell.swift */; };
 		E621E38821A9E09E001F5C24 /* RolesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E621E38721A9E09E001F5C24 /* RolesCollectionViewCell.swift */; };
+		E6B5DDD921AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B5DDD821AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift */; };
 		E6DCBCDB21A64FF5001A35F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCBCDA21A64FF5001A35F8 /* AppDelegate.swift */; };
 		E6DCBCDD21A64FF5001A35F8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCBCDC21A64FF5001A35F8 /* HomeViewController.swift */; };
 		E6DCBCE221A64FF7001A35F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6DCBCE121A64FF7001A35F8 /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 		E61F4F1421A76F530096BAE1 /* ProjectSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSearchViewController.swift; sourceTree = "<group>"; };
 		E61F4F1621A772F70096BAE1 /* SkillsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsCollectionViewCell.swift; sourceTree = "<group>"; };
 		E621E38721A9E09E001F5C24 /* RolesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolesCollectionViewCell.swift; sourceTree = "<group>"; };
+		E6B5DDD821AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSizeCollectionViewCell.swift; sourceTree = "<group>"; };
 		E6DCBCD721A64FF5001A35F8 /* Hack Challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hack Challenge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6DCBCDA21A64FF5001A35F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6DCBCDC21A64FF5001A35F8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				18456D6C21A883FA00BFDDD8 /* Post.swift */,
 				18456D6E21A88D8E00BFDDD8 /* Project.swift */,
 				E61F4F1421A76F530096BAE1 /* ProjectSearchViewController.swift */,
+				E6B5DDD821AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift */,
 				E621E38721A9E09E001F5C24 /* RolesCollectionViewCell.swift */,
 				E61F4F1621A772F70096BAE1 /* SkillsCollectionViewCell.swift */,
 				E6DCBCE121A64FF7001A35F8 /* Assets.xcassets */,
@@ -167,6 +170,7 @@
 				E621E38821A9E09E001F5C24 /* RolesCollectionViewCell.swift in Sources */,
 				18D0A60D21AA44AE00D0A079 /* NewPitchViewController.swift in Sources */,
 				E6DCBCDD21A64FF5001A35F8 /* HomeViewController.swift in Sources */,
+				E6B5DDD921AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift in Sources */,
 				E6DCBCDB21A64FF5001A35F8 /* AppDelegate.swift in Sources */,
 				18456D6F21A88D8E00BFDDD8 /* Project.swift in Sources */,
 			);
