@@ -10,6 +10,8 @@ import UIKit
 
 class ProjectSearchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
 
+    var scrollView: UIScrollView!
+    
     var skillsLabel: UILabel!
     var skillsCollectionView: UICollectionView!
     var skills = [String]()
@@ -23,6 +25,13 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
     var selectedRoles = [String]()
     var rolesTextField: UITextField!
     
+    var keywordsLabel: UILabel!
+    var keywordsCollectionView: UICollectionView!
+    var keywords = [String]()
+    var keywordsTextField: UITextField!
+    
+    var submitButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("test")
@@ -31,13 +40,17 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         
         view.backgroundColor = .white
         
+        scrollView = UIScrollView()//frame: view.bounds)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        
         skillsLabel = UILabel()
         skillsLabel.text = "Skills"
         skillsLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
         skillsLabel.textAlignment = .left
         skillsLabel.textColor = .black
         skillsLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(skillsLabel)
+        scrollView.addSubview(skillsLabel)
         
         var skillsLayout = UICollectionViewFlowLayout()
         skillsLayout.scrollDirection = .horizontal
@@ -50,8 +63,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         skillsCollectionView.dataSource = self
         skillsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "skill")
         skillsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(skillsCollectionView)
-        skillsCollectionView.reloadData()
+        scrollView.addSubview(skillsCollectionView)
         skillsCollectionView.backgroundColor = .white
         skillsCollectionView.allowsMultipleSelection = true
         
@@ -63,7 +75,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         skillsTextField.textColor = .gray
         skillsTextField.delegate = self
         skillsTextField.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(skillsTextField)
+        scrollView.addSubview(skillsTextField)
         
         rolesLabel = UILabel()
         rolesLabel.text = "Roles"
@@ -71,7 +83,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         rolesLabel.textAlignment = .left
         rolesLabel.textColor = .black
         rolesLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(rolesLabel)
+        scrollView.addSubview(rolesLabel)
         
         var rolesLayout = UICollectionViewFlowLayout()
         rolesLayout.scrollDirection = .vertical
@@ -85,7 +97,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         rolesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         rolesCollectionView.backgroundColor = .white
         rolesCollectionView.allowsMultipleSelection = true
-        view.addSubview(rolesCollectionView)
+        scrollView.addSubview(rolesCollectionView)
         
         rolesTextField = UITextField()
         rolesTextField.placeholder = "Enter your own"
@@ -94,9 +106,49 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         rolesTextField.borderStyle = .roundedRect
         rolesTextField.delegate = self
         rolesTextField.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(rolesTextField)
+        scrollView.addSubview(rolesTextField)
+        
+        keywordsLabel = UILabel()
+        keywordsLabel.text = "Roles"
+        keywordsLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
+        keywordsLabel.textAlignment = .left
+        keywordsLabel.textColor = .black
+        keywordsLabel.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(keywordsLabel)
+        
+        keywordsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: skillsLayout)
+        keywordsCollectionView.delegate = self
+        keywordsCollectionView.dataSource = self
+        keywordsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "keyword")
+        keywordsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        keywordsCollectionView.backgroundColor = .white
+        keywordsCollectionView.allowsMultipleSelection = true
+        scrollView.addSubview(keywordsCollectionView)
+        
+        keywordsTextField = UITextField()
+        keywordsTextField.placeholder = " ex. freshmen, 2020, internship"
+        keywordsTextField.textColor = .gray
+        keywordsTextField.font = UIFont.systemFont(ofSize: 15.0)
+        keywordsTextField.borderStyle = .roundedRect
+        keywordsTextField.delegate = self
+        keywordsTextField.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(keywordsTextField)
+        
+        submitButton = UIButton()
+        submitButton.setTitle("Search projects", for: .normal)
+        submitButton.setTitleColor(.white, for: .normal)
+        submitButton.backgroundColor = .black
+        submitButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        submitButton.titleLabel?.textAlignment = .center
+        submitButton.addTarget(self, action: #selector(performSearch), for: .touchUpInside)
+        submitButton.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(submitButton)
         
         setupConstraints()
+        
+    }
+    
+    @objc func performSearch() {
         
     }
     
@@ -111,6 +163,11 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             rolesCollectionView.reloadData()
             textField.text = ""
             return true
+        } else if textField == keywordsTextField {
+            keywords.append(textField.text!)
+            keywordsCollectionView.reloadData()
+            textField.text = ""
+            return true
         } else {
             return false
         }
@@ -121,6 +178,8 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             return skills.count
         } else if collectionView == rolesCollectionView {
             return roles.count
+        } else if collectionView == keywordsCollectionView {
+            return keywords.count
         } else {
             return 0
         }
@@ -146,8 +205,9 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
                     }
                 }
             }
+        } else if collectionView == keywordsCollectionView {
+            keywords.remove(at: indexPath.row)
         }
-        print(selectedRoles)
         collectionView.reloadData()
     }
     
@@ -160,8 +220,11 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             var cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "role", for: indexPath) as! RolesCollectionViewCell
             cell.configure(roleName: roles[indexPath.row])
             return cell
-        }
-        else {
+        } else if collectionView == keywordsCollectionView {
+            var cell = keywordsCollectionView.dequeueReusableCell(withReuseIdentifier: "keyword", for: indexPath) as! SkillsCollectionViewCell
+            cell.configure(skillName: keywords[indexPath.row])
+            return cell
+        } else {
             return UICollectionViewCell()
         }
     }
@@ -176,6 +239,9 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             var width = collectionView.frame.width
             var height = CGFloat(integerLiteral: 25)
             return CGSize(width: width, height: height)
+        } else if collectionView == keywordsCollectionView {
+            var width = ceil((Double)(keywords[indexPath.row].count) / 10.0 * 75.0 + 10.0)
+            return CGSize(width: width, height: 25.0)
         } else {
             return CGSize()
         }
@@ -183,43 +249,78 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            skillsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            skillsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -1 * padding),
-            skillsLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ])
         
         NSLayoutConstraint.activate([
-            skillsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            skillsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -1 * padding),
+            skillsLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            skillsLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
+            skillsLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
+            ])
+        
+        NSLayoutConstraint.activate([
+            skillsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            skillsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             skillsCollectionView.topAnchor.constraint(equalTo: skillsLabel.bottomAnchor, constant: 8),
             skillsCollectionView.heightAnchor.constraint(equalToConstant: 25),
 
         ])
         
         NSLayoutConstraint.activate([
-            skillsTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            skillsTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -1 * padding),
+            skillsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            skillsTextField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             skillsTextField.topAnchor.constraint(equalTo: skillsCollectionView.bottomAnchor, constant: 8)
             ])
         
         NSLayoutConstraint.activate([
-            rolesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            rolesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -1 * padding),
+            rolesLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            rolesLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             rolesLabel.topAnchor.constraint(equalTo: skillsTextField.bottomAnchor, constant: 16)
             ])
         
         NSLayoutConstraint.activate([
-            rolesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            rolesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -1 * padding),
+            rolesCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            rolesCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             rolesCollectionView.topAnchor.constraint(equalTo: rolesLabel.bottomAnchor, constant: 8),
-            rolesCollectionView.heightAnchor.constraint(equalToConstant: 150)
+            rolesCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(integerLiteral: roles.count * (29)))
             ])
         
         NSLayoutConstraint.activate([
-            rolesTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            rolesTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -1 * padding),
+            rolesTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            rolesTextField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             rolesTextField.topAnchor.constraint(equalTo: rolesCollectionView.bottomAnchor, constant: 8)
             ])
+        
+        NSLayoutConstraint.activate([
+            keywordsLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: 8),
+            keywordsLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            keywordsLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
+        ])
+        
+        NSLayoutConstraint.activate([
+            keywordsCollectionView.topAnchor.constraint(equalTo: keywordsLabel.bottomAnchor, constant: 8),
+            keywordsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            keywordsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
+            keywordsCollectionView.heightAnchor.constraint(equalToConstant: 25)
+        ])
+        
+        NSLayoutConstraint.activate([
+            keywordsTextField.topAnchor.constraint(equalTo: keywordsCollectionView.bottomAnchor, constant: 8),
+            keywordsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            keywordsTextField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
+        ])
+        
+        NSLayoutConstraint.activate([
+            submitButton.topAnchor.constraint(equalTo: keywordsTextField.bottomAnchor, constant: 20),
+            submitButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            submitButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            submitButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            submitButton.heightAnchor.constraint(equalToConstant: 50),
+            submitButton.widthAnchor.constraint(equalToConstant: view.frame.width)
+        ])
     }
     
 
