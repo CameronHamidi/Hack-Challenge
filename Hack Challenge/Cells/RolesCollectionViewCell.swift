@@ -39,13 +39,13 @@ class RolesCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            if isSelected {
+            if isSelected == false {
+                contentView.backgroundColor = .lightGray
+                roleLabel.textColor = .gray
+            } else {
                 contentView.backgroundColor = .gray
                 roleLabel.textColor = .black
                 print("selected")
-            } else {
-                contentView.backgroundColor = .lightGray
-                roleLabel.textColor = .gray
             }
         }
     }

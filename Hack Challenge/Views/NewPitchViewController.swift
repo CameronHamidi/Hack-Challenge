@@ -24,15 +24,15 @@ class NewPitchViewController: UIViewController {
     var libButton: UIButton! //library
     var lineSeparator: UIView!
     
-//    var tagLabel: UILabel!
-//    var tagInput:
+    //    var tagLabel: UILabel!
+    //    var tagInput:
     
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
     let textInputHeight: CGFloat = 32
     let textSize: CGFloat = 14
     let buttonSize: CGFloat = 72
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -55,7 +55,7 @@ class NewPitchViewController: UIViewController {
         titleInput.placeholder = "Enter a title here"
         titleInput.font = .systemFont(ofSize: textSize)
         titleInput.borderStyle = .roundedRect
-//        titleInput.underlined()
+        //        titleInput.underlined()
         view.addSubview(titleInput)
         
         descrLabel = UILabel()
@@ -70,7 +70,7 @@ class NewPitchViewController: UIViewController {
         descrInput.font = .systemFont(ofSize: textSize)
         descrInput.textAlignment = .left
         descrInput.borderStyle = .roundedRect
-//        descrInput.underlined()
+        //        descrInput.underlined()
         view.addSubview(descrInput)
         
         imageLabel = UILabel()
@@ -88,7 +88,7 @@ class NewPitchViewController: UIViewController {
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
         cameraButton.backgroundColor = .blue
         cameraButton.setTitle("Camera", for: .normal)
-//        cameraButton.setImage("cameraIcon", for: .normal)
+        //        cameraButton.setImage("cameraIcon", for: .normal)
         view.addSubview(cameraButton)
         
         libButton = UIButton()
@@ -108,7 +108,7 @@ class NewPitchViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding*2),
             titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*2),
             titleLabel.heightAnchor.constraint(equalToConstant: labelHeight)
-//            titleLabel.widthAnchor.constraint(equalToConstant: 100)
+            //            titleLabel.widthAnchor.constraint(equalToConstant: 100)
             ])
         
         NSLayoutConstraint.activate([
@@ -162,7 +162,7 @@ class NewPitchViewController: UIViewController {
             libButton.widthAnchor.constraint(equalTo: cameraButton.widthAnchor),
             libButton.heightAnchor.constraint(equalTo: cameraButton.heightAnchor)
             ])
-
+        
     }
     
     @objc func dismissViewController() {
@@ -196,7 +196,7 @@ class NewPitchViewController: UIViewController {
         
         //Delegate to another view
         //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
-//        navigationController?.popViewController(animated: true)
+        //        navigationController?.popViewController(animated: true)
     }
     
 }
