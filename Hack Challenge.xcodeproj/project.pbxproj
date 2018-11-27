@@ -15,6 +15,7 @@
 		18D0A61121AB163B00D0A079 /* NewRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0A61021AB163B00D0A079 /* NewRequestViewController.swift */; };
 		18D0A61321AB16C600D0A079 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0A61221AB16C600D0A079 /* CheckBox.swift */; };
 		18D0A61C21AB2D2700D0A079 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0A61B21AB2D2700D0A079 /* PostCell.swift */; };
+		18D0A61E21ACCC4900D0A079 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0A61D21ACCC4100D0A079 /* PostViewController.swift */; };
 		E61F4F1521A76F530096BAE1 /* ProjectSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F4F1421A76F530096BAE1 /* ProjectSearchViewController.swift */; };
 		E61F4F1721A772F70096BAE1 /* SkillsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F4F1621A772F70096BAE1 /* SkillsCollectionViewCell.swift */; };
 		E621E38821A9E09E001F5C24 /* RolesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E621E38721A9E09E001F5C24 /* RolesCollectionViewCell.swift */; };
@@ -35,6 +36,7 @@
 		18D0A61021AB163B00D0A079 /* NewRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRequestViewController.swift; sourceTree = "<group>"; };
 		18D0A61221AB16C600D0A079 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		18D0A61B21AB2D2700D0A079 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		18D0A61D21ACCC4100D0A079 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		E61F4F1421A76F530096BAE1 /* ProjectSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSearchViewController.swift; sourceTree = "<group>"; };
 		E61F4F1621A772F70096BAE1 /* SkillsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsCollectionViewCell.swift; sourceTree = "<group>"; };
 		E621E38721A9E09E001F5C24 /* RolesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				18D0A61021AB163B00D0A079 /* NewRequestViewController.swift */,
 				18D0A60C21AA44AE00D0A079 /* NewPitchViewController.swift */,
 				18456D6821A8812F00BFDDD8 /* ProfileViewController.swift */,
+				18D0A61D21ACCC4100D0A079 /* PostViewController.swift */,
 				E61F4F1421A76F530096BAE1 /* ProjectSearchViewController.swift */,
 				E6DCBCDC21A64FF5001A35F8 /* HomeViewController.swift */,
 			);
@@ -202,6 +205,7 @@
 				18456D6921A8812F00BFDDD8 /* ProfileViewController.swift in Sources */,
 				E621E38821A9E09E001F5C24 /* RolesCollectionViewCell.swift in Sources */,
 				18D0A61C21AB2D2700D0A079 /* PostCell.swift in Sources */,
+				18D0A61E21ACCC4900D0A079 /* PostViewController.swift in Sources */,
 				18D0A60D21AA44AE00D0A079 /* NewPitchViewController.swift in Sources */,
 				E6DCBCDD21A64FF5001A35F8 /* HomeViewController.swift in Sources */,
 				E6B5DDD921AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift in Sources */,

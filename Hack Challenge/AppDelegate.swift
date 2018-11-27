@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = HomeViewController()
         
         // for easy testing
-//                window?.rootViewController = ProfileViewController()
+//        window?.rootViewController = PostViewController()
 //        window?.rootViewController = NewPitchViewController()
 //        window?.rootViewController = NewRequestViewController()
         
