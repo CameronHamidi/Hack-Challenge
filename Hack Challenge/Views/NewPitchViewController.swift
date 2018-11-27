@@ -31,7 +31,7 @@ class NewPitchViewController: UIViewController {
     let labelHeight: CGFloat = 18
     let textInputHeight: CGFloat = 32
     let textSize: CGFloat = 14
-    let buttonSize: CGFloat = 72
+    let buttonSize: CGFloat = 50 //72
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,17 +86,21 @@ class NewPitchViewController: UIViewController {
         
         cameraButton = UIButton()
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
-        cameraButton.backgroundColor = .blue
+//        cameraButton.backgroundColor = .blue
+        cameraButton.setImage(UIImage(named: "img_cam"), for: .normal)
         cameraButton.setTitle("Camera", for: .normal)
         //        cameraButton.setImage("cameraIcon", for: .normal)
         view.addSubview(cameraButton)
         
         libButton = UIButton()
         libButton.translatesAutoresizingMaskIntoConstraints = false
-        libButton.backgroundColor = .blue
+//        libButton.backgroundColor = .blue
+        libButton.setImage(UIImage(named: "img_lib"), for: .normal)
         libButton.setTitle("Library", for: .normal)
         //        cameraButton.setImage("libIcon", for: .normal)
         view.addSubview(libButton)
+        
+        // TODO - add UILabels "Camera" and "Gallery" under each button 
         
         setupConstraints()
     }
