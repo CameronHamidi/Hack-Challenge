@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var scrollView: UIScrollView!
     
@@ -45,6 +45,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var projectsContainer: UIView!
     var postsContainer: UIView!
 //    var segmentedControlContainer: UIView!
+    
+    var contactCollectionView: UICollectionView!
     
     let avatarSize: CGFloat = 64
     let padding: CGFloat = 14
@@ -163,6 +165,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         aboutContainer.translatesAutoresizingMaskIntoConstraints = false
         aboutContainer.backgroundColor = .red
         scrollView.addSubview(aboutContainer)
+        
+        var contactLayout = UICollectionViewFlowLayout()
+        contactLayout.minimumInteritemSpacing = 4
+        contactLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        contactLayout.scrollDirection = .horizontal
+        contactCollectionView = UICollectionView(frame: .zero, collectionViewLayout: contactLayout)
+        contactCollectionView.delegate = self
+        contactCollectionView.dataSource = self
+        contactCollectionView.register(ContactCollectionViewCell.self, forCellWithReuseIdentifier: "contact")
+        contactCollectionView.backgroundColor = .gray
+        contactCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        aboutContainer.addSubview(contactCollectionView)
 
         projectsContainer = UIView()
         projectsContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -211,6 +225,46 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 //            controller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
 //            controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
 //            ])
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == contactCollectionView  {
+            return 2
+        } else {
+            return 0
+        }
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if collectionView == contactCollectionView {
+            return 1
+        } else {
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == contactCollectionView {
+            var cell = contactCollectionView.dequeueReusableCell(withReuseIdentifier: "contact", for: indexPath) as! ContactCollectionViewCell
+            if indexPath.row == 0 {
+                cell.label.text = "949 887 8055"
+                cell.contactType = .phone
+                return cell
+            } else {
+                cell.label.text = "cah376@cornell.edu"
+                cell.contactType = .email
+            }
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == contactCollectionView {
+            var cell = contactCollectionView.cellForItem(at: indexPath) as! ContactCollectionViewCell
+            cell.performContact()
+        }
     }
     
     @objc func back() {
@@ -328,6 +382,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             aboutContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
             ])
 
+        NSLayoutConstraint.activate([
+            contactCollectionView.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
+            contactCollectionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
+            contactCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor)
+            ])
+        
         NSLayoutConstraint.activate([
             projectsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
             projectsContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
