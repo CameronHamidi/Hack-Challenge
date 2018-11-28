@@ -10,6 +10,8 @@ import UIKit
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var scrollView: UIScrollView!
+    
     var avatar: UIImageView! //user's picture
     var caption: UILabel! //major, minor, or any one-line intro user wants to display
     var name: UILabel! //user's name
@@ -24,6 +26,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var netIcon: UIImageView!
     
     var activeLabel: UILabel!
+    
+//    var lineSeparator2: UIView!
+//    var majorsSubLabel: UILabel! //Primary Role
+//    var majorsLabel: UILabel!
+//    var netSubLabel: UILabel! //Cornell Net ID
+//    var netLabel: UILabel!
+//    var roleIcon: UIImageView!
+//    var netIcon: UIImageView!
     
     var postsTableView: UITableView!
     var postsArray: [Post] = [Post]()
@@ -44,6 +54,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        scrollView = UIScrollView(frame: .zero)
+        view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
         let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
         navigationItem.leftBarButtonItem = backButton
         
@@ -59,21 +74,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         avatar.backgroundColor = .gray
         avatar.layer.cornerRadius = avatarSize/2
         avatar.clipsToBounds = true
-        view.addSubview(avatar)
+        scrollView.addSubview(avatar)
         
         caption = UILabel()
         caption.translatesAutoresizingMaskIntoConstraints = false
         caption.text = "A generalization to all"
         caption.textAlignment = .center
         caption.font = .systemFont(ofSize: subTextSize)
-        view.addSubview(caption)
+        scrollView.addSubview(caption)
         
         name = UILabel()
         name.translatesAutoresizingMaskIntoConstraints = false
         name.text = "John Doe"
         name.font = .boldSystemFont(ofSize: 26)
-        //        name.textAlignment = .right
-        view.addSubview(name)
+        name.textAlignment = .center
+        scrollView.addSubview(name)
         
         activeLabel = UILabel()
         activeLabel.backgroundColor = .green
@@ -83,58 +98,58 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         activeLabel.layer.masksToBounds = true
         activeLabel.font = UIFont.systemFont(ofSize: 14)
         activeLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(activeLabel)
+        scrollView.addSubview(activeLabel)
     
         lineSeparator = UIView()
         lineSeparator.translatesAutoresizingMaskIntoConstraints = false
         lineSeparator.backgroundColor = .lightGray
-        view.addSubview(lineSeparator)
+        scrollView.addSubview(lineSeparator)
         
         roleSubLabel = UILabel()
         roleSubLabel.translatesAutoresizingMaskIntoConstraints = false
         roleSubLabel.text = "Primary Role"
         roleSubLabel.font = .systemFont(ofSize: subTextSize)
         roleSubLabel.textColor = .gray
-        view.addSubview(roleSubLabel)
+        scrollView.addSubview(roleSubLabel)
         
         roleLabel = UILabel()
         roleLabel.translatesAutoresizingMaskIntoConstraints = false
         roleLabel.text = "Architect"
         roleLabel.font = .systemFont(ofSize: normTextSize)
-        view.addSubview(roleLabel)
+        scrollView.addSubview(roleLabel)
         
         roleIcon = UIImageView()
         roleIcon.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(roleIcon)
+        scrollView.addSubview(roleIcon)
         
         netSubLabel = UILabel()
         netSubLabel.translatesAutoresizingMaskIntoConstraints = false
         netSubLabel.text = "Net ID"
         netSubLabel.font = .systemFont(ofSize: subTextSize)
         netSubLabel.textColor = .gray
-        view.addSubview(netSubLabel)
+        scrollView.addSubview(netSubLabel)
         
         netLabel = UILabel()
         netLabel.translatesAutoresizingMaskIntoConstraints = false
         netLabel.text = "jd123"
         netLabel.font = .systemFont(ofSize: normTextSize)
-        view.addSubview(netLabel)
+        scrollView.addSubview(netLabel)
         
         netIcon = UIImageView()
         netIcon.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(netIcon)
+        scrollView.addSubview(netIcon)
         
         segControl = UISegmentedControl(items: ["About", "Projects", "Posts"])
         segControl.translatesAutoresizingMaskIntoConstraints = false
 //        control.addTarget(self, action: #selector(sortList), for: .valueChanged)
         segControl.addTarget(self, action: #selector(self.showComponents(sender:)), for: .valueChanged)
         segControl.backgroundColor = .white
-        view.addSubview(segControl)
+        scrollView.addSubview(segControl)
         
         // add container
 //        containerView = UIView()
 //        containerView.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(containerView)
+//        scrollView.addSubview(containerView)
 //
 //        let controller = storyboard!.instantiateViewController(withIdentifier: "Second")
 //        addChild(controller)
@@ -147,19 +162,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         aboutContainer = UIView()
         aboutContainer.translatesAutoresizingMaskIntoConstraints = false
         aboutContainer.backgroundColor = .red
-        view.addSubview(aboutContainer)
+        scrollView.addSubview(aboutContainer)
 
         projectsContainer = UIView()
         projectsContainer.translatesAutoresizingMaskIntoConstraints = false
         projectsContainer.backgroundColor = .green
         projectsContainer.alpha = 0
-        view.addSubview(projectsContainer)
+        scrollView.addSubview(projectsContainer)
 
         postsContainer = UIView()
         postsContainer.translatesAutoresizingMaskIntoConstraints = false
         postsContainer.backgroundColor = .blue
         postsContainer.alpha = 0
-        view.addSubview(postsContainer)
+        scrollView.addSubview(postsContainer)
         
         //Hardcoded data TODO - get posts info from backend
         createPosts()
@@ -186,7 +201,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
 //        segmentedControlContainer = UIView()
 //        segmentedControlContainer.backgroundColor = UIColor.white
-//        view.addSubview(segmentedControlContainer)
+//        scrollView.addSubview(segmentedControlContainer)
 //        self.segmentedControlContainer = segmentedControlContainer
         
         setupConstraints()
@@ -204,31 +219,41 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            avatar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            avatar.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            avatar.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 32),
             avatar.heightAnchor.constraint(equalToConstant: avatarSize),
             avatar.widthAnchor.constraint(equalToConstant: avatarSize)
             ])
         
         NSLayoutConstraint.activate([
             name.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            name.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: padding)
+            name.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: padding),
+            name.widthAnchor.constraint(equalToConstant: view.frame.width - (2.0 * 5.0)),
+            name.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -5)
             ])
         
         NSLayoutConstraint.activate([
-            caption.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            caption.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             caption.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 12),
-            caption.widthAnchor.constraint(equalToConstant: view.bounds.width/2)
+            caption.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
+            caption.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
             ])
         
         NSLayoutConstraint.activate([
-            activeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            activeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+            activeLabel.topAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            activeLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -10)
             ])
         
         NSLayoutConstraint.activate([
             lineSeparator.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding*2),
-            lineSeparator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lineSeparator.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             lineSeparator.widthAnchor.constraint(equalToConstant: 1),
             lineSeparator.heightAnchor.constraint(equalToConstant: 52)
             ])
@@ -240,7 +265,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             roleIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
             roleIcon.heightAnchor.constraint(equalToConstant: 25),
             roleIcon.widthAnchor.constraint(equalToConstant: 25),
-            roleIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10)
+            roleIcon.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10)
             ])
         
         NSLayoutConstraint.activate([
@@ -259,7 +284,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             netIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
             netIcon.heightAnchor.constraint(equalToConstant: 25),
             netIcon.widthAnchor.constraint(equalToConstant: 25),
-            netIcon.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 10)
+            netIcon.leadingAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 10)
             ])
         
         NSLayoutConstraint.activate([
@@ -277,8 +302,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         NSLayoutConstraint.activate([
             segControl.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: padding*2),
-            segControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            segControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            segControl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            segControl.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
             segControl.heightAnchor.constraint(equalToConstant: 32)
             ])
         
@@ -298,23 +323,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         NSLayoutConstraint.activate([
             aboutContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-            aboutContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            aboutContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            aboutContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+            aboutContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            aboutContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
+            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
             ])
 
         NSLayoutConstraint.activate([
             projectsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-            projectsContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            projectsContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            projectsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+            projectsContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            projectsContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
+            projectsContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
             ])
 
         NSLayoutConstraint.activate([
             postsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-            postsContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            postsContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            postsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+            postsContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            postsContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
+            postsContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
             ])
         
         NSLayoutConstraint.activate([
