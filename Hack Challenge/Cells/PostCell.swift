@@ -15,7 +15,7 @@ class PostCell: UITableViewCell {
     var dateLabel: UILabel!
     
     var titleLabel: UILabel!
-    var blurbText: UITextView!
+    var blurbText: UILabel!
     
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
@@ -57,7 +57,7 @@ class PostCell: UITableViewCell {
         addSubview(titleLabel)
         
         //Short description
-        blurbText = UITextView()
+        blurbText = UILabel()
         blurbText.translatesAutoresizingMaskIntoConstraints = false
         blurbText.font = .systemFont(ofSize: 14)
         blurbText.textColor = .black
@@ -76,12 +76,12 @@ class PostCell: UITableViewCell {
     }
     
     func setConstraints() {
-        iconView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        iconView.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
         iconView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         iconView.widthAnchor.constraint(equalToConstant: 50).isActive = true
         iconView.heightAnchor.constraint(equalTo: iconView.widthAnchor).isActive = true
         
-        nameLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
         nameLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: padding/2).isActive = true
         nameLabel.heightAnchor.constraint(equalToConstant: 14).isActive = true
 
@@ -96,7 +96,7 @@ class PostCell: UITableViewCell {
         blurbText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding).isActive = true
         blurbText.leadingAnchor.constraint(equalTo: iconView.leadingAnchor).isActive = true
         blurbText.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        blurbText.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        blurbText.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

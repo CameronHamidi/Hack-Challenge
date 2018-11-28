@@ -14,8 +14,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var caption: UILabel! //major, minor, or any one-line intro user wants to display
     var name: UILabel! //user's name
     
+    
+    var lineSeparator: UIView!
+    var roleSubLabel: UILabel! //Primary Role
+    var roleLabel: UILabel!
+    var netSubLabel: UILabel! //Cornell Net ID
+    var netLabel: UILabel!
+    
     var postsTableView: UITableView!
     var postsArray: [Post] = [Post]()
+//    var tableview: UITableView!
     
     var segControl: UISegmentedControl!
 //    var containerView: UIView!
@@ -26,6 +34,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     let avatarSize: CGFloat = 64
     let padding: CGFloat = 14
+    let subTextSize: CGFloat = 14
+    let normTextSize: CGFloat = 18
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,23 +49,55 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         avatar.translatesAutoresizingMaskIntoConstraints = false
 //        avatar.layer.borderWidth = 1
 //        avatar.layer.masksToBounds = false
-        avatar.backgroundColor = .blue
+        avatar.backgroundColor = .gray
         avatar.layer.cornerRadius = avatarSize/2
         avatar.clipsToBounds = true
         view.addSubview(avatar)
         
         caption = UILabel()
         caption.translatesAutoresizingMaskIntoConstraints = false
-        caption.text = "Architect"
-        caption.font = .systemFont(ofSize: 18)
+        caption.text = "A generalization to all"
+        caption.textAlignment = .center
+        caption.font = .systemFont(ofSize: subTextSize)
         view.addSubview(caption)
         
         name = UILabel()
         name.translatesAutoresizingMaskIntoConstraints = false
         name.text = "John Doe"
-        name.font = .boldSystemFont(ofSize: 32)
+        name.font = .boldSystemFont(ofSize: 26)
         //        name.textAlignment = .right
         view.addSubview(name)
+        
+        lineSeparator = UIView()
+        lineSeparator.translatesAutoresizingMaskIntoConstraints = false
+        lineSeparator.backgroundColor = .lightGray
+        view.addSubview(lineSeparator)
+        
+        roleSubLabel = UILabel()
+        roleSubLabel.translatesAutoresizingMaskIntoConstraints = false
+        roleSubLabel.text = "Primary Role"
+        roleSubLabel.font = .systemFont(ofSize: subTextSize)
+        roleSubLabel.textColor = .gray
+        view.addSubview(roleSubLabel)
+        
+        roleLabel = UILabel()
+        roleLabel.translatesAutoresizingMaskIntoConstraints = false
+        roleLabel.text = "Architect"
+        roleLabel.font = .systemFont(ofSize: normTextSize)
+        view.addSubview(roleLabel)
+        
+        netSubLabel = UILabel()
+        netSubLabel.translatesAutoresizingMaskIntoConstraints = false
+        netSubLabel.text = "Net ID"
+        netSubLabel.font = .systemFont(ofSize: subTextSize)
+        netSubLabel.textColor = .gray
+        view.addSubview(netSubLabel)
+        
+        netLabel = UILabel()
+        netLabel.translatesAutoresizingMaskIntoConstraints = false
+        netLabel.text = "jd123"
+        netLabel.font = .systemFont(ofSize: normTextSize)
+        view.addSubview(netLabel)
         
         segControl = UISegmentedControl(items: ["About", "Projects", "Posts"])
         segControl.translatesAutoresizingMaskIntoConstraints = false
@@ -103,9 +145,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         postsTableView.register(PostCell.self, forCellReuseIdentifier: "postCellID")
         postsTableView.backgroundColor = .white
 //        postsTableView.separatorStyle = .none
+        postsTableView.estimatedRowHeight = 200
+        postsTableView.rowHeight = UITableView.automaticDimension
         postsTableView.delegate = self
         postsTableView.dataSource = self
         postsContainer.addSubview(postsTableView)
+        
+        //testing out a tableview with dynamic height
+//        tableview = UITableView()
+//        tableview.translatesAutoresizingMaskIntoConstraints = false
+//        tableview.estimatedRowHeight = 100
+//        tableview.rowHeight = UITableView.automaticDimension
+//        tableview.register(PostCell.self, forCellReuseIdentifier: "postCellID")
+//        aboutContainer.addSubview(tableview) //for testing purposes
         
 //        segmentedControlContainer = UIView()
 //        segmentedControlContainer.backgroundColor = UIColor.white
@@ -132,17 +184,47 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         NSLayoutConstraint.activate([
             caption.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             caption.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 12),
-            caption.heightAnchor.constraint(equalToConstant: 20)
+            caption.widthAnchor.constraint(equalToConstant: view.bounds.width/2)
             ])
         
         NSLayoutConstraint.activate([
             name.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            name.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding),
-            name.heightAnchor.constraint(equalToConstant: 36)
+            name.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding)
             ])
         
         NSLayoutConstraint.activate([
-            segControl.topAnchor.constraint(equalTo: name.bottomAnchor, constant: padding*2),
+            lineSeparator.topAnchor.constraint(equalTo: name.bottomAnchor, constant: padding*2),
+            lineSeparator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lineSeparator.widthAnchor.constraint(equalToConstant: 1),
+            lineSeparator.heightAnchor.constraint(equalToConstant: 52)
+            ])
+        
+        // Some maths to align labels on either side of line separator
+        let coor: CGFloat = view.bounds.width/4
+        
+        NSLayoutConstraint.activate([
+            roleSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
+            roleSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -coor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            roleLabel.topAnchor.constraint(equalTo: roleSubLabel.bottomAnchor, constant: padding/2),
+            roleLabel.centerXAnchor.constraint(equalTo: roleSubLabel.centerXAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            netSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
+            netSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: coor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            netLabel.topAnchor.constraint(equalTo: netSubLabel.bottomAnchor, constant: padding/2),
+            netLabel.centerXAnchor.constraint(equalTo: netSubLabel.centerXAnchor)
+            ])
+        
+        
+        NSLayoutConstraint.activate([
+            segControl.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: padding*2),
             segControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             segControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
             segControl.heightAnchor.constraint(equalToConstant: 32)
@@ -189,14 +271,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             postsTableView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
             postsTableView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor)
             ])
+        
+//        NSLayoutConstraint.activate([
+//            tableview.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
+//            tableview.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
+//            tableview.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
+//            tableview.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor)
+//            ])
     }
     
     func createPosts() {
         let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc...")
         let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc...")
         let vanillaIcecream = Post(icon: UIImage(named: "icon_placeholder")!, name: "FoodWiki", date: "2h", title: "Ice cream, vanilla facts and history - testing if this title will wrap", blurb: "Vanilla is frequently used to flavor ice cream, especially in North America and Europe. Vanilla ice cream, like other flavors of ice cream, was originally created by cooling a mixture made of cream, sugar...")
+        let test = Post(icon: UIImage(named: "icon_placeholder")!, name: "test", date: "Nov 27", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc...")
         
-        postsArray = [newPost, ezraCornell, vanillaIcecream]
+        postsArray = [newPost, ezraCornell, vanillaIcecream, test]
     }
     
     // MARK: - TABLEVIEW METHODS
@@ -214,9 +304,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return postsArray.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 200
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

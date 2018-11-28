@@ -23,6 +23,8 @@ class NewPitchViewController: UIViewController {
     var cameraButton: UIButton!
     var libButton: UIButton! //library
     var lineSeparator: UIView!
+    var cameraLabel: UILabel!
+    var libLabel: UILabel!
     
     //    var tagLabel: UILabel!
     //    var tagInput:
@@ -100,6 +102,20 @@ class NewPitchViewController: UIViewController {
         //        cameraButton.setImage("libIcon", for: .normal)
         view.addSubview(libButton)
         
+        cameraLabel = UILabel()
+        cameraLabel.translatesAutoresizingMaskIntoConstraints = false
+        cameraLabel.text = "Camera"
+        cameraLabel.textAlignment = .center
+        cameraLabel.font = .systemFont(ofSize: textSize)
+        view.addSubview(cameraLabel)
+        
+        libLabel = UILabel()
+        libLabel.translatesAutoresizingMaskIntoConstraints = false
+        libLabel.text = "Gallery"
+        libLabel.textAlignment = .center
+        libLabel.font = .systemFont(ofSize: textSize)
+        view.addSubview(libLabel)
+        
         // TODO - add UILabels "Camera" and "Gallery" under each button 
         
         setupConstraints()
@@ -110,23 +126,23 @@ class NewPitchViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding*2),
-            titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*2),
-            titleLabel.heightAnchor.constraint(equalToConstant: labelHeight)
-            //            titleLabel.widthAnchor.constraint(equalToConstant: 100)
+            titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*2)
+//            titleLabel.heightAnchor.constraint(equalToConstant: labelHeight)
+//                        titleLabel.widthAnchor.constraint(equalToConstant: 100)
             ])
         
         NSLayoutConstraint.activate([
             titleInput.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
             titleInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            titleInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            titleInput.heightAnchor.constraint(equalToConstant: textInputHeight)
+            titleInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
+//            titleInput.heightAnchor.constraint(equalToConstant: textInputHeight)
             ])
         
         NSLayoutConstraint.activate([
             descrLabel.topAnchor.constraint(equalTo: titleInput.bottomAnchor, constant: padding*2),
             descrLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            descrLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            descrLabel.heightAnchor.constraint(equalToConstant: labelHeight)
+            descrLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
+//            descrLabel.heightAnchor.constraint(equalToConstant: labelHeight)
             ])
         
         NSLayoutConstraint.activate([
@@ -139,8 +155,8 @@ class NewPitchViewController: UIViewController {
         NSLayoutConstraint.activate([
             imageLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
             imageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            imageLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            imageLabel.heightAnchor.constraint(equalToConstant: labelHeight)
+            imageLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
+//            imageLabel.heightAnchor.constraint(equalToConstant: labelHeight)
             ])
         
         NSLayoutConstraint.activate([
@@ -161,10 +177,22 @@ class NewPitchViewController: UIViewController {
             ])
         
         NSLayoutConstraint.activate([
+            cameraLabel.topAnchor.constraint(equalTo: cameraButton.bottomAnchor, constant: padding),
+            cameraLabel.centerXAnchor.constraint(equalTo: cameraButton.centerXAnchor)
+//            cameraLabel.widthAnchor.constraint(equalToConstant: buttonSize)
+            ])
+        
+        NSLayoutConstraint.activate([
             libButton.topAnchor.constraint(equalTo: cameraButton.topAnchor),
             libButton.leadingAnchor.constraint(equalTo: lineSeparator.trailingAnchor, constant: buttonPadding),
             libButton.widthAnchor.constraint(equalTo: cameraButton.widthAnchor),
             libButton.heightAnchor.constraint(equalTo: cameraButton.heightAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            libLabel.topAnchor.constraint(equalTo: libButton.bottomAnchor, constant: padding),
+            libLabel.centerXAnchor.constraint(equalTo: libButton.centerXAnchor)
+//            libLabel.widthAnchor.constraint(equalToConstant: buttonSize)
             ])
         
     }
