@@ -170,8 +170,15 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         groupSizeCollectionView.dataSource = self
         scrollView.addSubview(groupSizeCollectionView)
         
+        let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
+        navigationItem.leftBarButtonItem = backButton
+        
         setupConstraints()
         
+    }
+    
+    @objc func back() {
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func performSearch() {

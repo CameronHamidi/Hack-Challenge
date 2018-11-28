@@ -30,6 +30,9 @@ class NewRequestViewController: UIViewController {
         view.backgroundColor = .white
         title = "New Request"
         
+        let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
+        navigationItem.leftBarButtonItem = backButton
+        
         // Group Size
         groupLabel = UILabel()
         groupLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -64,6 +67,10 @@ class NewRequestViewController: UIViewController {
         
         setupConstraints()
 
+    }
+    
+    @objc func back() {
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func stepperValueChanged(_ sender:UIStepper!){

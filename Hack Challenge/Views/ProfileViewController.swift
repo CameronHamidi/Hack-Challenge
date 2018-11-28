@@ -20,6 +20,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var roleLabel: UILabel!
     var netSubLabel: UILabel! //Cornell Net ID
     var netLabel: UILabel!
+    var roleIcon: UIImageView!
+    var netIcon: UIImageView!
+    
+    var activeLabel: UILabel!
     
     var postsTableView: UITableView!
     var postsArray: [Post] = [Post]()
@@ -39,6 +43,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
+        navigationItem.leftBarButtonItem = backButton
         
         view.backgroundColor = .white
         title = "Profile"
@@ -68,6 +75,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         //        name.textAlignment = .right
         view.addSubview(name)
         
+        activeLabel = UILabel()
+        activeLabel.backgroundColor = .green
+        activeLabel.text = "  Active  "
+        activeLabel.textColor = .white
+        activeLabel.layer.cornerRadius = 8
+        activeLabel.layer.masksToBounds = true
+        activeLabel.font = UIFont.systemFont(ofSize: 14)
+        activeLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activeLabel)
+    
         lineSeparator = UIView()
         lineSeparator.translatesAutoresizingMaskIntoConstraints = false
         lineSeparator.backgroundColor = .lightGray
@@ -86,6 +103,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         roleLabel.font = .systemFont(ofSize: normTextSize)
         view.addSubview(roleLabel)
         
+        roleIcon = UIImageView()
+        roleIcon.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(roleIcon)
+        
         netSubLabel = UILabel()
         netSubLabel.translatesAutoresizingMaskIntoConstraints = false
         netSubLabel.text = "Net ID"
@@ -98,6 +119,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         netLabel.text = "jd123"
         netLabel.font = .systemFont(ofSize: normTextSize)
         view.addSubview(netLabel)
+        
+        netIcon = UIImageView()
+        netIcon.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(netIcon)
         
         segControl = UISegmentedControl(items: ["About", "Projects", "Posts"])
         segControl.translatesAutoresizingMaskIntoConstraints = false
@@ -173,6 +198,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 //            ])
     }
     
+    @objc func back() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             avatar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -182,18 +211,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             ])
         
         NSLayoutConstraint.activate([
+            name.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            name.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: padding)
+            ])
+        
+        NSLayoutConstraint.activate([
             caption.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            caption.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 12),
+            caption.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 12),
             caption.widthAnchor.constraint(equalToConstant: view.bounds.width/2)
             ])
         
         NSLayoutConstraint.activate([
-            name.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            name.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding)
+            activeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            activeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
             ])
         
         NSLayoutConstraint.activate([
-            lineSeparator.topAnchor.constraint(equalTo: name.bottomAnchor, constant: padding*2),
+            lineSeparator.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding*2),
             lineSeparator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lineSeparator.widthAnchor.constraint(equalToConstant: 1),
             lineSeparator.heightAnchor.constraint(equalToConstant: 52)
@@ -203,23 +237,41 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let coor: CGFloat = view.bounds.width/4
         
         NSLayoutConstraint.activate([
+            roleIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
+            roleIcon.heightAnchor.constraint(equalToConstant: 25),
+            roleIcon.widthAnchor.constraint(equalToConstant: 25),
+            roleIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10)
+            ])
+        
+        NSLayoutConstraint.activate([
             roleSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
-            roleSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -coor)
+            //roleSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -coor)
+            roleSubLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor)
             ])
         
         NSLayoutConstraint.activate([
             roleLabel.topAnchor.constraint(equalTo: roleSubLabel.bottomAnchor, constant: padding/2),
-            roleLabel.centerXAnchor.constraint(equalTo: roleSubLabel.centerXAnchor)
+            //roleLabel.centerXAnchor.constraint(equalTo: roleSubLabel.centerXAnchor)
+            roleLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            netIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
+            netIcon.heightAnchor.constraint(equalToConstant: 25),
+            netIcon.widthAnchor.constraint(equalToConstant: 25),
+            netIcon.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 10)
             ])
         
         NSLayoutConstraint.activate([
             netSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
-            netSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: coor)
+            //netSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: coor)
+            netSubLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor)
             ])
         
         NSLayoutConstraint.activate([
             netLabel.topAnchor.constraint(equalTo: netSubLabel.bottomAnchor, constant: padding/2),
-            netLabel.centerXAnchor.constraint(equalTo: netSubLabel.centerXAnchor)
+//            netLabel.centerXAnchor.constraint(equalTo: netSubLabel.centerXAnchor)
+            netLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor)
             ])
         
         

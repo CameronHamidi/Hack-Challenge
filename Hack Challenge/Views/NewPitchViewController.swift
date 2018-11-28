@@ -40,6 +40,9 @@ class NewPitchViewController: UIViewController {
         view.backgroundColor = .white
         title = "New Pitch"
         
+        let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
+        navigationItem.leftBarButtonItem = backButton
+        
         postButton = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(dismissViewControllerAndSaveText))
         self.navigationItem.rightBarButtonItem = postButton
         
@@ -121,6 +124,9 @@ class NewPitchViewController: UIViewController {
         setupConstraints()
     }
     
+    @objc func back() {
+        dismiss(animated: true, completion: nil)
+    }
     
     func setupConstraints() {
         
