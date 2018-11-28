@@ -385,7 +385,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         NSLayoutConstraint.activate([
             contactCollectionView.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
             contactCollectionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
-            contactCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor)
+            contactCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
+            contactCollectionView.heightAnchor.constraint(equalToConstant: 50)
             ])
         
         NSLayoutConstraint.activate([
