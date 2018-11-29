@@ -353,7 +353,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         aboutOpenConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 500)
         aboutClosedConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 0)
-        aboutOpenConstraint.isActive = true
+//        aboutOpenConstraint.isActive = true
         
         projectsOpenConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 500)
         projectsClosedConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 0)
@@ -604,11 +604,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             skillsCollectionView.topAnchor.constraint(equalTo: skillsButton.bottomAnchor, constant: 10),
             skillsCollectionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
             skillsCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
+            skillsCollectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -1 * padding)
             
-            descriptionView.topAnchor.constraint(equalTo: skillsCollectionView.bottomAnchor, constant: 10),
-            descriptionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: padding),
-            descriptionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -1 * padding),
-            descriptionView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor, constant: -padding)
+//            descriptionView.topAnchor.constraint(equalTo: skillsCollectionView.bottomAnchor, constant: 10),
+//            descriptionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: padding),
+//            descriptionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -1 * padding),
+//            descriptionView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor, constant: -padding)
             ])
         
         print(descriptionView.frame.height)

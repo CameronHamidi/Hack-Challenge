@@ -23,7 +23,7 @@ class RolesCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(roleLabel)
         contentView.backgroundColor = .lightGray
         
-        contentView.layer.cornerRadius = 5
+        contentView.layer.cornerRadius = 12.5
     }
     
     func configure(roleName: String) {

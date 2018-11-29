@@ -23,7 +23,7 @@ class GroupSizeCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(sizeLabel)
         contentView.backgroundColor = .lightGray
         
-        contentView.layer.cornerRadius = 5
+        contentView.layer.cornerRadius = 12.5
     }
     
     func configure(sizeName: String) {
