@@ -460,26 +460,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             ])
         
         NSLayoutConstraint.activate([
-            name.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            name.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             name.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: padding / 2.0),
             name.widthAnchor.constraint(equalToConstant: view.frame.width - (2.0 * 5.0)),
             name.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -5)
             ])
         
         NSLayoutConstraint.activate([
-//            caption.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            caption.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 6),
-            caption.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
-            caption.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
+            activeLabel.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 10),
+            activeLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
             ])
         
         NSLayoutConstraint.activate([
-            activeLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
-            activeLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -10)
-            ])
-        
-        NSLayoutConstraint.activate([
-            lineSeparator.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding),
+            lineSeparator.topAnchor.constraint(equalTo: activeLabel.bottomAnchor, constant: padding),
             lineSeparator.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             lineSeparator.widthAnchor.constraint(equalToConstant: 1),
             lineSeparator.heightAnchor.constraint(equalToConstant: 52)
@@ -527,7 +520,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             ])
         
         NSLayoutConstraint.activate([
-            segControl.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: padding*2),
+            //            caption.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            caption.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: 6),
+            caption.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
+            caption.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
+            ])
+        
+        NSLayoutConstraint.activate([
+            segControl.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding*2),
             segControl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             segControl.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
             segControl.heightAnchor.constraint(equalToConstant: 32)
