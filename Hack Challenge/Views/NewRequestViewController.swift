@@ -33,6 +33,9 @@ class NewRequestViewController: UIViewController {
         let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
         navigationItem.leftBarButtonItem = backButton
         
+        let postButton = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: #selector(back))
+        navigationItem.rightBarButtonItem = postButton
+        
         // Group Size
         groupLabel = UILabel()
         groupLabel.translatesAutoresizingMaskIntoConstraints = false

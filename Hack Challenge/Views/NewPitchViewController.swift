@@ -10,9 +10,6 @@ import UIKit
 
 class NewPitchViewController: UIViewController {
     
-    var postButton: UIBarButtonItem!
-    var closeButton: UIBarButtonItem!
-    
     var titleLabel: UILabel!
     var titleInput: UITextField!
     
@@ -43,11 +40,8 @@ class NewPitchViewController: UIViewController {
         let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
         navigationItem.leftBarButtonItem = backButton
         
-        postButton = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(dismissViewControllerAndSaveText))
-        self.navigationItem.rightBarButtonItem = postButton
-        
-        closeButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(dismissViewController))
-        self.navigationItem.rightBarButtonItem = closeButton
+        let postButton = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: #selector(dismissViewControllerAndSaveText))
+        navigationItem.rightBarButtonItem = postButton
         
         titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -133,28 +127,24 @@ class NewPitchViewController: UIViewController {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding*2),
             titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*2)
-//            titleLabel.heightAnchor.constraint(equalToConstant: labelHeight)
-//                        titleLabel.widthAnchor.constraint(equalToConstant: 100)
             ])
         
         NSLayoutConstraint.activate([
             titleInput.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
             titleInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            titleInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
-//            titleInput.heightAnchor.constraint(equalToConstant: textInputHeight)
+            titleInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding*2)
             ])
         
         NSLayoutConstraint.activate([
             descrLabel.topAnchor.constraint(equalTo: titleInput.bottomAnchor, constant: padding*2),
             descrLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             descrLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
-//            descrLabel.heightAnchor.constraint(equalToConstant: labelHeight)
             ])
         
         NSLayoutConstraint.activate([
             descrInput.topAnchor.constraint(equalTo: descrLabel.bottomAnchor, constant: padding),
             descrInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            descrInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
+            descrInput.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
             descrInput.heightAnchor.constraint(equalToConstant: 200)
             ])
         
@@ -162,7 +152,6 @@ class NewPitchViewController: UIViewController {
             imageLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
             imageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             imageLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
-//            imageLabel.heightAnchor.constraint(equalToConstant: labelHeight)
             ])
         
         NSLayoutConstraint.activate([

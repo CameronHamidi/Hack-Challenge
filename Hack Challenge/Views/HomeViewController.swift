@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     var profileButton: UIButton!
     var newPitchButton: UIButton!
     var newRequestButton: UIButton!
+    var createProfileButton: UIButton! //for testing purposes
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,13 @@ class HomeViewController: UIViewController {
         newRequestButton.addTarget(self, action: #selector(showNewRequest), for: .touchUpInside)
         view.addSubview(newRequestButton)
         
+        createProfileButton = UIButton()
+        createProfileButton.setTitle("Create New Profile", for: .normal)
+        createProfileButton.translatesAutoresizingMaskIntoConstraints = false
+        createProfileButton.setTitleColor(.black, for: .normal)
+        createProfileButton.addTarget(self, action: #selector(showCreateProfile), for: .touchUpInside)
+        view.addSubview(createProfileButton)
+        
         setupConstraints()
     }
     
@@ -71,6 +79,11 @@ class HomeViewController: UIViewController {
         present(viewController, animated: true)
     }
     
+    @objc func showCreateProfile() {
+        let viewController = UINavigationController(rootViewController: CreateProfileViewController())
+        present(viewController, animated: true)
+    }
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             searchProjectsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -90,6 +103,11 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate([
             newRequestButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             newRequestButton.topAnchor.constraint(equalTo: newPitchButton.bottomAnchor, constant: 15)
+            ])
+        
+        NSLayoutConstraint.activate([
+            createProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            createProfileButton.topAnchor.constraint(equalTo: newRequestButton.bottomAnchor, constant: 15)
             ])
     }
 
