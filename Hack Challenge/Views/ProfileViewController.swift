@@ -27,6 +27,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var activeLabel: UILabel!
     
+    var infoViewsTableView: UITableView!
+    
 //    var lineSeparator2: UIView!
 //    var majorsSubLabel: UILabel! //Primary Role
 //    var majorsLabel: UILabel!
@@ -173,31 +175,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         netIcon.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(netIcon)
         
-        segControl = UISegmentedControl(items: ["About", "Projects", "Posts"])
-        segControl.translatesAutoresizingMaskIntoConstraints = false
-//        control.addTarget(self, action: #selector(sortList), for: .valueChanged)
-        segControl.addTarget(self, action: #selector(self.showComponents(sender:)), for: .valueChanged)
-        segControl.backgroundColor = .white
-        scrollView.addSubview(segControl)
-        segControl.selectedSegmentIndex = 0
-        
-        // add container
-//        containerView = UIView()
-//        containerView.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.addSubview(containerView)
-//
-//        let controller = storyboard!.instantiateViewController(withIdentifier: "Second")
-//        addChild(controller)
-//        controller.view.translatesAutoresizingMaskIntoConstraints = false
-//        containerView.addSubview(controller.view)
-//
-//        controller.didMove(toParent: self)
-        
-        //Segmented subviews
-        aboutContainer = UIView()
-        aboutContainer.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(aboutContainer)
-        
         var contactLayout = UICollectionViewFlowLayout()
         contactLayout.minimumInteritemSpacing = 6
         contactLayout.sectionInset = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
@@ -208,127 +185,161 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         contactCollectionView.register(ContactCollectionViewCell.self, forCellWithReuseIdentifier: "contact")
         contactCollectionView.backgroundColor = .gray
         contactCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.addSubview(contactCollectionView)
+        scrollView.addSubview(contactCollectionView)
         
-        majorIcon = UIImageView()
-        majorIcon.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.addSubview(majorIcon)
+        infoViewsTableView = UITableView()
+        infoViewsTableView.dataSource = self
+        infoViewsTableView.delegate = self
+        infoViewsTableView.register(InfoViewsTableViewCell.self, forCellWithReuseIdentifier: "infoView")
+        infoViewsTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        majorTitleLabel = UILabel()
-        majorTitleLabel.text = "Major(s)/Minor(s)"
-        majorTitleLabel.textColor = .lightGray
-        majorTitleLabel.font = UIFont.systemFont(ofSize: 10)
-        majorTitleLabel.textAlignment = .left
-        majorTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.addSubview(majorTitleLabel)
         
-        majorLabel = UILabel()
-        majorLabel.text = "Computer Science, Information Science"
-        majorLabel.textColor = .black
-        majorLabel.font = UIFont.systemFont(ofSize: 12)
-        majorLabel.textAlignment = .left
-        majorLabel.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.addSubview(majorLabel)
-        
-        minorLabel = UILabel()
-        minorLabel.text = "Computer Science, Information Science"
-        minorLabel.textColor = .black
-        minorLabel.font = UIFont.systemFont(ofSize: 12)
-        minorLabel.textAlignment = .left
-        minorLabel.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.addSubview(minorLabel)
-        
-        gradIcon = UIImageView()
-        gradIcon.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.addSubview(gradIcon)
-        
-        gradTitle = UILabel()
-        gradTitle.text = "Graduation Year"
-        gradTitle.textColor = .lightGray
-        gradTitle.font = UIFont.systemFont(ofSize: 10)
-        gradTitle.textAlignment = .left
-        gradTitle.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.addSubview(gradTitle)
-        
-        gradYear = UILabel()
-        gradYear.text = "May 2021"
-        gradYear.textColor = .black
-        gradYear.font = UIFont.systemFont(ofSize: 12)
-        gradYear.textAlignment = .left
-        gradYear.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.addSubview(gradYear)
-        
-        lineSeparator2 = UIView()
-        lineSeparator2.translatesAutoresizingMaskIntoConstraints = false
-        lineSeparator2.backgroundColor = .lightGray
-        aboutContainer.addSubview(lineSeparator2)
-        
-        skillsButton = UIButton()
-        skillsButton.setTitle("Show skills", for: .normal)
-        skillsButton.translatesAutoresizingMaskIntoConstraints = false
-        skillsButton.setTitleColor(.black, for: .normal)
-        skillsButton.layer.cornerRadius = 9
-        skillsButton.layer.borderWidth = 1
-        skillsButton.layer.borderColor = UIColor.black.cgColor
-        skillsButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        skillsButton.translatesAutoresizingMaskIntoConstraints = false
-        skillsButton.addTarget(self, action: #selector(openCloseSkillsView), for: .touchUpInside)
-        aboutContainer.addSubview(skillsButton)
-        
-        var skillsLayout = UICollectionViewFlowLayout()
-        skillsLayout.scrollDirection = .horizontal
-        skillsLayout.minimumLineSpacing = 4
-        skillsLayout.minimumInteritemSpacing = 4
-        skillsLayout.sectionInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
-        //skillsLayout.estimatedItemSize = CGSize(width: 50, height: 25)
-        skillsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: skillsLayout)
-        skillsCollectionView.delegate = self
-        skillsCollectionView.dataSource = self
-        skillsCollectionView.backgroundColor = .clear
-        skillsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "skill")
-        skillsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.addSubview(skillsCollectionView)
-//        skillsCollectionView.backgroundColor = .white
-        skillsCollectionViewOpenConstraint = skillsCollectionView.heightAnchor.constraint(equalToConstant: 35)
-        skillsCollectionViewClosedConstraint = skillsCollectionView.heightAnchor.constraint(equalToConstant: 0)
-        skillsCollectionView.allowsMultipleSelection = true
-        skillsCollectionViewClosedConstraint.isActive = true
-        
-        descriptionView = UITextView()
-        descriptionView.font = UIFont.systemFont(ofSize: 14)
-        descriptionView.isSelectable = true
-        descriptionView.isEditable = false
-        descriptionView.textColor = .black
-        descriptionView.translatesAutoresizingMaskIntoConstraints = false
-        descriptionView.text = "Dr. Pavel, I'm CIA. He wasn't alone. Uhh, you don't get to bring friends. They are not my friends. Don't worry, no charge for them. And why would I want them? They were trying to grab your prize. They work for the mercenary. The masketta man. Bane? Mhmm. Get 'em on board I'll call it in."
-        aboutContainer.addSubview(descriptionView)
-
-        projectsContainer = UIView()
-        projectsContainer.translatesAutoresizingMaskIntoConstraints = false
-        projectsContainer.backgroundColor = .green
-        projectsContainer.alpha = 0
-        scrollView.addSubview(projectsContainer)
-
-        postsContainer = UIView()
-        postsContainer.translatesAutoresizingMaskIntoConstraints = false
-        postsContainer.backgroundColor = .blue
-        postsContainer.alpha = 0
-        scrollView.addSubview(postsContainer)
-        
-        //Hardcoded data TODO - get posts info from backend
-        createPosts()
-        
-        //Set up and add tableViews to their respective container views
-        postsTableView = UITableView()
-        postsTableView.translatesAutoresizingMaskIntoConstraints = false
-        postsTableView.register(PostCell.self, forCellReuseIdentifier: "postCellID")
-        postsTableView.backgroundColor = .white
-//        postsTableView.separatorStyle = .none
-        postsTableView.estimatedRowHeight = 200
-        postsTableView.rowHeight = UITableView.automaticDimension
-        postsTableView.delegate = self
-        postsTableView.dataSource = self
-        postsContainer.addSubview(postsTableView)
+//        segControl = UISegmentedControl(items: ["About", "Projects", "Posts"])
+//        segControl.translatesAutoresizingMaskIntoConstraints = false
+////        control.addTarget(self, action: #selector(sortList), for: .valueChanged)
+//        segControl.addTarget(self, action: #selector(self.showComponents(sender:)), for: .valueChanged)
+//        segControl.backgroundColor = .white
+//        scrollView.addSubview(segControl)
+//        segControl.selectedSegmentIndex = 0
+//
+//        // add container
+////        containerView = UIView()
+////        containerView.translatesAutoresizingMaskIntoConstraints = false
+////        scrollView.addSubview(containerView)
+////
+////        let controller = storyboard!.instantiateViewController(withIdentifier: "Second")
+////        addChild(controller)
+////        controller.view.translatesAutoresizingMaskIntoConstraints = false
+////        containerView.addSubview(controller.view)
+////
+////        controller.didMove(toParent: self)
+//
+//        //Segmented subviews
+//        aboutContainer = UIView()
+//        aboutContainer.translatesAutoresizingMaskIntoConstraints = false
+//        scrollView.addSubview(aboutContainer)
+//
+//
+//
+//        majorIcon = UIImageView()
+//        majorIcon.translatesAutoresizingMaskIntoConstraints = false
+//        aboutContainer.addSubview(majorIcon)
+//
+//        majorTitleLabel = UILabel()
+//        majorTitleLabel.text = "Major(s)/Minor(s)"
+//        majorTitleLabel.textColor = .lightGray
+//        majorTitleLabel.font = UIFont.systemFont(ofSize: 10)
+//        majorTitleLabel.textAlignment = .left
+//        majorTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+//        aboutContainer.addSubview(majorTitleLabel)
+//
+//        majorLabel = UILabel()
+//        majorLabel.text = "Computer Science, Information Science"
+//        majorLabel.textColor = .black
+//        majorLabel.font = UIFont.systemFont(ofSize: 12)
+//        majorLabel.textAlignment = .left
+//        majorLabel.translatesAutoresizingMaskIntoConstraints = false
+//        aboutContainer.addSubview(majorLabel)
+//
+//        minorLabel = UILabel()
+//        minorLabel.text = "Computer Science, Information Science"
+//        minorLabel.textColor = .black
+//        minorLabel.font = UIFont.systemFont(ofSize: 12)
+//        minorLabel.textAlignment = .left
+//        minorLabel.translatesAutoresizingMaskIntoConstraints = false
+//        aboutContainer.addSubview(minorLabel)
+//
+//        gradIcon = UIImageView()
+//        gradIcon.translatesAutoresizingMaskIntoConstraints = false
+//        aboutContainer.addSubview(gradIcon)
+//
+//        gradTitle = UILabel()
+//        gradTitle.text = "Graduation Year"
+//        gradTitle.textColor = .lightGray
+//        gradTitle.font = UIFont.systemFont(ofSize: 10)
+//        gradTitle.textAlignment = .left
+//        gradTitle.translatesAutoresizingMaskIntoConstraints = false
+//        aboutContainer.addSubview(gradTitle)
+//
+//        gradYear = UILabel()
+//        gradYear.text = "May 2021"
+//        gradYear.textColor = .black
+//        gradYear.font = UIFont.systemFont(ofSize: 12)
+//        gradYear.textAlignment = .left
+//        gradYear.translatesAutoresizingMaskIntoConstraints = false
+//        aboutContainer.addSubview(gradYear)
+//
+//        lineSeparator2 = UIView()
+//        lineSeparator2.translatesAutoresizingMaskIntoConstraints = false
+//        lineSeparator2.backgroundColor = .lightGray
+//        aboutContainer.addSubview(lineSeparator2)
+//
+//        skillsButton = UIButton()
+//        skillsButton.setTitle("Show skills", for: .normal)
+//        skillsButton.translatesAutoresizingMaskIntoConstraints = false
+//        skillsButton.setTitleColor(.black, for: .normal)
+//        skillsButton.layer.cornerRadius = 9
+//        skillsButton.layer.borderWidth = 1
+//        skillsButton.layer.borderColor = UIColor.black.cgColor
+//        skillsButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+//        skillsButton.translatesAutoresizingMaskIntoConstraints = false
+//        skillsButton.addTarget(self, action: #selector(openCloseSkillsView), for: .touchUpInside)
+//        aboutContainer.addSubview(skillsButton)
+//
+//        var skillsLayout = UICollectionViewFlowLayout()
+//        skillsLayout.scrollDirection = .horizontal
+//        skillsLayout.minimumLineSpacing = 4
+//        skillsLayout.minimumInteritemSpacing = 4
+//        skillsLayout.sectionInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+//        //skillsLayout.estimatedItemSize = CGSize(width: 50, height: 25)
+//        skillsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: skillsLayout)
+//        skillsCollectionView.delegate = self
+//        skillsCollectionView.dataSource = self
+//        skillsCollectionView.backgroundColor = .clear
+//        skillsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "skill")
+//        skillsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+//        aboutContainer.addSubview(skillsCollectionView)
+////        skillsCollectionView.backgroundColor = .white
+//        skillsCollectionViewOpenConstraint = skillsCollectionView.heightAnchor.constraint(equalToConstant: 35)
+//        skillsCollectionViewClosedConstraint = skillsCollectionView.heightAnchor.constraint(equalToConstant: 0)
+//        skillsCollectionView.allowsMultipleSelection = true
+//        skillsCollectionViewClosedConstraint.isActive = true
+//
+//        descriptionView = UITextView()
+//        descriptionView.font = UIFont.systemFont(ofSize: 14)
+//        descriptionView.isSelectable = true
+//        descriptionView.isEditable = false
+//        descriptionView.textColor = .black
+//        descriptionView.translatesAutoresizingMaskIntoConstraints = false
+//        descriptionView.text = "Dr. Pavel, I'm CIA. He wasn't alone. Uhh, you don't get to bring friends. They are not my friends. Don't worry, no charge for them. And why would I want them? They were trying to grab your prize. They work for the mercenary. The masketta man. Bane? Mhmm. Get 'em on board I'll call it in."
+//        aboutContainer.addSubview(descriptionView)
+//
+//        projectsContainer = UIView()
+//        projectsContainer.translatesAutoresizingMaskIntoConstraints = false
+//        projectsContainer.backgroundColor = .green
+//        projectsContainer.alpha = 0
+//        scrollView.addSubview(projectsContainer)
+//
+//        postsContainer = UIView()
+//        postsContainer.translatesAutoresizingMaskIntoConstraints = false
+//        postsContainer.backgroundColor = .blue
+//        postsContainer.alpha = 0
+//        scrollView.addSubview(postsContainer)
+//
+//        //Hardcoded data TODO - get posts info from backend
+//        createPosts()
+//
+//        //Set up and add tableViews to their respective container views
+//        postsTableView = UITableView()
+//        postsTableView.translatesAutoresizingMaskIntoConstraints = false
+//        postsTableView.register(PostCell.self, forCellReuseIdentifier: "postCellID")
+//        postsTableView.backgroundColor = .white
+////        postsTableView.separatorStyle = .none
+//        postsTableView.estimatedRowHeight = 200
+//        postsTableView.rowHeight = UITableView.automaticDimension
+//        postsTableView.delegate = self
+//        postsTableView.dataSource = self
+//        postsContainer.addSubview(postsTableView)
         
         //testing out a tableview with dynamic height
 //        tableview = UITableView()
@@ -521,11 +532,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         NSLayoutConstraint.activate([
             //            caption.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            caption.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: 6),
+            caption.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: 10),
             caption.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
             caption.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
             ])
         
+        NSLayoutConstraint.activate([
+            contactCollectionView.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding),
+            contactCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contactCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contactCollectionView.heightAnchor.constraint(equalToConstant: 30)
+        ])
+            
         NSLayoutConstraint.activate([
             segControl.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding*2),
             segControl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
@@ -557,10 +575,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             ])
 
         NSLayoutConstraint.activate([
-            contactCollectionView.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
-            contactCollectionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
-            contactCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
-            contactCollectionView.heightAnchor.constraint(equalToConstant: 30),
+        
             
             majorIcon.topAnchor.constraint(equalTo: contactCollectionView.bottomAnchor, constant: 15),
             majorIcon.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: 15),

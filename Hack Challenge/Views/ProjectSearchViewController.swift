@@ -190,6 +190,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         if textField == skillsTextField {
             skills.append("X " + textField.text!)
             skillsCollectionView.reloadData()
+            print(skills)
             textField.text = ""
             return true
         } else if textField == rolesTextField {
@@ -209,7 +210,6 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == skillsCollectionView {
-            print(skills.count)
             return skills.count
         } else if collectionView == rolesCollectionView {
             return roles.count
@@ -262,6 +262,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             var cell = skillsCollectionView.dequeueReusableCell(withReuseIdentifier: "skill", for: indexPath) as! SkillsCollectionViewCell
             cell.configure(skillName: skills[indexPath.row])
             print(skills[indexPath.row])
+            print(skills)
             return cell
         } else if collectionView == rolesCollectionView {
             var cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "role", for: indexPath) as! RolesCollectionViewCell
@@ -320,7 +321,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             skillsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             skillsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             skillsCollectionView.topAnchor.constraint(equalTo: skillsLabel.bottomAnchor, constant: 8),
-            skillsCollectionView.heightAnchor.constraint(equalToConstant: 25),
+            skillsCollectionView.heightAnchor.constraint(equalToConstant: 55),
 
         ])
         
