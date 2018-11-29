@@ -46,6 +46,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var postsContainer: UIView!
 //    var segmentedControlContainer: UIView!
     
+    var aboutOpenConstraint: NSLayoutConstraint!
+    var aboutClosedConstraint: NSLayoutConstraint!
+    
+    var projectsOpenConstraint: NSLayoutConstraint!
+    var projectsClosedConstraint: NSLayoutConstraint!
+    
+    var postsOpenConstraint: NSLayoutConstraint!
+    var postsClosedConstraint: NSLayoutConstraint!
+    
     var contactCollectionView: UICollectionView!
     
     var majorIcon: UIImageView!
@@ -66,6 +75,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var skillsCollectionViewOpenConstraint: NSLayoutConstraint!
     var skillsCollectionViewClosedConstraint: NSLayoutConstraint!
     var skillsCollectionViewOpen = false
+    
+    var descriptionView: UITextView!
     
     let avatarSize: CGFloat = 64
     let padding: CGFloat = 14
@@ -168,6 +179,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         segControl.addTarget(self, action: #selector(self.showComponents(sender:)), for: .valueChanged)
         segControl.backgroundColor = .white
         scrollView.addSubview(segControl)
+        segControl.selectedSegmentIndex = 0
         
         // add container
 //        containerView = UIView()
@@ -184,7 +196,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         //Segmented subviews
         aboutContainer = UIView()
         aboutContainer.translatesAutoresizingMaskIntoConstraints = false
-        aboutContainer.backgroundColor = .red
         scrollView.addSubview(aboutContainer)
         
         var contactLayout = UICollectionViewFlowLayout()
@@ -273,13 +284,24 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         skillsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: skillsLayout)
         skillsCollectionView.delegate = self
         skillsCollectionView.dataSource = self
+        skillsCollectionView.backgroundColor = .clear
         skillsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "skill")
         skillsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         aboutContainer.addSubview(skillsCollectionView)
-        skillsCollectionView.backgroundColor = .white
+//        skillsCollectionView.backgroundColor = .white
         skillsCollectionViewOpenConstraint = skillsCollectionView.heightAnchor.constraint(equalToConstant: 35)
         skillsCollectionViewClosedConstraint = skillsCollectionView.heightAnchor.constraint(equalToConstant: 0)
         skillsCollectionView.allowsMultipleSelection = true
+        skillsCollectionViewClosedConstraint.isActive = true
+        
+        descriptionView = UITextView()
+        descriptionView.font = UIFont.systemFont(ofSize: 14)
+        descriptionView.isSelectable = true
+        descriptionView.isEditable = false
+        descriptionView.textColor = .black
+        descriptionView.translatesAutoresizingMaskIntoConstraints = false
+        descriptionView.text = "Dr. Pavel, I'm CIA. He wasn't alone. Uhh, you don't get to bring friends. They are not my friends. Don't worry, no charge for them. And why would I want them? They were trying to grab your prize. They work for the mercenary. The masketta man. Bane? Mhmm. Get 'em on board I'll call it in."
+        aboutContainer.addSubview(descriptionView)
 
         projectsContainer = UIView()
         projectsContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -328,6 +350,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 //            controller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
 //            controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
 //            ])
+        
+        aboutOpenConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 500)
+        aboutClosedConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 0)
+        aboutOpenConstraint.isActive = true
+        
+        projectsOpenConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 500)
+        projectsClosedConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 0)
+        
+        postsOpenConstraint = postsContainer.heightAnchor.constraint(equalToConstant: 500)
+        postsClosedConstraint = postsContainer.heightAnchor.constraint(equalToConstant: 0)
     }
     
     @objc func openCloseSkillsView() {
@@ -435,14 +467,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             ])
         
         NSLayoutConstraint.activate([
-            caption.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            caption.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 12 / 2.0),
+//            caption.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            caption.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 6),
             caption.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
             caption.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
             ])
         
         NSLayoutConstraint.activate([
-            activeLabel.topAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            activeLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
             activeLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -10)
             ])
         
@@ -500,122 +532,108 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             segControl.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
             segControl.heightAnchor.constraint(equalToConstant: 32)
             ])
-        
-//        NSLayoutConstraint.activate([
-//            containerView.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-//            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-//            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-//            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
-//            ])
-        
-//        NSLayoutConstraint.activate([
-//            segmentedControlContainer.topAnchor.constraint(equalTo: control.bottomAnchor, constant: padding),
-//            segmentedControlContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-//            segmentedControlContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-//            segmentedControlContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
-//            ])
-        
+//
+////        NSLayoutConstraint.activate([
+////            containerView.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
+////            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+////            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+////            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+////            ])
+//
+////        NSLayoutConstraint.activate([
+////            segmentedControlContainer.topAnchor.constraint(equalTo: control.bottomAnchor, constant: padding),
+////            segmentedControlContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+////            segmentedControlContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+////            segmentedControlContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+////            ])
+//
         NSLayoutConstraint.activate([
             aboutContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
             aboutContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             aboutContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
-            aboutContainer.heightAnchor.constraint(equalToConstant: 150)
+            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -padding),
+//            aboutContainer.heightAnchor.constraint(equalToConstant: 500),
+            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
             ])
 
         NSLayoutConstraint.activate([
             contactCollectionView.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
             contactCollectionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
             contactCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
-            contactCollectionView.heightAnchor.constraint(equalToConstant: 30)
-            ])
-        
-        NSLayoutConstraint.activate([
+            contactCollectionView.heightAnchor.constraint(equalToConstant: 30),
+            
             majorIcon.topAnchor.constraint(equalTo: contactCollectionView.bottomAnchor, constant: 15),
             majorIcon.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: 15),
             majorIcon.heightAnchor.constraint(equalToConstant: 20),
-            majorIcon.widthAnchor.constraint(equalToConstant: 20)
-            ])
-        
-        NSLayoutConstraint.activate([
+            majorIcon.widthAnchor.constraint(equalToConstant: 20),
+            
             majorTitleLabel.bottomAnchor.constraint(equalTo: majorIcon.topAnchor),
             majorTitleLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
-            majorTitleLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15)
-            ])
-
-        NSLayoutConstraint.activate([
+            majorTitleLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+            
             majorLabel.topAnchor.constraint(equalTo: majorTitleLabel.bottomAnchor),
             majorLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
-            majorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15)
-            ])
-
-        NSLayoutConstraint.activate([
+            majorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+            
             minorLabel.topAnchor.constraint(equalTo: majorLabel.bottomAnchor),
             minorLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
-            minorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15)
-            ])
-        
-        NSLayoutConstraint.activate([
+            minorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+            
             gradIcon.topAnchor.constraint(equalTo: minorLabel.bottomAnchor, constant: 25),
             gradIcon.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: 15),
             gradIcon.heightAnchor.constraint(equalToConstant: 20),
-            gradIcon.widthAnchor.constraint(equalToConstant: 20)
-            ])
-        
-        NSLayoutConstraint.activate([
+            gradIcon.widthAnchor.constraint(equalToConstant: 20),
+            
             gradTitle.bottomAnchor.constraint(equalTo: gradIcon.topAnchor),
             gradTitle.leadingAnchor.constraint(equalTo: gradIcon.trailingAnchor, constant: 5),
-            gradTitle.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15)
-            ])
-        
-        NSLayoutConstraint.activate([
+            gradTitle.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+            
             gradYear.topAnchor.constraint(equalTo: gradTitle.bottomAnchor),
             gradYear.leadingAnchor.constraint(equalTo: gradIcon.trailingAnchor, constant: 5),
-            gradYear.trailingAnchor.constraint(equalTo: lineSeparator2.leadingAnchor, constant: -15)
-            ])
-
-        NSLayoutConstraint.activate([
+            gradYear.trailingAnchor.constraint(equalTo: lineSeparator2.leadingAnchor, constant: -15),
+            
             lineSeparator2.topAnchor.constraint(equalTo: gradTitle.topAnchor),
             lineSeparator2.bottomAnchor.constraint(equalTo: skillsButton.bottomAnchor),
             lineSeparator2.widthAnchor.constraint(equalToConstant: 1),
-            lineSeparator2.centerXAnchor.constraint(equalTo: aboutContainer.centerXAnchor)
-            ])
-        
-        NSLayoutConstraint.activate([
+            lineSeparator2.centerXAnchor.constraint(equalTo: aboutContainer.centerXAnchor),
+            
             skillsButton.centerYAnchor.constraint(equalTo: gradYear.centerYAnchor),
             skillsButton.leadingAnchor.constraint(equalTo: lineSeparator2.trailingAnchor, constant: 15),
-            skillsButton.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15)
-            ])
-        
-        NSLayoutConstraint.activate([
+            skillsButton.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+            
             skillsCollectionView.topAnchor.constraint(equalTo: skillsButton.bottomAnchor, constant: 10),
             skillsCollectionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
             skillsCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
-            skillsCollectionView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor)
-            ])
-        skillsCollectionViewClosedConstraint.isActive = true
-        
-        NSLayoutConstraint.activate([
-            projectsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-            projectsContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-            projectsContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-            projectsContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
-            projectsContainer.heightAnchor.constraint(equalToConstant: 150)
-            ])
-
-        NSLayoutConstraint.activate([
-            postsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-            postsContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-            postsContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-            postsContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+            
+            descriptionView.topAnchor.constraint(equalTo: skillsCollectionView.bottomAnchor, constant: 10),
+            descriptionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: padding),
+            descriptionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -1 * padding),
+            descriptionView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor, constant: -padding)
             ])
         
-        NSLayoutConstraint.activate([
-            postsTableView.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
-            postsTableView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
-            postsTableView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
-            postsTableView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor)
-            ])
+        print(descriptionView.frame.height)
+//
+//        NSLayoutConstraint.activate([
+//            projectsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
+//            projectsContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+//            projectsContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
+//            projectsContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
+//            projectsContainer.heightAnchor.constraint(equalToConstant: 150)
+//            ])
+//
+//        NSLayoutConstraint.activate([
+//            postsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
+//            postsContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+//            postsContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
+//            postsContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+//            ])
+//
+//        NSLayoutConstraint.activate([
+//            postsTableView.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
+//            postsTableView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
+//            postsTableView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
+//            postsTableView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor)
+//            ])
         
 //        NSLayoutConstraint.activate([
 //            tableview.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
@@ -649,10 +667,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return postsArray.count
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 200
-//    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -665,6 +679,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.projectsContainer.alpha = 0
                 self.postsContainer.alpha = 0
                 })
+            NSLayoutConstraint.deactivate([
+                aboutClosedConstraint,
+                projectsOpenConstraint,
+                postsOpenConstraint
+            ])
+            aboutOpenConstraint.isActive = true
         }
         else if(sender.selectedSegmentIndex == 1) {
             UIView.animate(withDuration: 0.5, animations: {
@@ -672,6 +692,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.projectsContainer.alpha = 1
                 self.postsContainer.alpha = 0
             })
+            NSLayoutConstraint.deactivate([
+                aboutOpenConstraint,
+                projectsClosedConstraint,
+                postsOpenConstraint
+                ])
+            projectsOpenConstraint.isActive = true
         }
         else {
             UIView.animate(withDuration: 0.5, animations: {
@@ -679,6 +705,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.projectsContainer.alpha = 0
                 self.postsContainer.alpha = 1
             })
+            NSLayoutConstraint.deactivate([
+                aboutOpenConstraint,
+                projectsOpenConstraint,
+                postsClosedConstraint
+                ])
+            postsOpenConstraint.isActive = true
         }
     }
 }
