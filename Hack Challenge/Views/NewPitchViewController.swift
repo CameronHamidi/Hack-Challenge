@@ -113,8 +113,6 @@ class NewPitchViewController: UIViewController {
         libLabel.font = .systemFont(ofSize: textSize)
         view.addSubview(libLabel)
         
-        // TODO - add UILabels "Camera" and "Gallery" under each button 
-        
         setupConstraints()
     }
     

@@ -187,11 +187,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         contactCollectionView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contactCollectionView)
         
-        infoViewsTableView = UITableView()
-        infoViewsTableView.dataSource = self
-        infoViewsTableView.delegate = self
-        infoViewsTableView.register(InfoViewsTableViewCell.self, forCellWithReuseIdentifier: "infoView")
-        infoViewsTableView.translatesAutoresizingMaskIntoConstraints = false
+//        infoViewsTableView = UITableView()
+//        infoViewsTableView.dataSource = self
+//        infoViewsTableView.delegate = self
+//        infoViewsTableView.register(InfoViewsTableViewCell.self, forCellWithReuseIdentifier: "infoView")
+//        infoViewsTableView.translatesAutoresizingMaskIntoConstraints = false
         
         
 //        segControl = UISegmentedControl(items: ["About", "Projects", "Posts"])
@@ -544,12 +544,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             contactCollectionView.heightAnchor.constraint(equalToConstant: 30)
         ])
             
-        NSLayoutConstraint.activate([
-            segControl.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding*2),
-            segControl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-            segControl.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-            segControl.heightAnchor.constraint(equalToConstant: 32)
-            ])
+//        NSLayoutConstraint.activate([
+//            segControl.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding*2),
+//            segControl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+//            segControl.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
+//            segControl.heightAnchor.constraint(equalToConstant: 32)
+//            ])
 //
 ////        NSLayoutConstraint.activate([
 ////            containerView.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
