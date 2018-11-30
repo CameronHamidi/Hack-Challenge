@@ -22,6 +22,8 @@ class AboutViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        view.backgroundColor = .white
+        
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -39,13 +41,13 @@ class AboutViewController: UIViewController {
         rolesView = AboutView(frame: .zero, viewType: .roles)
         rolesView.mainTextView.text = "Developer\nDesigner\nBackend Developer"
         rolesView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(rolesView)
+//        scrollView.addSubview(rolesView)
         
         skillsView = AboutView(frame: .zero, viewType: .skills)
         skillsView.translatesAutoresizingMaskIntoConstraints = false
         skillsView.mainTextView.text = "Adobe Illustrator\nAdobe Photoshop\nBalsamiq\nBootstrap\nC\nCSS\nHTML"
         skillsView.secondaryTextView!.text = "InVision\nJava\nJavaScript\nOcaml\nPython\nSketch\nSwift"
-        scrollView.addSubview(skillsView)
+//        scrollView.addSubview(skillsView)
         
         updateConstraints()
     }
@@ -60,6 +62,7 @@ class AboutViewController: UIViewController {
             gradYearView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 15),
             gradYearView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
             gradYearView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -15),
+            gradYearView.widthAnchor.constraint(equalToConstant: view.frame.width - 15 * 2),
             
             majorsView.topAnchor.constraint(equalTo: gradYearView.bottomAnchor, constant: 15),
             majorsView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),

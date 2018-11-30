@@ -30,6 +30,8 @@ class AboutView: UIView {
         
         self.viewType = viewType
         
+        self.backgroundColor = .gray
+        
         icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(icon)
@@ -115,9 +117,10 @@ class AboutView: UIView {
                 ])
         default:
             NSLayoutConstraint.activate([
-                (secondaryTextView?.widthAnchor.constraint(equalToConstant: 0))!,
                 mainTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 15)
                 ])
         }
+        
+        super.updateConstraints()
     }
 }
