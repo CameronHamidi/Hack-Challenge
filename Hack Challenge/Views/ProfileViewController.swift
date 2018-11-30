@@ -28,6 +28,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var activeLabel: UILabel!
     
     var infoViewsTableView: UITableView!
+    var infoViews = ["About", "Posts", "Projects"]
+    
+    var logoutButton: UIButton!
     
 //    var lineSeparator2: UIView!
 //    var majorsSubLabel: UILabel! //Primary Role
@@ -190,9 +193,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         infoViewsTableView = UITableView()
         infoViewsTableView.dataSource = self
         infoViewsTableView.delegate = self
-        infoViewsTableView.register(InfoViewsTableViewCell.self, forCellWithReuseIdentifier: "infoView")
+        infoViewsTableView.register(InfoViewsTableViewCell.self, forCellReuseIdentifier: "infoView")
         infoViewsTableView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(infoViewsTableView)
         
+        logoutButton = UIButton()
+        logoutButton.setTitle("Logout", for: .normal)
+        logoutButton.setTitleColor(.white, for: .normal)
+        logoutButton.backgroundColor = .red
+        logoutButton.layer.cornerRadius = 10
+        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(logoutButton)
         
 //        segControl = UISegmentedControl(items: ["About", "Projects", "Posts"])
 //        segControl.translatesAutoresizingMaskIntoConstraints = false
@@ -362,15 +373,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 //            controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
 //            ])
         
-        aboutOpenConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 500)
-        aboutClosedConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 0)
-//        aboutOpenConstraint.isActive = true
-        
-        projectsOpenConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 500)
-        projectsClosedConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 0)
-        
-        postsOpenConstraint = postsContainer.heightAnchor.constraint(equalToConstant: 500)
-        postsClosedConstraint = postsContainer.heightAnchor.constraint(equalToConstant: 0)
+//        aboutOpenConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 500)
+//        aboutClosedConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 0)
+////        aboutOpenConstraint.isActive = true
+//
+//        projectsOpenConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 500)
+//        projectsClosedConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 0)
+//
+//        postsOpenConstraint = postsContainer.heightAnchor.constraint(equalToConstant: 500)
+//        postsClosedConstraint = postsContainer.heightAnchor.constraint(equalToConstant: 0)
     }
     
     @objc func openCloseSkillsView() {
@@ -543,13 +554,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             contactCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contactCollectionView.heightAnchor.constraint(equalToConstant: 30)
         ])
-            
+        
         NSLayoutConstraint.activate([
-            segControl.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding*2),
-            segControl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-            segControl.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-            segControl.heightAnchor.constraint(equalToConstant: 32)
+            infoViewsTableView.topAnchor.constraint(equalTo: contactCollectionView.bottomAnchor, constant: 5),
+            infoViewsTableView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            infoViewsTableView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            infoViewsTableView.heightAnchor.constraint(equalToConstant: 150)
             ])
+        
+        NSLayoutConstraint.activate([
+            logoutButton.topAnchor.constraint(equalTo: infoViewsTableView.bottomAnchor, constant: padding),
+            logoutButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            logoutButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
+            logoutButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -50)
+            ])
+        
+        
+            
 //
 ////        NSLayoutConstraint.activate([
 ////            containerView.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
@@ -565,69 +586,68 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 ////            segmentedControlContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
 ////            ])
 //
-        NSLayoutConstraint.activate([
-            aboutContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-            aboutContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-            aboutContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -padding),
-//            aboutContainer.heightAnchor.constraint(equalToConstant: 500),
-            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-            ])
-
-        NSLayoutConstraint.activate([
+//        NSLayoutConstraint.activate([
+//            aboutContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
+//            aboutContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+//            aboutContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
+//            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -padding),
+////            aboutContainer.heightAnchor.constraint(equalToConstant: 500),
+//            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+//            ])
+//
+//        NSLayoutConstraint.activate([
+//
+//
+//            majorIcon.topAnchor.constraint(equalTo: contactCollectionView.bottomAnchor, constant: 15),
+//            majorIcon.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: 15),
+//            majorIcon.heightAnchor.constraint(equalToConstant: 20),
+//            majorIcon.widthAnchor.constraint(equalToConstant: 20),
+//
+//            majorTitleLabel.bottomAnchor.constraint(equalTo: majorIcon.topAnchor),
+//            majorTitleLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
+//            majorTitleLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+//
+//            majorLabel.topAnchor.constraint(equalTo: majorTitleLabel.bottomAnchor),
+//            majorLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
+//            majorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+//
+//            minorLabel.topAnchor.constraint(equalTo: majorLabel.bottomAnchor),
+//            minorLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
+//            minorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+//
+//            gradIcon.topAnchor.constraint(equalTo: minorLabel.bottomAnchor, constant: 25),
+//            gradIcon.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: 15),
+//            gradIcon.heightAnchor.constraint(equalToConstant: 20),
+//            gradIcon.widthAnchor.constraint(equalToConstant: 20),
+//
+//            gradTitle.bottomAnchor.constraint(equalTo: gradIcon.topAnchor),
+//            gradTitle.leadingAnchor.constraint(equalTo: gradIcon.trailingAnchor, constant: 5),
+//            gradTitle.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+//
+//            gradYear.topAnchor.constraint(equalTo: gradTitle.bottomAnchor),
+//            gradYear.leadingAnchor.constraint(equalTo: gradIcon.trailingAnchor, constant: 5),
+//            gradYear.trailingAnchor.constraint(equalTo: lineSeparator2.leadingAnchor, constant: -15),
+//
+//            lineSeparator2.topAnchor.constraint(equalTo: gradTitle.topAnchor),
+//            lineSeparator2.bottomAnchor.constraint(equalTo: skillsButton.bottomAnchor),
+//            lineSeparator2.widthAnchor.constraint(equalToConstant: 1),
+//            lineSeparator2.centerXAnchor.constraint(equalTo: aboutContainer.centerXAnchor),
+//
+//            skillsButton.centerYAnchor.constraint(equalTo: gradYear.centerYAnchor),
+//            skillsButton.leadingAnchor.constraint(equalTo: lineSeparator2.trailingAnchor, constant: 15),
+//            skillsButton.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
+//
+//            skillsCollectionView.topAnchor.constraint(equalTo: skillsButton.bottomAnchor, constant: 10),
+//            skillsCollectionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
+//            skillsCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
+//            skillsCollectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -1 * padding)
+//
+////            descriptionView.topAnchor.constraint(equalTo: skillsCollectionView.bottomAnchor, constant: 10),
+////            descriptionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: padding),
+////            descriptionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -1 * padding),
+////            descriptionView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor, constant: -padding)
+//            ])
         
-            
-            majorIcon.topAnchor.constraint(equalTo: contactCollectionView.bottomAnchor, constant: 15),
-            majorIcon.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: 15),
-            majorIcon.heightAnchor.constraint(equalToConstant: 20),
-            majorIcon.widthAnchor.constraint(equalToConstant: 20),
-            
-            majorTitleLabel.bottomAnchor.constraint(equalTo: majorIcon.topAnchor),
-            majorTitleLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
-            majorTitleLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-            
-            majorLabel.topAnchor.constraint(equalTo: majorTitleLabel.bottomAnchor),
-            majorLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
-            majorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-            
-            minorLabel.topAnchor.constraint(equalTo: majorLabel.bottomAnchor),
-            minorLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
-            minorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-            
-            gradIcon.topAnchor.constraint(equalTo: minorLabel.bottomAnchor, constant: 25),
-            gradIcon.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: 15),
-            gradIcon.heightAnchor.constraint(equalToConstant: 20),
-            gradIcon.widthAnchor.constraint(equalToConstant: 20),
-            
-            gradTitle.bottomAnchor.constraint(equalTo: gradIcon.topAnchor),
-            gradTitle.leadingAnchor.constraint(equalTo: gradIcon.trailingAnchor, constant: 5),
-            gradTitle.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-            
-            gradYear.topAnchor.constraint(equalTo: gradTitle.bottomAnchor),
-            gradYear.leadingAnchor.constraint(equalTo: gradIcon.trailingAnchor, constant: 5),
-            gradYear.trailingAnchor.constraint(equalTo: lineSeparator2.leadingAnchor, constant: -15),
-            
-            lineSeparator2.topAnchor.constraint(equalTo: gradTitle.topAnchor),
-            lineSeparator2.bottomAnchor.constraint(equalTo: skillsButton.bottomAnchor),
-            lineSeparator2.widthAnchor.constraint(equalToConstant: 1),
-            lineSeparator2.centerXAnchor.constraint(equalTo: aboutContainer.centerXAnchor),
-            
-            skillsButton.centerYAnchor.constraint(equalTo: gradYear.centerYAnchor),
-            skillsButton.leadingAnchor.constraint(equalTo: lineSeparator2.trailingAnchor, constant: 15),
-            skillsButton.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-            
-            skillsCollectionView.topAnchor.constraint(equalTo: skillsButton.bottomAnchor, constant: 10),
-            skillsCollectionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
-            skillsCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
-            skillsCollectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -1 * padding)
-            
-//            descriptionView.topAnchor.constraint(equalTo: skillsCollectionView.bottomAnchor, constant: 10),
-//            descriptionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: padding),
-//            descriptionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -1 * padding),
-//            descriptionView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor, constant: -padding)
-            ])
-        
-        print(descriptionView.frame.height)
 //
 //        NSLayoutConstraint.activate([
 //            projectsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
@@ -671,16 +691,44 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: - TABLEVIEW METHODS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "postCellID", for: indexPath) as! PostCell
-        let post = postsArray[indexPath.row]
-        cell.configure(for: post)
-//        cell.backgroundColor = .white
-        cell.selectionStyle = .none
-        return cell
+        if tableView == infoViewsTableView {
+            var cell = tableView.dequeueReusableCell(withIdentifier: "infoView", for: indexPath) as! InfoViewsTableViewCell
+            cell.configure(for: infoViews[indexPath.row])
+            cell.setNeedsUpdateConstraints()
+            print(infoViews[indexPath.row])
+            return cell
+        } else if tableView == postsTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "postCellID", for: indexPath) as! PostCell
+            let post = postsArray[indexPath.row]
+            cell.configure(for: post)
+    //        cell.backgroundColor = .white
+            cell.selectionStyle = .none
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == infoViewsTableView {
+            return infoViews.count
+        }
         return postsArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == infoViewsTableView {
+            if indexPath.row == 0 {
+                var aboutView = AboutViewController()
+                navigationController?.pushViewController(aboutView, animated: true)
+            } else if indexPath.row == 1 {
+                
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
