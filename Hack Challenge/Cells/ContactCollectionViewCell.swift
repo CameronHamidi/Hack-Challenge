@@ -30,17 +30,15 @@ class ContactCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
+        label.textAlignment = .left
         contentView.addSubview(label)
-     
-        updateConstraints()
     }
     
     override func updateConstraints() {
         NSLayoutConstraint.activate([
             icon.heightAnchor.constraint(equalToConstant: 10),
             icon.widthAnchor.constraint(equalToConstant: 10),
-            icon.topAnchor.constraint(equalTo: contentView.topAnchor),
+            icon.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
             ])
         
@@ -48,6 +46,8 @@ class ContactCollectionViewCell: UICollectionViewCell {
             label.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 5),
             label.centerYAnchor.constraint(equalTo: icon.centerYAnchor)
             ])
+        
+        super.updateConstraints()
     }
     
     func performContact() {

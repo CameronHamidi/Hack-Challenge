@@ -168,6 +168,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         groupSizeCollectionView.translatesAutoresizingMaskIntoConstraints = false
         groupSizeCollectionView.delegate = self
         groupSizeCollectionView.dataSource = self
+        groupSizeCollectionView.allowsMultipleSelection = true
         scrollView.addSubview(groupSizeCollectionView)
         
         let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
@@ -189,6 +190,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         if textField == skillsTextField {
             skills.append("X " + textField.text!)
             skillsCollectionView.reloadData()
+            print(skills)
             textField.text = ""
             return true
         } else if textField == rolesTextField {
@@ -227,6 +229,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == skillsCollectionView {
             skills.remove(at: indexPath.row)
+            collectionView.reloadData()
         } else if collectionView == rolesCollectionView {
             if selectedRoles.count == 0 || !selectedRoles.contains(roles[indexPath.row]) {
                 selectedRoles.append(roles[indexPath.row])
@@ -240,6 +243,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             }
         } else if collectionView == keywordsCollectionView {
             keywords.remove(at: indexPath.row)
+            collectionView.reloadData()
         } else if collectionView == groupSizeCollectionView {
             if selectedSizes.count == 0 || !selectedSizes.contains(groupSizes[indexPath.row]) {
                 selectedSizes.append(groupSizes[indexPath.row])
@@ -251,13 +255,14 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
                 }
             }
         }
-        collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.skillsCollectionView {
             var cell = skillsCollectionView.dequeueReusableCell(withReuseIdentifier: "skill", for: indexPath) as! SkillsCollectionViewCell
             cell.configure(skillName: skills[indexPath.row])
+            print(skills[indexPath.row])
+            print(skills)
             return cell
         } else if collectionView == rolesCollectionView {
             var cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "role", for: indexPath) as! RolesCollectionViewCell
@@ -316,7 +321,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             skillsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             skillsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             skillsCollectionView.topAnchor.constraint(equalTo: skillsLabel.bottomAnchor, constant: 8),
-            skillsCollectionView.heightAnchor.constraint(equalToConstant: 25),
+            skillsCollectionView.heightAnchor.constraint(equalToConstant: 55),
 
         ])
         
