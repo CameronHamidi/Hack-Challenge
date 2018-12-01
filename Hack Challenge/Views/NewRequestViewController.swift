@@ -11,7 +11,7 @@ import UIKit
 //Layout would be the same as NewPitchViewController - will be added here later
 //With the addition of 'group size' and 'roles' options
 
-class NewRequestViewController: UIViewController {
+class NewRequestViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var scrollView: UIScrollView!
     
@@ -36,7 +36,12 @@ class NewRequestViewController: UIViewController {
     var stepper: UIStepper!
     
     var roleLabel: UILabel!
-    var roleTableView: UITableView!
+    //    var roleTableView: UITableView!
+    var rolesCollectionView: UICollectionView!
+    var roles = ["Developer", "Frontend Developer", "Backend Developer", "iOS Developer", "Embedded Systems Developer", "Designer"]
+    let NUM_ROLES_DEFAULT = 6
+    var selectedRoles = [String]()
+    var rolesTextField: UITextField!
     
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
@@ -156,6 +161,29 @@ class NewRequestViewController: UIViewController {
         roleLabel.font = .boldSystemFont(ofSize: labelHeight)
         scrollView.addSubview(roleLabel)
         
+        let rolesLayout = UICollectionViewFlowLayout()
+        rolesLayout.scrollDirection = .vertical
+        rolesLayout.minimumLineSpacing = 8
+        rolesLayout.minimumInteritemSpacing = 8
+        rolesLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        rolesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: rolesLayout)
+        rolesCollectionView.delegate = self
+        rolesCollectionView.dataSource = self
+        rolesCollectionView.register(RolesCollectionViewCell.self, forCellWithReuseIdentifier: "role")
+        rolesCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        rolesCollectionView.backgroundColor = .white
+        rolesCollectionView.allowsMultipleSelection = true
+        scrollView.addSubview(rolesCollectionView)
+        
+        rolesTextField = UITextField()
+        rolesTextField.placeholder = "Enter a role"
+        rolesTextField.textColor = .gray
+        rolesTextField.font = UIFont.systemFont(ofSize: 15.0)
+        rolesTextField.borderStyle = .roundedRect
+        //        rolesTextField.delegate = self
+        rolesTextField.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(rolesTextField)
+        
         setupConstraints()
         
     }
@@ -166,6 +194,40 @@ class NewRequestViewController: UIViewController {
     
     @objc func stepperValueChanged(_ sender:UIStepper!){
         sizeLabel.text = String(Int(sender.value))
+    }
+    
+    //Functions for role collection view
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return roles.count
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if selectedRoles.count == 0 || !selectedRoles.contains(roles[indexPath.row]) {
+            selectedRoles.append(roles[indexPath.row])
+        } else {
+            for i in 0..<selectedRoles.count {
+                if selectedRoles[i] == roles[indexPath.row] {
+                    selectedRoles.remove(at: i)
+                    break
+                }
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "role", for: indexPath) as! RolesCollectionViewCell
+        cell.configure(roleName: roles[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.frame.width*2
+        let height = CGFloat(integerLiteral: 32)
+        return CGSize(width: width, height: height)
     }
     
     func setupConstraints() {
@@ -183,14 +245,13 @@ class NewRequestViewController: UIViewController {
         NSLayoutConstraint.activate([
             titleInput.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
             titleInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            titleInput.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            titleInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
             titleInput.heightAnchor.constraint(equalToConstant: 32)
             ])
         
         NSLayoutConstraint.activate([
             descrLabel.topAnchor.constraint(equalTo: titleInput.bottomAnchor, constant: padding*2),
             descrLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-            //            descrLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
             ])
         
         NSLayoutConstraint.activate([
@@ -203,7 +264,6 @@ class NewRequestViewController: UIViewController {
         NSLayoutConstraint.activate([
             imageLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
             imageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-            //            imageLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
             ])
         
         NSLayoutConstraint.activate([
@@ -226,7 +286,6 @@ class NewRequestViewController: UIViewController {
         NSLayoutConstraint.activate([
             cameraLabel.topAnchor.constraint(equalTo: cameraButton.bottomAnchor, constant: padding),
             cameraLabel.centerXAnchor.constraint(equalTo: cameraButton.centerXAnchor)
-            //            cameraLabel.widthAnchor.constraint(equalToConstant: buttonSize)
             ])
         
         NSLayoutConstraint.activate([
@@ -239,32 +298,42 @@ class NewRequestViewController: UIViewController {
         NSLayoutConstraint.activate([
             libLabel.topAnchor.constraint(equalTo: libButton.bottomAnchor, constant: padding),
             libLabel.centerXAnchor.constraint(equalTo: libButton.centerXAnchor)
-            //            libLabel.widthAnchor.constraint(equalToConstant: buttonSize)
             ])
         
         NSLayoutConstraint.activate([
             groupLabel.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: padding*2),
             groupLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-            //            groupLabel.heightAnchor.constraint(equalToConstant: labelHeight)
             ])
         
         NSLayoutConstraint.activate([
             sizeLabel.topAnchor.constraint(equalTo: groupLabel.bottomAnchor, constant: padding),
-            sizeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-            //            sizeLabel.heightAnchor.constraint(equalToConstant: textInputHeight)
+            sizeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 50)
             ])
         
         NSLayoutConstraint.activate([
             stepper.topAnchor.constraint(equalTo: sizeLabel.topAnchor),
-            stepper.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            stepper.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
             stepper.widthAnchor.constraint(equalToConstant: 124),
             stepper.heightAnchor.constraint(equalToConstant: 48)
             ])
         
         NSLayoutConstraint.activate([
             roleLabel.topAnchor.constraint(equalTo: sizeLabel.bottomAnchor, constant: padding*2),
-            roleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            roleLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -padding)
+            roleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            rolesCollectionView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            rolesCollectionView.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+            rolesCollectionView.topAnchor.constraint(equalTo: roleLabel.bottomAnchor, constant: padding*2),
+            rolesCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(integerLiteral: roles.count * (40)))
+            ])
+        
+        NSLayoutConstraint.activate([
+            rolesTextField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            rolesTextField.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+            rolesTextField.topAnchor.constraint(equalTo: rolesCollectionView.bottomAnchor, constant: padding*2),
+            rolesTextField.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
             ])
     }
     

@@ -726,7 +726,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 var aboutView = AboutViewController()
                 navigationController?.pushViewController(aboutView, animated: true)
             } else if indexPath.row == 1 {
-                var postsView = PostViewController()
+                var postsView = PostsViewController()
                 navigationController?.pushViewController(postsView, animated: true)
             }
         }

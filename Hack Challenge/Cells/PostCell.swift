@@ -99,6 +99,8 @@ class PostCell: UITableViewCell {
         blurbText.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding).isActive = true
     }
     
+    
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
