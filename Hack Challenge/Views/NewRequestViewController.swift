@@ -232,20 +232,20 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
     
     func setupConstraints() {
         
-        scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding*2).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor)
+            titleLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: padding*2),
+            titleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding*2)
             ])
         
         NSLayoutConstraint.activate([
             titleInput.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
             titleInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            titleInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
+            titleInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding*2),
             titleInput.heightAnchor.constraint(equalToConstant: 32)
             ])
         
@@ -296,7 +296,7 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             ])
         
         NSLayoutConstraint.activate([
-            libLabel.topAnchor.constraint(equalTo: libButton.bottomAnchor, constant: padding),
+            libLabel.topAnchor.constraint(equalTo: cameraLabel.bottomAnchor, constant: padding),
             libLabel.centerXAnchor.constraint(equalTo: libButton.centerXAnchor)
             ])
         

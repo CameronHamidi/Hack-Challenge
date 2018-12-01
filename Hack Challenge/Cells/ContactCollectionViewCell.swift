@@ -21,6 +21,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.backgroundColor = UIColor.init(red: 241, green: 241, blue: 241, alpha: 1.0)
         
         icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -40,12 +41,16 @@ class ContactCollectionViewCell: UICollectionViewCell {
             icon.image = UIImage(named: "messenger")
         case .phone:
             icon.image = UIImage(named: "phone")
+            icon.heightAnchor.constraint(equalToConstant: 15).isActive = true
+            icon.widthAnchor.constraint(equalToConstant: 9).isActive = true
         case .email:
             icon.image = UIImage(named: "mail")
+            icon.heightAnchor.constraint(equalToConstant: 11).isActive = true
+            icon.widthAnchor.constraint(equalToConstant: 15).isActive = true
         }
         NSLayoutConstraint.activate([
-            icon.heightAnchor.constraint(equalToConstant: 10),
-            icon.widthAnchor.constraint(equalToConstant: 10),
+//            icon.heightAnchor.constraint(equalToConstant: 10),
+//            icon.widthAnchor.constraint(equalToConstant: 10),
             icon.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
             ])

@@ -91,8 +91,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         scrollView = UIScrollView(frame: .zero)
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -119,6 +117,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         caption.translatesAutoresizingMaskIntoConstraints = false
         caption.text = "A generalization to all"
         caption.textAlignment = .center
+        caption.textColor = .lightGray
         caption.font = .systemFont(ofSize: subTextSize)
         scrollView.addSubview(caption)
         
@@ -130,10 +129,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         scrollView.addSubview(name)
         
         activeLabel = UILabel()
-        activeLabel.backgroundColor = .green
-        activeLabel.text = "  Active  "
+        activeLabel.backgroundColor = UIColor(displayP3Red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
+        activeLabel.text = "Active"
         activeLabel.textColor = .white
-        activeLabel.layer.cornerRadius = 8
+        activeLabel.layer.cornerRadius = 7.5
         activeLabel.layer.masksToBounds = true
         activeLabel.font = UIFont.systemFont(ofSize: 14)
         activeLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -181,14 +180,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         scrollView.addSubview(netIcon)
         
         var contactLayout = UICollectionViewFlowLayout()
-        contactLayout.minimumInteritemSpacing = 6
-        contactLayout.sectionInset = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
+        contactLayout.minimumInteritemSpacing = 16
+        contactLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         contactLayout.scrollDirection = .horizontal
         contactCollectionView = UICollectionView(frame: .zero, collectionViewLayout: contactLayout)
         contactCollectionView.delegate = self
         contactCollectionView.dataSource = self
         contactCollectionView.register(ContactCollectionViewCell.self, forCellWithReuseIdentifier: "contact")
-        contactCollectionView.backgroundColor = UIColor(displayP3Red: 241, green: 241, blue: 241, alpha: 1.0)
+//        contactCollectionView.backgroundColor = UIColor(displayP3Red: 241, green: 241, blue: 241, alpha: 1.0)
+        contactCollectionView.backgroundColor = UIColor(displayP3Red: 241/255, green: 241/255, blue: 241/255, alpha: 1.0)
         contactCollectionView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contactCollectionView)
         
@@ -200,10 +200,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         scrollView.addSubview(infoViewsTableView)
         
         logoutButton = UIButton()
-        logoutButton.setTitle("Logout", for: .normal)
+        logoutButton.setTitle("Log Out", for: .normal)
+        logoutButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         logoutButton.setTitleColor(.white, for: .normal)
-        logoutButton.backgroundColor = .red
-        logoutButton.layer.cornerRadius = 10
+        logoutButton.backgroundColor = UIColor(displayP3Red: 1.0, green: 109/255, blue: 109/255, alpha: 1.0)
+        logoutButton.layer.cornerRadius = 5
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(logoutButton)
         
@@ -490,11 +491,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         NSLayoutConstraint.activate([
             activeLabel.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 10),
-            activeLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+            activeLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            activeLabel.heightAnchor.constraint(equalToConstant: 15),
+            activeLabel.widthAnchor.constraint(equalToConstant: 50)
             ])
         
         NSLayoutConstraint.activate([
-            lineSeparator.topAnchor.constraint(equalTo: activeLabel.bottomAnchor, constant: padding),
+            lineSeparator.topAnchor.constraint(equalTo: activeLabel.bottomAnchor, constant: padding*3),
             lineSeparator.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             lineSeparator.widthAnchor.constraint(equalToConstant: 1),
             lineSeparator.heightAnchor.constraint(equalToConstant: 52)
@@ -502,19 +505,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Some maths to align labels on either side of line separator
         let coor: CGFloat = view.bounds.width/4
-        
+
         NSLayoutConstraint.activate([
-            roleIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
-            roleIcon.heightAnchor.constraint(equalToConstant: 25),
-            roleIcon.widthAnchor.constraint(equalToConstant: 25),
-            roleIcon.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10)
+            roleSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
+            roleSubLabel.trailingAnchor.constraint(equalTo: lineSeparator.leadingAnchor, constant: -50)
+            //roleSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -coor)
+//            roleSubLabel.centerYAnchor.constraint(equalTo: roleIcon.centerYAnchor),
+//            roleSubLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor, constant: 10)
             ])
         
         NSLayoutConstraint.activate([
-            roleSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
-            //roleSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -coor)
-            roleSubLabel.centerYAnchor.constraint(equalTo: roleIcon.centerYAnchor),
-            roleSubLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor, constant: 10)
+            roleIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
+            roleIcon.heightAnchor.constraint(equalToConstant: 19),
+            roleIcon.widthAnchor.constraint(equalToConstant: 20),
+            //            roleIcon.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10)
+            roleIcon.trailingAnchor.constraint(equalTo: roleSubLabel.leadingAnchor, constant: -10)
             ])
         
         NSLayoutConstraint.activate([
@@ -525,16 +530,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         NSLayoutConstraint.activate([
             netIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
-            netIcon.heightAnchor.constraint(equalToConstant: 25),
-            netIcon.widthAnchor.constraint(equalToConstant: 25),
-            netIcon.leadingAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 20)
+            netIcon.heightAnchor.constraint(equalToConstant: 19),
+            netIcon.widthAnchor.constraint(equalToConstant: 26),
+            netIcon.leadingAnchor.constraint(equalTo: lineSeparator.trailingAnchor, constant: 50)
             ])
         
         NSLayoutConstraint.activate([
             netSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
+            netSubLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor, constant: 10)
             //netSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: coor)
-            netSubLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor, constant: 10),
-            netSubLabel.centerYAnchor.constraint(equalTo: netIcon.centerYAnchor)
+//            netSubLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor, constant: 10),
+//            netSubLabel.centerYAnchor.constraint(equalTo: netIcon.centerYAnchor)
             ])
         
         NSLayoutConstraint.activate([
@@ -559,15 +565,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         NSLayoutConstraint.activate([
             infoViewsTableView.topAnchor.constraint(equalTo: contactCollectionView.bottomAnchor, constant: 5),
-            infoViewsTableView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            infoViewsTableView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            infoViewsTableView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding*2),
+            infoViewsTableView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding*2),
             infoViewsTableView.heightAnchor.constraint(equalToConstant: 150)
             ])
         
         NSLayoutConstraint.activate([
-            logoutButton.topAnchor.constraint(equalTo: infoViewsTableView.bottomAnchor, constant: padding),
-            logoutButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-            logoutButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
+            logoutButton.topAnchor.constraint(equalTo: infoViewsTableView.bottomAnchor, constant: 50),
+            logoutButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding*2),
+            logoutButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding*2),
             logoutButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -50)
             ])
         
