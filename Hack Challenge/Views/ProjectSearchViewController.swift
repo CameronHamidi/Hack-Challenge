@@ -70,7 +70,6 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         skillsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(skillsCollectionView)
         skillsCollectionView.backgroundColor = .white
-        skillsCollectionView.allowsMultipleSelection = true
         
         skillsTextField = UITextField()
         skillsTextField.placeholder = " ex. Python"

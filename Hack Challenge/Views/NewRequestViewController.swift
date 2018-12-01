@@ -37,7 +37,7 @@ class NewRequestViewController: UIViewController {
     
     var roleLabel: UILabel!
     var roleTableView: UITableView!
-
+    
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
     let textInputHeight: CGFloat = 32
@@ -57,7 +57,7 @@ class NewRequestViewController: UIViewController {
         
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.backgroundColor = .lightGray //for testing purposes
+        //        scrollView.backgroundColor = .lightGray //for testing purposes
         view.addSubview(scrollView)
         
         titleLabel = UILabel()
@@ -157,7 +157,7 @@ class NewRequestViewController: UIViewController {
         scrollView.addSubview(roleLabel)
         
         setupConstraints()
-
+        
     }
     
     @objc func back() {
@@ -190,7 +190,7 @@ class NewRequestViewController: UIViewController {
         NSLayoutConstraint.activate([
             descrLabel.topAnchor.constraint(equalTo: titleInput.bottomAnchor, constant: padding*2),
             descrLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-//            descrLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
+            //            descrLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
             ])
         
         NSLayoutConstraint.activate([
@@ -203,7 +203,7 @@ class NewRequestViewController: UIViewController {
         NSLayoutConstraint.activate([
             imageLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
             imageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-//            imageLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
+            //            imageLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
             ])
         
         NSLayoutConstraint.activate([
@@ -245,13 +245,13 @@ class NewRequestViewController: UIViewController {
         NSLayoutConstraint.activate([
             groupLabel.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: padding*2),
             groupLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-//            groupLabel.heightAnchor.constraint(equalToConstant: labelHeight)
+            //            groupLabel.heightAnchor.constraint(equalToConstant: labelHeight)
             ])
         
         NSLayoutConstraint.activate([
             sizeLabel.topAnchor.constraint(equalTo: groupLabel.bottomAnchor, constant: padding),
             sizeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-//            sizeLabel.heightAnchor.constraint(equalToConstant: textInputHeight)
+            //            sizeLabel.heightAnchor.constraint(equalToConstant: textInputHeight)
             ])
         
         NSLayoutConstraint.activate([
@@ -267,5 +267,5 @@ class NewRequestViewController: UIViewController {
             roleLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -padding)
             ])
     }
-
+    
 }
