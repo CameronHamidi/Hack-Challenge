@@ -18,6 +18,8 @@ class PostViewController: UIViewController {
     var titleLabel: UILabel!
     var descrText: UITextView!
     
+    var subLabels: UILabel!
+    
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
     let subTextSize: CGFloat = 12
