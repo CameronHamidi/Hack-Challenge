@@ -21,7 +21,8 @@ class RolesCollectionViewCell: UICollectionViewCell {
         roleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(roleLabel)
-        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+//        contentView.backgroundColor = .lightGray
         
         contentView.layer.cornerRadius = 12.5
     }
@@ -39,11 +40,13 @@ class RolesCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            if isSelected == false {
-                contentView.backgroundColor = .lightGray
+            if !isSelected {
+//                contentView.backgroundColor = .lightGray
+                contentView.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
                 roleLabel.textColor = .gray
             } else {
-                contentView.backgroundColor = .gray
+//                contentView.backgroundColor = .gray
+                contentView.backgroundColor = UIColor.init(white: 0.7, alpha: 1.0)
                 roleLabel.textColor = .black
                 print("selected")
             }
