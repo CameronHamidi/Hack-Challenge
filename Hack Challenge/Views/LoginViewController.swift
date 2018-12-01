@@ -87,7 +87,7 @@ class LoginViewController: UIViewController {
             
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 30),
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.widthAnchor.constraint(equalToConstant: 30)
+            loginButton.widthAnchor.constraint(equalToConstant: 30),
             
             createAccountButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 25),
             createAccountButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)

@@ -43,6 +43,9 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
     var selectedRoles = [String]()
     var rolesTextField: UITextField!
     
+    var tagLabel: UILabel!
+    var tagInput: UITextField!
+    
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
     let textInputHeight: CGFloat = 32
@@ -62,7 +65,6 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        //        scrollView.backgroundColor = .lightGray //for testing purposes
         view.addSubview(scrollView)
         
         titleLabel = UILabel()
@@ -184,6 +186,19 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         rolesTextField.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(rolesTextField)
         
+        tagLabel = UILabel()
+        tagLabel.translatesAutoresizingMaskIntoConstraints = false
+        tagLabel.text = "Add Tags"
+        tagLabel.font = .boldSystemFont(ofSize: labelHeight)
+        scrollView.addSubview(tagLabel)
+        
+        tagInput = UITextField()
+        tagInput.translatesAutoresizingMaskIntoConstraints = false
+        tagInput.placeholder = "Separate tags with commas"
+        tagInput.font = .systemFont(ofSize: textSize)
+        tagInput.borderStyle = .roundedRect
+        scrollView.addSubview(tagInput)
+        
         setupConstraints()
         
     }
@@ -296,7 +311,7 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             ])
         
         NSLayoutConstraint.activate([
-            libLabel.topAnchor.constraint(equalTo: cameraLabel.bottomAnchor, constant: padding),
+            libLabel.topAnchor.constraint(equalTo: cameraLabel.topAnchor),
             libLabel.centerXAnchor.constraint(equalTo: libButton.centerXAnchor)
             ])
         
@@ -332,8 +347,21 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         NSLayoutConstraint.activate([
             rolesTextField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             rolesTextField.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
-            rolesTextField.topAnchor.constraint(equalTo: rolesCollectionView.bottomAnchor, constant: padding*2),
-            rolesTextField.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
+            rolesTextField.topAnchor.constraint(equalTo: rolesCollectionView.bottomAnchor, constant: padding/2)
+//            rolesTextField.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
+            ])
+        
+        NSLayoutConstraint.activate([
+            tagLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: padding*2),
+            tagLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            tagInput.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: padding),
+            tagInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            tagInput.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+            tagInput.heightAnchor.constraint(equalToConstant: 32),
+            tagInput.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
             ])
     }
     
