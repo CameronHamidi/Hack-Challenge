@@ -21,7 +21,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = UIColor.init(red: 241, green: 241, blue: 241, alpha: 1.0)
+        contentView.backgroundColor = UIColor(displayP3Red: 241/255, green: 241/255, blue: 241/255, alpha: 1.0)
         
         icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false

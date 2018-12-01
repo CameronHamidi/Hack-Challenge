@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
 //        window?.rootViewController = HomeViewController()
         
-        window?.rootViewController = ProfileViewController()
+        window?.rootViewController = PostViewController()
         
         window?.makeKeyAndVisible()
         return true

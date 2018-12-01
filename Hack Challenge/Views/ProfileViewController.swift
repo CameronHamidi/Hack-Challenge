@@ -130,7 +130,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         activeLabel = UILabel()
         activeLabel.backgroundColor = UIColor(displayP3Red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
-        activeLabel.text = "Active"
+        activeLabel.text = "  Active  "
         activeLabel.textColor = .white
         activeLabel.layer.cornerRadius = 7.5
         activeLabel.layer.masksToBounds = true
@@ -492,12 +492,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         NSLayoutConstraint.activate([
             activeLabel.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 10),
             activeLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            activeLabel.heightAnchor.constraint(equalToConstant: 15),
-            activeLabel.widthAnchor.constraint(equalToConstant: 50)
+            activeLabel.heightAnchor.constraint(equalToConstant: 24)
             ])
         
         NSLayoutConstraint.activate([
-            lineSeparator.topAnchor.constraint(equalTo: activeLabel.bottomAnchor, constant: padding*3),
+            lineSeparator.topAnchor.constraint(equalTo: activeLabel.bottomAnchor, constant: padding),
             lineSeparator.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             lineSeparator.widthAnchor.constraint(equalToConstant: 1),
             lineSeparator.heightAnchor.constraint(equalToConstant: 52)
@@ -508,7 +507,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         NSLayoutConstraint.activate([
             roleSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
-            roleSubLabel.trailingAnchor.constraint(equalTo: lineSeparator.leadingAnchor, constant: -50)
+            roleSubLabel.trailingAnchor.constraint(equalTo: lineSeparator.leadingAnchor, constant: -32)
             //roleSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -coor)
 //            roleSubLabel.centerYAnchor.constraint(equalTo: roleIcon.centerYAnchor),
 //            roleSubLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor, constant: 10)
@@ -516,8 +515,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         NSLayoutConstraint.activate([
             roleIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
-            roleIcon.heightAnchor.constraint(equalToConstant: 19),
-            roleIcon.widthAnchor.constraint(equalToConstant: 20),
+            roleIcon.heightAnchor.constraint(equalToConstant: 19*2),
+            roleIcon.widthAnchor.constraint(equalToConstant: 20*2),
             //            roleIcon.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10)
             roleIcon.trailingAnchor.constraint(equalTo: roleSubLabel.leadingAnchor, constant: -10)
             ])
@@ -530,9 +529,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         NSLayoutConstraint.activate([
             netIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
-            netIcon.heightAnchor.constraint(equalToConstant: 19),
-            netIcon.widthAnchor.constraint(equalToConstant: 26),
-            netIcon.leadingAnchor.constraint(equalTo: lineSeparator.trailingAnchor, constant: 50)
+            netIcon.heightAnchor.constraint(equalToConstant: 19*2),
+            netIcon.widthAnchor.constraint(equalToConstant: 26*2),
+            netIcon.leadingAnchor.constraint(equalTo: lineSeparator.trailingAnchor, constant: 32)
             ])
         
         NSLayoutConstraint.activate([
@@ -551,7 +550,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         NSLayoutConstraint.activate([
             //            caption.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            caption.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: 15),
+            caption.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: padding*2),
             caption.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
             caption.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
             ])
