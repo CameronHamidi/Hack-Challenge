@@ -170,34 +170,17 @@ class HomeViewController: UIViewController {
     }
     
     @objc func showSearchPartnerView() {
-        
+        let viewController = UINavigationController(rootViewController: PartnerSearchViewController())
+        present(viewController, animated: true)
     }
     
     @objc func showPostProjectView() {
-        
-    }
-    
-    @objc func showPitchSelfView() {
-        
-    }
-    
-    @objc func showProfile() {
-        let viewController = UINavigationController(rootViewController: ProfileViewController())
-        present(viewController, animated: true)
-    }
-    
-    @objc func showNewPitch() {
-        let viewController = UINavigationController(rootViewController: NewPitchViewController())
-        present(viewController, animated: true)
-    }
-    
-    @objc func showNewRequest() {
         let viewController = UINavigationController(rootViewController: NewRequestViewController())
         present(viewController, animated: true)
     }
     
-    @objc func showCreateProfile() {
-        let viewController = UINavigationController(rootViewController: CreateProfileViewController())
+    @objc func showPitchSelfView() {
+        let viewController = UINavigationController(rootViewController: NewPitchViewController())
         present(viewController, animated: true)
     }
     
