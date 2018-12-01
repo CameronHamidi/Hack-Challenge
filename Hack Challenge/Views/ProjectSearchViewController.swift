@@ -325,7 +325,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             skillsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             skillsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             skillsCollectionView.topAnchor.constraint(equalTo: skillsLabel.bottomAnchor, constant: 8),
-            skillsCollectionView.heightAnchor.constraint(equalToConstant: 55),
+            skillsCollectionView.heightAnchor.constraint(equalToConstant: 25),
 
         ])
         
@@ -338,14 +338,14 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         NSLayoutConstraint.activate([
             rolesLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             rolesLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
-            rolesLabel.topAnchor.constraint(equalTo: skillsTextField.bottomAnchor, constant: 16)
+            rolesLabel.topAnchor.constraint(equalTo: skillsTextField.bottomAnchor, constant: 25)
             ])
         
         NSLayoutConstraint.activate([
             rolesCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             rolesCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             rolesCollectionView.topAnchor.constraint(equalTo: rolesLabel.bottomAnchor, constant: 8),
-            rolesCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(integerLiteral: roles.count * (29)))
+            rolesCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(integerLiteral: (roles.count + 1) * (29)))
             ])
         
         NSLayoutConstraint.activate([
@@ -355,7 +355,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             ])
         
         NSLayoutConstraint.activate([
-            keywordsLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: 16),
+            keywordsLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: 25),
             keywordsLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             keywordsLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
         ])
@@ -374,7 +374,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         ])
         
         NSLayoutConstraint.activate([
-            groupSizeLabel.topAnchor.constraint(equalTo: keywordsTextField.bottomAnchor, constant: 16),
+            groupSizeLabel.topAnchor.constraint(equalTo: keywordsTextField.bottomAnchor, constant: 25),
             groupSizeLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             groupSizeLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
             ])

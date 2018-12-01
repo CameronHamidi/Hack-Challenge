@@ -20,7 +20,6 @@ class InfoViewsTableViewCell: UITableViewCell {
         
         icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
-        icon.backgroundColor = .black
         contentView.addSubview(icon)
         
         infoLabel = UILabel()
@@ -32,6 +31,13 @@ class InfoViewsTableViewCell: UITableViewCell {
     
     func configure(for text: String) {
         infoLabel.text = text
+        if text == "About" {
+            icon.image = UIImage(named: "info")
+        } else if text == "Posts" {
+            icon.image = UIImage(named: "history")
+        } else if text == "Projects" {
+            icon.image = UIImage(named: "idea")
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,8 +51,6 @@ class InfoViewsTableViewCell: UITableViewCell {
             icon.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15)
             ])
-        
-        
         
         NSLayoutConstraint.activate([
 //            infoLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),

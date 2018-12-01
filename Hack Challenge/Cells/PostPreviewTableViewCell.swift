@@ -90,7 +90,7 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         blurb.font = UIFont.systemFont(ofSize: 15)
         blurb.lineBreakMode = .byWordWrapping
         blurb.textColor = .black
-        blurb.numberOfLines = 0
+        blurb.numberOfLines = 3
         blurb.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(blurb)
         blurb.text = "Hello, I am looking for a prtner. This should be quite a long blurb, because I need to see fi the constraints are working. Here is some additional random text, I am very obviously good with swift but I can also use Java, SQL, C++, MIPS, and I know backend design as well. Please reach out to me if you would like to work together on a project."
@@ -206,16 +206,17 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
             postDataCollectionView.heightAnchor.constraint(equalToConstant: 25),
             
             blurb.topAnchor.constraint(equalTo: postDataCollectionView.bottomAnchor, constant: 15),
-            blurb.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            blurb.leadingAnchor.constraint(equalTo: dayLabel.leadingAnchor),
             blurb.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+//            blurb.heightAnchor.constraint(equalToConstant: 200),
             
             tagView.topAnchor.constraint(equalTo: blurb.bottomAnchor, constant: 15),
-            tagView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            tagView.leadingAnchor.constraint(equalTo: dayLabel.leadingAnchor),
             tagView.trailingAnchor.constraint(equalTo: numCommentsLabel.leadingAnchor, constant: -15),
             tagView.heightAnchor.constraint(equalToConstant: 25),
-            tagView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
+//            tagView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
             
-            numCommentsLabel.trailingAnchor.constraint(equalTo: commentsIcon.leadingAnchor, constant: -2),
+            numCommentsLabel.trailingAnchor.constraint(equalTo: commentsIcon.leadingAnchor, constant: -5),
             numCommentsLabel.centerYAnchor.constraint(equalTo: tagView.centerYAnchor),
             
             commentsIcon.heightAnchor.constraint(equalToConstant: 15),

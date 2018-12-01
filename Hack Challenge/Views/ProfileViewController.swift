@@ -188,7 +188,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         contactCollectionView.delegate = self
         contactCollectionView.dataSource = self
         contactCollectionView.register(ContactCollectionViewCell.self, forCellWithReuseIdentifier: "contact")
-        contactCollectionView.backgroundColor = .gray
+        contactCollectionView.backgroundColor = UIColor(displayP3Red: 241, green: 241, blue: 241, alpha: 1.0)
         contactCollectionView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contactCollectionView)
         
@@ -420,11 +420,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             if indexPath.row == 0 {
                 cell.label.text = "949 887 8055"
                 cell.contactType = .phone
-                cell.contentView.backgroundColor = .green
             } else {
                 cell.label.text = "cah376@cornell.edu"
                 cell.contactType = .email
-                cell.contentView.backgroundColor = .blue
             }
             cell.setNeedsUpdateConstraints()
             return cell
@@ -515,37 +513,39 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         NSLayoutConstraint.activate([
             roleSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
             //roleSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -coor)
-            roleSubLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor)
+            roleSubLabel.centerYAnchor.constraint(equalTo: roleIcon.centerYAnchor),
+            roleSubLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor, constant: 10)
             ])
         
         NSLayoutConstraint.activate([
             roleLabel.topAnchor.constraint(equalTo: roleSubLabel.bottomAnchor, constant: padding/2),
             //roleLabel.centerXAnchor.constraint(equalTo: roleSubLabel.centerXAnchor)
-            roleLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor)
+            roleLabel.leadingAnchor.constraint(equalTo: roleSubLabel.leadingAnchor)
             ])
         
         NSLayoutConstraint.activate([
             netIcon.topAnchor.constraint(equalTo: roleSubLabel.topAnchor),
             netIcon.heightAnchor.constraint(equalToConstant: 25),
             netIcon.widthAnchor.constraint(equalToConstant: 25),
-            netIcon.leadingAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 10)
+            netIcon.leadingAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 20)
             ])
         
         NSLayoutConstraint.activate([
             netSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
             //netSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: coor)
-            netSubLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor)
+            netSubLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor, constant: 10),
+            netSubLabel.centerYAnchor.constraint(equalTo: netIcon.centerYAnchor)
             ])
         
         NSLayoutConstraint.activate([
             netLabel.topAnchor.constraint(equalTo: netSubLabel.bottomAnchor, constant: padding/2),
 //            netLabel.centerXAnchor.constraint(equalTo: netSubLabel.centerXAnchor)
-            netLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor)
+            netLabel.leadingAnchor.constraint(equalTo: netSubLabel.leadingAnchor)
             ])
         
         NSLayoutConstraint.activate([
             //            caption.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            caption.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: 10),
+            caption.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: 15),
             caption.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
             caption.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20)
             ])

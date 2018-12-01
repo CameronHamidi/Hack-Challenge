@@ -17,11 +17,12 @@ class GroupSizeCollectionViewCell: UICollectionViewCell {
         sizeLabel = UILabel()
         sizeLabel.font = UIFont.systemFont(ofSize: 15)
         sizeLabel.textAlignment = .center
-        sizeLabel.textColor = .gray
+        sizeLabel.textColor = UIColor(displayP3Red: 151, green: 151, blue: 151, alpha: 1)
         sizeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(sizeLabel)
-        contentView.backgroundColor = .lightGray
+//        contentView.backgroundColor = UIColor(displayP3Red: 216, green: 216, blue: 216, alpha: 0.35)
+        contentView.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         
         contentView.layer.cornerRadius = 12.5
     }
@@ -40,12 +41,14 @@ class GroupSizeCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                contentView.backgroundColor = .gray
+//                contentView.alpha = 1
+                contentView.backgroundColor = UIColor.init(white: 0.7, alpha: 1.0)
                 sizeLabel.textColor = .black
                 print("selected")
             } else {
-                contentView.backgroundColor = .lightGray
-                sizeLabel.textColor = .gray
+//                contentView.alpha = 0.35
+                contentView.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+                sizeLabel.textColor = UIColor(displayP3Red: 151, green: 151, blue: 151, alpha: 1)
             }
         }
     }
