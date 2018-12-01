@@ -21,6 +21,7 @@
 		E61F4F1721A772F70096BAE1 /* SkillsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F4F1621A772F70096BAE1 /* SkillsCollectionViewCell.swift */; };
 		E621E38821A9E09E001F5C24 /* RolesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E621E38721A9E09E001F5C24 /* RolesCollectionViewCell.swift */; };
 		E63FE83E21AF1AC90013CE8A /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63FE83D21AF1AC90013CE8A /* ContactCollectionViewCell.swift */; };
+		E65FB32C21B1F5FF00400253 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65FB32B21B1F5FF00400253 /* EditProfileViewController.swift */; };
 		E6B5DDD921AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B5DDD821AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift */; };
 		E6D5285B21B0CBE200415946 /* InfoViewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D5285A21B0CBE200415946 /* InfoViewsTableViewCell.swift */; };
 		E6DCBCDB21A64FF5001A35F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCBCDA21A64FF5001A35F8 /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 		E6DCBCE221A64FF7001A35F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6DCBCE121A64FF7001A35F8 /* Assets.xcassets */; };
 		E6DCBCE521A64FF7001A35F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6DCBCE321A64FF7001A35F8 /* LaunchScreen.storyboard */; };
 		E6DCBCED21A653AE001A35F8 /* SearchTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCBCEC21A653AE001A35F8 /* SearchTabViewController.swift */; };
+		E6DD029421B21A0000F7E754 /* PostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DD029321B21A0000F7E754 /* PostsViewController.swift */; };
 		E6E7C0D521B17328000074FA /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E7C0D421B17328000074FA /* AboutViewController.swift */; };
 		E6E7C0D721B17420000074FA /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E7C0D621B17420000074FA /* AboutView.swift */; };
 /* End PBXBuildFile section */
@@ -47,6 +49,7 @@
 		E61F4F1621A772F70096BAE1 /* SkillsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsCollectionViewCell.swift; sourceTree = "<group>"; };
 		E621E38721A9E09E001F5C24 /* RolesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RolesCollectionViewCell.swift; sourceTree = "<group>"; };
 		E63FE83D21AF1AC90013CE8A /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
+		E65FB32B21B1F5FF00400253 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		E6B5DDD821AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSizeCollectionViewCell.swift; sourceTree = "<group>"; };
 		E6D5285A21B0CBE200415946 /* InfoViewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewsTableViewCell.swift; sourceTree = "<group>"; };
 		E6DCBCD721A64FF5001A35F8 /* Hack Challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hack Challenge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +59,7 @@
 		E6DCBCE421A64FF7001A35F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E6DCBCE621A64FF7001A35F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6DCBCEC21A653AE001A35F8 /* SearchTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabViewController.swift; sourceTree = "<group>"; };
+		E6DD029321B21A0000F7E754 /* PostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewController.swift; sourceTree = "<group>"; };
 		E6E7C0D421B17328000074FA /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E6E7C0D621B17420000074FA /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,8 +107,10 @@
 				18D0A60C21AA44AE00D0A079 /* NewPitchViewController.swift */,
 				18456D6821A8812F00BFDDD8 /* ProfileViewController.swift */,
 				E6E7C0D421B17328000074FA /* AboutViewController.swift */,
+				E65FB32B21B1F5FF00400253 /* EditProfileViewController.swift */,
 				E6E7C0D621B17420000074FA /* AboutView.swift */,
 				18D0A61D21ACCC4100D0A079 /* PostViewController.swift */,
+				E6DD029321B21A0000F7E754 /* PostsViewController.swift */,
 				E61F4F1421A76F530096BAE1 /* ProjectSearchViewController.swift */,
 				E6DCBCDC21A64FF5001A35F8 /* HomeViewController.swift */,
 			);
@@ -212,12 +218,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E65FB32C21B1F5FF00400253 /* EditProfileViewController.swift in Sources */,
 				E61F4F1521A76F530096BAE1 /* ProjectSearchViewController.swift in Sources */,
 				E6E7C0D721B17420000074FA /* AboutView.swift in Sources */,
 				E61F4F1721A772F70096BAE1 /* SkillsCollectionViewCell.swift in Sources */,
 				E6DCBCED21A653AE001A35F8 /* SearchTabViewController.swift in Sources */,
 				18456D6D21A883FA00BFDDD8 /* Post.swift in Sources */,
 				18456D6B21A8817D00BFDDD8 /* Profile.swift in Sources */,
+				E6DD029421B21A0000F7E754 /* PostsViewController.swift in Sources */,
 				18456D6921A8812F00BFDDD8 /* ProfileViewController.swift in Sources */,
 				E621E38821A9E09E001F5C24 /* RolesCollectionViewCell.swift in Sources */,
 				18D0A61C21AB2D2700D0A079 /* PostCell.swift in Sources */,

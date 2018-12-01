@@ -12,6 +12,7 @@ enum AboutViewType {
     case gradYear
     case majors
     case roles
+    case courses
     case skills
 }
 
@@ -19,10 +20,10 @@ class AboutView: UIView {
 
     var icon: UIImageView!
     var title: UILabel!
-    var editButton: UIImageView!
+//    var editButton: UIImageView!
     var primaryRoleIcon: UIImageView?
-    var mainTextView: UITextView!
-    var secondaryTextView: UITextView?
+    var mainLabel: UILabel!
+    var secondaryLabel: UILabel?
     var viewType: AboutViewType!
     
     init(frame: CGRect, viewType: AboutViewType) {
@@ -30,7 +31,8 @@ class AboutView: UIView {
         
         self.viewType = viewType
         
-        self.backgroundColor = .gray
+        self.backgroundColor = .lightGray
+        self.layer.cornerRadius = 5
         
         icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -43,18 +45,19 @@ class AboutView: UIView {
         title.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(title)
         
-        editButton = UIImageView()
-        editButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(editButton)
-        editButton.backgroundColor = .red
+//        editButton = UIImageView()
+//        editButton.translatesAutoresizingMaskIntoConstraints = false
+//        self.addSubview(editButton)
+//        editButton.backgroundColor = .red
         
-        mainTextView = UITextView()
-        mainTextView.isEditable = false
-        mainTextView.isSelectable = false
-        mainTextView.textColor = .black
-        mainTextView.font = UIFont.systemFont(ofSize: 14)
-        mainTextView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(mainTextView)
+        mainLabel = UILabel()
+//        mainLabel.isEditable = false
+//        mainLabel.isSelectable = false
+        mainLabel.textColor = .black
+        mainLabel.font = UIFont.systemFont(ofSize: 14)
+        mainLabel.translatesAutoresizingMaskIntoConstraints = false
+        mainLabel.numberOfLines = 0
+        self.addSubview(mainLabel)
         
         switch viewType {
         case .gradYear:
@@ -63,15 +66,22 @@ class AboutView: UIView {
             title.text = "Majors/Minors"
         case .roles:
             title.text = "Roles"
+        case .courses:
+            title.text = "Courses"
+            secondaryLabel = UILabel()
+            secondaryLabel!.textColor = .black
+            secondaryLabel!.numberOfLines = 0
+            secondaryLabel!.font = UIFont.systemFont(ofSize: 14)
+            secondaryLabel!.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview(secondaryLabel!)
         case .skills:
             title.text = "Skills"
-            secondaryTextView = UITextView()
-            secondaryTextView!.isEditable = false
-            secondaryTextView!.isSelectable = false
-            secondaryTextView!.textColor = .black
-            secondaryTextView!.font = UIFont.systemFont(ofSize: 14)
-            secondaryTextView!.translatesAutoresizingMaskIntoConstraints = false
-            self.addSubview(secondaryTextView!)
+            secondaryLabel = UILabel()
+            secondaryLabel!.textColor = .black
+            secondaryLabel!.numberOfLines = 0
+            secondaryLabel!.font = UIFont.systemFont(ofSize: 14)
+            secondaryLabel!.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview(secondaryLabel!)
         }
         
     }
@@ -81,6 +91,11 @@ class AboutView: UIView {
     }
     
     override  func updateConstraints() {
+        let attributedMain = NSMutableAttributedString(string: mainLabel.text!)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        attributedMain.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedMain.length))
+        
         NSLayoutConstraint.activate([
             icon.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             icon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
@@ -90,34 +105,51 @@ class AboutView: UIView {
         
         NSLayoutConstraint.activate([
             title.centerYAnchor.constraint(equalTo: icon.centerYAnchor),
-            title.leadingAnchor.constraint(equalTo: icon.leadingAnchor, constant: 5),
-            title.trailingAnchor.constraint(equalTo: editButton.leadingAnchor, constant: 15)
+            title.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 5),
+            title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
             ])
         
-        NSLayoutConstraint.activate([
-            editButton.centerYAnchor.constraint(equalTo: icon.centerYAnchor),
-            editButton.heightAnchor.constraint(equalToConstant: 15),
-            editButton.widthAnchor.constraint(equalToConstant: 15),
-            editButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
-            ])
+//        NSLayoutConstraint.activate([
+//            editButton.centerYAnchor.constraint(equalTo: icon.centerYAnchor),
+//            editButton.heightAnchor.constraint(equalToConstant: 15),
+//            editButton.widthAnchor.constraint(equalToConstant: 15),
+//            editButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
+//            ])
         
         NSLayoutConstraint.activate([
-            mainTextView.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 15),
-            mainTextView.leadingAnchor.constraint(equalTo: title.leadingAnchor),
-            mainTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15)
+            mainLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 15),
+            mainLabel.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            mainLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15)
             ])
+        
+        mainLabel.sizeToFit()
+        
+//        let fixedWidth = mainLabel.frame.size.width
+//        let newSize = mainLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+//        mainLabel.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
         
         switch self.viewType! {
         case .skills:
             NSLayoutConstraint.activate([
-                (secondaryTextView?.topAnchor.constraint(equalTo: mainTextView.topAnchor))!,
-                (secondaryTextView?.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15))!,
-                (secondaryTextView?.widthAnchor.constraint(equalToConstant: self.frame.width - 15))!,
-                mainTextView.trailingAnchor.constraint(equalTo: secondaryTextView!.leadingAnchor, constant: 15)
+                (secondaryLabel?.topAnchor.constraint(equalTo: mainLabel.topAnchor))!,
+                (secondaryLabel?.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15))!,
+                (secondaryLabel?.leadingAnchor.constraint(equalTo: self.centerXAnchor, constant: 15))!,
+                mainLabel.trailingAnchor.constraint(equalTo: secondaryLabel!.leadingAnchor, constant: -15)
                 ])
+            var attributedSecondary = NSMutableAttributedString(string: secondaryLabel!.text!)
+            attributedSecondary.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedSecondary.length))
+        case .courses:
+            NSLayoutConstraint.activate([
+                (secondaryLabel?.topAnchor.constraint(equalTo: mainLabel.topAnchor))!,
+                (secondaryLabel?.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15))!,
+                (secondaryLabel?.leadingAnchor.constraint(equalTo: self.centerXAnchor, constant: 15))!,
+                mainLabel.trailingAnchor.constraint(equalTo: secondaryLabel!.leadingAnchor, constant: -15)
+                ])
+            var attributedSecondary = NSMutableAttributedString(string: secondaryLabel!.text!)
+            attributedSecondary.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedSecondary.length))
         default:
             NSLayoutConstraint.activate([
-                mainTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 15)
+                mainLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
                 ])
         }
         
