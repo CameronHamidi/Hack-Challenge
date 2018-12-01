@@ -30,10 +30,21 @@ class PostDataCollectionViewCell: UICollectionViewCell {
         label = UILabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(label)
     }
     
     override func updateConstraints() {
-        icon.backgroundColor = .blue
+        switch postDataType! {
+        case .groupSize:
+            icon.image = UIImage(named: "member")
+        case .developer:
+            icon.image = UIImage(named: "code")
+        case .designer:
+            icon.image = UIImage(named: "design")
+        default:
+            icon.backgroundColor = .black
+        }
         
         NSLayoutConstraint.activate([
             icon.heightAnchor.constraint(equalToConstant: 15),
@@ -44,9 +55,10 @@ class PostDataCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             label.centerYAnchor.constraint(equalTo: label.centerYAnchor),
-            label.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 1),
+            label.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 3),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
             ])
+        
         super.updateConstraints()
     }
     

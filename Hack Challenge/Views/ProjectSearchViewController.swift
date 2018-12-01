@@ -120,7 +120,12 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         keywordsLabel.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(keywordsLabel)
         
-        keywordsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: skillsLayout)
+        var keywordsLayout = UICollectionViewFlowLayout()
+        keywordsLayout.scrollDirection = .horizontal
+        keywordsLayout.minimumLineSpacing = 4
+        keywordsLayout.minimumInteritemSpacing = 4
+        keywordsLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        keywordsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: keywordsLayout)
         keywordsCollectionView.delegate = self
         keywordsCollectionView.dataSource = self
         keywordsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "keyword")

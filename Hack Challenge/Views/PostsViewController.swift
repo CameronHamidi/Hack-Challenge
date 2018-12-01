@@ -23,6 +23,8 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         postPreviewsTableView.dataSource = self
         postPreviewsTableView.translatesAutoresizingMaskIntoConstraints = false
         postPreviewsTableView.register(PostPreviewTableViewCell.self, forCellReuseIdentifier: "post")
+        postPreviewsTableView.estimatedRowHeight = 100
+        postPreviewsTableView.rowHeight = UITableView.automaticDimension
         view.addSubview(postPreviewsTableView)
         
         setupConstraints()

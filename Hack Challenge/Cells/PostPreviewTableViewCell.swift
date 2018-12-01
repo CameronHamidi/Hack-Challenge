@@ -32,7 +32,7 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         
         monthLabel = UILabel()
         monthLabel.text = "NOV"
-        monthLabel.font = UIFont.systemFont(ofSize: 12)
+        monthLabel.font = UIFont.systemFont(ofSize: 17)
         monthLabel.textColor = .black
         monthLabel.textAlignment = .center
         monthLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +40,7 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         
         dayLabel = UILabel()
         dayLabel.text = "12"
-        dayLabel.font = UIFont.systemFont(ofSize: 15)
+        dayLabel.font = UIFont.systemFont(ofSize: 30)
         dayLabel.textColor = .black
         dayLabel.textAlignment = .center
         dayLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -63,10 +63,12 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         contentView.addSubview(titleLabel)
         
         openLabel = UILabel()
-        openLabel.text = "  Open  "
+        openLabel.text = "  Open   "
         openLabel.backgroundColor = .green
         openLabel.textColor = .white
-        openLabel.layer.cornerRadius = 15
+        openLabel.layer.masksToBounds = true
+        openLabel.font = UIFont.systemFont(ofSize: 12)
+        openLabel.layer.cornerRadius = 5
         openLabel.textAlignment = .center
         openLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(openLabel)
@@ -74,33 +76,40 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         var postDataLayout = UICollectionViewFlowLayout()
         postDataLayout.scrollDirection = .horizontal
         postDataLayout.minimumLineSpacing = 4
-        postDataLayout.minimumInteritemSpacing = 4
+        postDataLayout.minimumInteritemSpacing = 6
         postDataLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         postDataCollectionView = UICollectionView(frame: .zero, collectionViewLayout: postDataLayout)
         postDataCollectionView.dataSource = self
         postDataCollectionView.delegate = self
+        postDataCollectionView.backgroundColor = .clear
         postDataCollectionView.register(PostDataCollectionViewCell.self, forCellWithReuseIdentifier: "postData")
         postDataCollectionView.translatesAutoresizingMaskIntoConstraints = false
-//        contentView.addSubview(postDataCollectionView)
+        contentView.addSubview(postDataCollectionView)
         
         blurb = UILabel()
         blurb.font = UIFont.systemFont(ofSize: 15)
         blurb.lineBreakMode = .byWordWrapping
         blurb.textColor = .black
-        blurb.backgroundColor = .red
         blurb.numberOfLines = 0
         blurb.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(blurb)
         blurb.text = "Hello, I am looking for a prtner. This should be quite a long blurb, because I need to see fi the constraints are working. Here is some additional random text, I am very obviously good with swift but I can also use Java, SQL, C++, MIPS, and I know backend design as well. Please reach out to me if you would like to work together on a project."
         
-        tagView = UICollectionView(frame: .zero, collectionViewLayout: postDataLayout)
+        var tagViewLayout = UICollectionViewFlowLayout()
+        tagViewLayout.scrollDirection = .horizontal
+        tagViewLayout.minimumLineSpacing = 4
+        tagViewLayout.minimumInteritemSpacing = 4
+        tagViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tagView = UICollectionView(frame: .zero, collectionViewLayout: tagViewLayout)
         tagView.dataSource = self
         tagView.delegate = self
+        tagView.backgroundColor = .clear
         tagView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "tag")
         tagView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(tagView)
         
         commentsIcon = UIImageView()
+        commentsIcon.image = UIImage(named: "comment")
         commentsIcon.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(commentsIcon)
         
@@ -108,7 +117,7 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         numCommentsLabel.text = "2"
         numCommentsLabel.textColor = .black
         numCommentsLabel.textAlignment = .right
-        numCommentsLabel.font = UIFont.systemFont(ofSize: 12)
+        numCommentsLabel.font = UIFont.systemFont(ofSize: 15)
         numCommentsLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(numCommentsLabel)
     }
@@ -140,6 +149,7 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
                 cell.postDataType = .designer
                 cell.label.text = "designer"
             }
+            cell.setNeedsUpdateConstraints()
             return cell
         } else if collectionView == tagView {
             var cell = tagView.dequeueReusableCell(withReuseIdentifier: "tag", for: indexPath) as! SkillsCollectionViewCell
@@ -154,7 +164,12 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         if collectionView == tagView {
             var width = ceil((Double)(tags[indexPath.row].count) / 10.0 * 75.0 + 10.0)
             return CGSize(width: width, height: 25.0)
-        } else {
+        } else if collectionView == postDataCollectionView {
+            var labels = ["2-4 members", "developer", "designer"]
+            var width = ceil((Double)(labels[indexPath.row].count) / 10.0 * 75.0 + 10.0)
+            return CGSize(width: width, height: 15.0)
+        }
+        else {
             return CGSize(width: 0, height: 0)
         }
     }
@@ -164,56 +179,50 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
 //    }
 
     override func updateConstraints() {
-        contentView.backgroundColor = .blue
-        monthLabel.backgroundColor = .red
-        dayLabel.backgroundColor = .brown
-        titleLabel.backgroundColor = .red
         titleLabel.sizeToFit()
         monthLabel.sizeToFit()
         blurb.sizeToFit()
         NSLayoutConstraint.activate([
-            monthLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            monthLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             monthLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-            monthLabel.heightAnchor.constraint(equalToConstant: 25),
-            monthLabel.widthAnchor.constraint(equalToConstant: 25),
             
             dayLabel.centerXAnchor.constraint(equalTo: monthLabel.centerXAnchor),
             dayLabel.topAnchor.constraint(equalTo: monthLabel.bottomAnchor),
             
             typeLabel.leadingAnchor.constraint(equalTo: monthLabel.trailingAnchor, constant: 15),
-            typeLabel.centerYAnchor.constraint(equalTo: dayLabel.centerYAnchor),
+            typeLabel.centerYAnchor.constraint(equalTo: monthLabel.centerYAnchor),
             
             titleLabel.leadingAnchor.constraint(equalTo: typeLabel.leadingAnchor),
             titleLabel.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 3),
             titleLabel.trailingAnchor.constraint(equalTo: openLabel.leadingAnchor, constant: -10),
             
             openLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            openLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5)
+            openLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
             ])
         NSLayoutConstraint.activate([
-//            postDataCollectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-//            postDataCollectionView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-//            postDataCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-//            postDataCollectionView.heightAnchor.constraint(equalToConstant: 25),
+            postDataCollectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
+            postDataCollectionView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            postDataCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            postDataCollectionView.heightAnchor.constraint(equalToConstant: 25),
             
-            blurb.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
+            blurb.topAnchor.constraint(equalTo: postDataCollectionView.bottomAnchor, constant: 15),
             blurb.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-//            blurb.heightAnchor.constraint(equalToConstant: 150),
             blurb.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             
             tagView.topAnchor.constraint(equalTo: blurb.bottomAnchor, constant: 15),
             tagView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             tagView.trailingAnchor.constraint(equalTo: numCommentsLabel.leadingAnchor, constant: -15),
             tagView.heightAnchor.constraint(equalToConstant: 25),
-//            tagView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 15),
+            tagView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
             
-            numCommentsLabel.trailingAnchor.constraint(equalTo: commentsIcon.leadingAnchor),
-            numCommentsLabel.centerYAnchor.constraint(equalTo: commentsIcon.centerYAnchor),
+            numCommentsLabel.trailingAnchor.constraint(equalTo: commentsIcon.leadingAnchor, constant: -2),
+            numCommentsLabel.centerYAnchor.constraint(equalTo: tagView.centerYAnchor),
             
             commentsIcon.heightAnchor.constraint(equalToConstant: 15),
             commentsIcon.widthAnchor.constraint(equalToConstant: 15),
+            commentsIcon.centerYAnchor.constraint(equalTo: tagView.centerYAnchor),
             commentsIcon.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            commentsIcon.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
+//            commentsIcon.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
             
             ])
         
