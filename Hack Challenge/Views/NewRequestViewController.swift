@@ -36,7 +36,7 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
     var stepper: UIStepper!
     
     var roleLabel: UILabel!
-//    var roleTableView: UITableView!
+    //    var roleTableView: UITableView!
     var rolesCollectionView: UICollectionView!
     var roles = ["Developer", "Frontend Developer", "Backend Developer", "iOS Developer", "Embedded Systems Developer", "Designer"]
     let NUM_ROLES_DEFAULT = 6
@@ -180,7 +180,7 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         rolesTextField.textColor = .gray
         rolesTextField.font = UIFont.systemFont(ofSize: 15.0)
         rolesTextField.borderStyle = .roundedRect
-//        rolesTextField.delegate = self
+        //        rolesTextField.delegate = self
         rolesTextField.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(rolesTextField)
         
@@ -198,7 +198,7 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
     
     //Functions for role collection view
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return roles.count
+        return roles.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -206,22 +206,22 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            if selectedRoles.count == 0 || !selectedRoles.contains(roles[indexPath.row]) {
-                selectedRoles.append(roles[indexPath.row])
-            } else {
-                for i in 0..<selectedRoles.count {
-                    if selectedRoles[i] == roles[indexPath.row] {
-                        selectedRoles.remove(at: i)
-                        break
-                    }
+        if selectedRoles.count == 0 || !selectedRoles.contains(roles[indexPath.row]) {
+            selectedRoles.append(roles[indexPath.row])
+        } else {
+            for i in 0..<selectedRoles.count {
+                if selectedRoles[i] == roles[indexPath.row] {
+                    selectedRoles.remove(at: i)
+                    break
                 }
             }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "role", for: indexPath) as! RolesCollectionViewCell
-            cell.configure(roleName: roles[indexPath.row])
-            return cell
+        cell.configure(roleName: roles[indexPath.row])
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

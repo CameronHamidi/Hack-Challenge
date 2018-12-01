@@ -31,13 +31,12 @@ class AboutView: UIView {
         
         self.viewType = viewType
         
-        self.backgroundColor = .lightGray
+        self.backgroundColor = UIColor(displayP3Red: 241, green: 241, blue: 241, alpha: 1)
         self.layer.cornerRadius = 5
         
         icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(icon)
-        icon.backgroundColor = .blue
         
         title = UILabel()
         title.textColor = .gray
@@ -62,12 +61,16 @@ class AboutView: UIView {
         switch viewType {
         case .gradYear:
             title.text = "Graduation Year"
+            icon.image = UIImage(named: "calendar")
         case .majors:
             title.text = "Majors/Minors"
+            icon.image = UIImage(named: "books")
         case .roles:
             title.text = "Roles"
+            icon.image = UIImage(named: "role")
         case .courses:
             title.text = "Courses"
+            icon.image = UIImage(named: "books")
             secondaryLabel = UILabel()
             secondaryLabel!.textColor = .black
             secondaryLabel!.numberOfLines = 0
@@ -76,6 +79,7 @@ class AboutView: UIView {
             self.addSubview(secondaryLabel!)
         case .skills:
             title.text = "Skills"
+            icon.image = UIImage(named: "skill")
             secondaryLabel = UILabel()
             secondaryLabel!.textColor = .black
             secondaryLabel!.numberOfLines = 0

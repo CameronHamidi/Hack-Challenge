@@ -35,6 +35,14 @@ class ContactCollectionViewCell: UICollectionViewCell {
     }
     
     override func updateConstraints() {
+        switch contactType! {
+        case .facebook:
+            icon.image = UIImage(named: "messenger")
+        case .phone:
+            icon.image = UIImage(named: "phone")
+        case .email:
+            icon.image = UIImage(named: "mail")
+        }
         NSLayoutConstraint.activate([
             icon.heightAnchor.constraint(equalToConstant: 10),
             icon.widthAnchor.constraint(equalToConstant: 10),
