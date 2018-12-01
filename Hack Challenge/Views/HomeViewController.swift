@@ -86,7 +86,7 @@ class HomeViewController: UIViewController {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-//            searchProjectsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            searchProjectsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor), //Error happening here
             searchProjectsButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15)
             ])
         

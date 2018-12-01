@@ -159,6 +159,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         roleIcon = UIImageView()
         roleIcon.translatesAutoresizingMaskIntoConstraints = false
+        roleIcon.image = UIImage(named: "star")
         scrollView.addSubview(roleIcon)
         
         netSubLabel = UILabel()
@@ -175,6 +176,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         scrollView.addSubview(netLabel)
         
         netIcon = UIImageView()
+        netIcon.image = UIImage(named: "netid")
         netIcon.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(netIcon)
         
