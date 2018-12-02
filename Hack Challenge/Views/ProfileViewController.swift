@@ -575,130 +575,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             logoutButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding*2),
             logoutButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -50)
             ])
-        
-        
-            
-//        NSLayoutConstraint.activate([
-//            segControl.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: padding*2),
-//            segControl.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-//            segControl.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-//            segControl.heightAnchor.constraint(equalToConstant: 32)
-//            ])
-//
-////        NSLayoutConstraint.activate([
-////            containerView.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-////            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-////            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-////            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
-////            ])
-//
-////        NSLayoutConstraint.activate([
-////            segmentedControlContainer.topAnchor.constraint(equalTo: control.bottomAnchor, constant: padding),
-////            segmentedControlContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-////            segmentedControlContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-////            segmentedControlContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
-////            ])
-//
-//        NSLayoutConstraint.activate([
-//            aboutContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-//            aboutContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-//            aboutContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-//            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -padding),
-////            aboutContainer.heightAnchor.constraint(equalToConstant: 500),
-//            aboutContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//
-//
-//            majorIcon.topAnchor.constraint(equalTo: contactCollectionView.bottomAnchor, constant: 15),
-//            majorIcon.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: 15),
-//            majorIcon.heightAnchor.constraint(equalToConstant: 20),
-//            majorIcon.widthAnchor.constraint(equalToConstant: 20),
-//
-//            majorTitleLabel.bottomAnchor.constraint(equalTo: majorIcon.topAnchor),
-//            majorTitleLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
-//            majorTitleLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-//
-//            majorLabel.topAnchor.constraint(equalTo: majorTitleLabel.bottomAnchor),
-//            majorLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
-//            majorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-//
-//            minorLabel.topAnchor.constraint(equalTo: majorLabel.bottomAnchor),
-//            minorLabel.leadingAnchor.constraint(equalTo: majorIcon.trailingAnchor, constant: 5),
-//            minorLabel.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-//
-//            gradIcon.topAnchor.constraint(equalTo: minorLabel.bottomAnchor, constant: 25),
-//            gradIcon.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: 15),
-//            gradIcon.heightAnchor.constraint(equalToConstant: 20),
-//            gradIcon.widthAnchor.constraint(equalToConstant: 20),
-//
-//            gradTitle.bottomAnchor.constraint(equalTo: gradIcon.topAnchor),
-//            gradTitle.leadingAnchor.constraint(equalTo: gradIcon.trailingAnchor, constant: 5),
-//            gradTitle.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-//
-//            gradYear.topAnchor.constraint(equalTo: gradTitle.bottomAnchor),
-//            gradYear.leadingAnchor.constraint(equalTo: gradIcon.trailingAnchor, constant: 5),
-//            gradYear.trailingAnchor.constraint(equalTo: lineSeparator2.leadingAnchor, constant: -15),
-//
-//            lineSeparator2.topAnchor.constraint(equalTo: gradTitle.topAnchor),
-//            lineSeparator2.bottomAnchor.constraint(equalTo: skillsButton.bottomAnchor),
-//            lineSeparator2.widthAnchor.constraint(equalToConstant: 1),
-//            lineSeparator2.centerXAnchor.constraint(equalTo: aboutContainer.centerXAnchor),
-//
-//            skillsButton.centerYAnchor.constraint(equalTo: gradYear.centerYAnchor),
-//            skillsButton.leadingAnchor.constraint(equalTo: lineSeparator2.trailingAnchor, constant: 15),
-//            skillsButton.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -15),
-//
-//            skillsCollectionView.topAnchor.constraint(equalTo: skillsButton.bottomAnchor, constant: 10),
-//            skillsCollectionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
-//            skillsCollectionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
-//            skillsCollectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -1 * padding)
-//
-////            descriptionView.topAnchor.constraint(equalTo: skillsCollectionView.bottomAnchor, constant: 10),
-////            descriptionView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor, constant: padding),
-////            descriptionView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor, constant: -1 * padding),
-////            descriptionView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor, constant: -padding)
-//            ])
-        
-//
-//        NSLayoutConstraint.activate([
-//            projectsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-//            projectsContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-//            projectsContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-//            projectsContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
-//            projectsContainer.heightAnchor.constraint(equalToConstant: 150)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//            postsContainer.topAnchor.constraint(equalTo: segControl.bottomAnchor, constant: padding),
-//            postsContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-//            postsContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -padding),
-//            postsContainer.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//            postsTableView.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
-//            postsTableView.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
-//            postsTableView.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
-//            postsTableView.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor)
-//            ])
-        
-//        NSLayoutConstraint.activate([
-//            tableview.topAnchor.constraint(equalTo: aboutContainer.topAnchor),
-//            tableview.leadingAnchor.constraint(equalTo: aboutContainer.leadingAnchor),
-//            tableview.trailingAnchor.constraint(equalTo: aboutContainer.trailingAnchor),
-//            tableview.bottomAnchor.constraint(equalTo: aboutContainer.bottomAnchor)
-//            ])
     }
     
     func createPosts() {
-        let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-        let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-        let vanillaIcecream = Post(icon: UIImage(named: "icon_placeholder")!, name: "FoodWiki", date: "2h", title: "Ice cream, vanilla facts and history - testing if this title will wrap", blurb: "Vanilla is frequently used to flavor ice cream, especially in North America and Europe. Vanilla ice cream, like other flavors of ice cream, was originally created by cooling a mixture made of cream, sugar")
-        let test = Post(icon: UIImage(named: "icon_placeholder")!, name: "test", date: "Nov 27", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-        
-        postsArray = [newPost, ezraCornell, vanillaIcecream, test]
+//        let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+//        let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+//        let vanillaIcecream = Post(icon: UIImage(named: "icon_placeholder")!, name: "FoodWiki", date: "2h", title: "Ice cream, vanilla facts and history - testing if this title will wrap", blurb: "Vanilla is frequently used to flavor ice cream, especially in North America and Europe. Vanilla ice cream, like other flavors of ice cream, was originally created by cooling a mixture made of cream, sugar")
+//        let test = Post(icon: UIImage(named: "icon_placeholder")!, name: "test", date: "Nov 27", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+//        
+//        postsArray = [newPost, ezraCornell, vanillaIcecream, test]
     }
     
     // MARK: - TABLEVIEW METHODS

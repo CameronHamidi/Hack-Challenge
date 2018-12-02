@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Alamofire
 
 class ProjectSearchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
-
+    
     var scrollView: UIScrollView!
     
     var skillsLabel: UILabel!
@@ -36,6 +37,9 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
     var selectedSizes = [String]()
     
     var submitButton: UIButton!
+    
+    var defaults = UserDefaults.standard
+    var fetchedPosts: [Post]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -190,6 +194,35 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         
     }
     
+    func sendSearchRequest(completion: @escaping([Post]) -> Void) {
+        var parameters = [
+            "kind" : 1,
+            "skills" : self.skills.join(","),
+            "role" : self.selectedRoles.join(","),
+            "group_size" : self.selectedSizes.join(","),
+            "tags" : self.tags.join(",")
+        ]
+        Alamofire.request("http://35.190.171.42/api/posts/search/", method: .get, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{
+                    print(json)
+                    if let success = json["success"] as! Bool? {
+                        var postIds =
+                    }
+                } else {
+                    print("Invalid Response Data")
+                    let alert = UIAlertController(title: "Invalid Password", message: "Please try again.", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == skillsTextField {
             skills.append("X " + textField.text!)
@@ -326,8 +359,8 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             skillsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             skillsCollectionView.topAnchor.constraint(equalTo: skillsLabel.bottomAnchor, constant: 8),
             skillsCollectionView.heightAnchor.constraint(equalToConstant: 25),
-
-        ])
+            
+            ])
         
         NSLayoutConstraint.activate([
             skillsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
@@ -358,20 +391,20 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             keywordsLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: 25),
             keywordsLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             keywordsLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
-        ])
+            ])
         
         NSLayoutConstraint.activate([
             keywordsCollectionView.topAnchor.constraint(equalTo: keywordsLabel.bottomAnchor, constant: 8),
             keywordsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             keywordsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
             keywordsCollectionView.heightAnchor.constraint(equalToConstant: 25)
-        ])
+            ])
         
         NSLayoutConstraint.activate([
             keywordsTextField.topAnchor.constraint(equalTo: keywordsCollectionView.bottomAnchor, constant: 8),
             keywordsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
             keywordsTextField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
-        ])
+            ])
         
         NSLayoutConstraint.activate([
             groupSizeLabel.topAnchor.constraint(equalTo: keywordsTextField.bottomAnchor, constant: 25),
@@ -393,8 +426,8 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             submitButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             submitButton.heightAnchor.constraint(equalToConstant: 50),
             submitButton.widthAnchor.constraint(equalToConstant: view.frame.width)
-        ])
+            ])
     }
     
-
+    
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 //Layout would be the same as NewPitchViewController - will be added here later
 //With the addition of 'group size' and 'roles' options
@@ -245,6 +246,68 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         return CGSize(width: width, height: height)
     }
     
+    //Alert Pop-up
+    func displayMyAlertMessage(userMessage:String){
+        let myAlert = UIAlertController(title: "Oops!", message: userMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+        myAlert.addAction(okAction)
+        self.present(myAlert, animated: true, completion: nil)
+    }
+    
+    //Function called when form is submitted
+    @objc func postSubmit() {
+        
+        // Alerts user if required fields are empty on submit
+        guard let titleText = titleInput.text, !titleText.isEmpty else {
+            displayMyAlertMessage(userMessage: "Please input a title.")
+            return
+        }
+        guard let descrText = descrInput.text, !descrText.isEmpty else {
+            displayMyAlertMessage(userMessage: "Please fill out the description.")
+            return
+        }
+        guard let tagText = tagInput.text, !tagText.isEmpty else {
+            displayMyAlertMessage(userMessage: "Please add tags.")
+            return
+        }
+        let groupSizeText = sizeLabel.text!
+        
+        //token?? role??
+        postToServer(token: 0, title: titleText, tags: tagText, role: "", text: descrText, group_size: groupSizeText)
+        back()
+        
+        //Delegate to another view
+        //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
+        //        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func postToServer(token: Int, title: String, tags: String, role: String, text: String, group_size: String) {
+        //fields: *token, *title, *tags, *role, *text, kind, course, *group_size, skills
+        //* required
+        let parameters: [String : Any] = [
+            "token" : token,
+            "title" : title,
+            "tags" : tags,
+            "role" : role,
+            "text" : text,
+            "kind" : 1,
+            "group_size" : group_size
+        ]
+        
+        let urlString = "http://35.190.171.42/api/posts/"
+        Alamofire.request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
+            switch response.result {
+            case .success:
+                print(response)
+                break
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    
     func setupConstraints() {
         
         scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
@@ -348,7 +411,7 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             rolesTextField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             rolesTextField.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
             rolesTextField.topAnchor.constraint(equalTo: rolesCollectionView.bottomAnchor, constant: padding/2)
-//            rolesTextField.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
+            //            rolesTextField.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
             ])
         
         NSLayoutConstraint.activate([

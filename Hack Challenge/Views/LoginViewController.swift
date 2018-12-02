@@ -67,7 +67,7 @@ class LoginViewController: UIViewController {
         createAccountButton.setTitleColor(.white, for: .normal)
         createAccountButton.backgroundColor = .black
         createAccountButton.layer.cornerRadius = 10
-        createAccountButton.addTarget(self, action: #selector(showCreateProfileView), for: .touchUpInside)
+        //createAccountButton.addTarget(self, action: #selector(showCreateProfileView), for: .touchUpInside)
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
         createAccountButton.addTarget(self, action: #selector(createAccount), for: .touchUpInside)
         view.addSubview(createAccountButton)
@@ -90,7 +90,7 @@ class LoginViewController: UIViewController {
         }
     }
 
-    static func requestCreateAccount(completion: @escaping([String: String]) -> Void) {
+    func requestCreateAccount(completion: @escaping([String: String]) -> Void) {
         if emailTextField.text! != "" && passwordTextField.text! != "" {
             var parameters = ["email" : emailTextField.text!, "password" : passwordTextField.text!]
             print("http://35.190.171.42/api/login/")
@@ -128,13 +128,29 @@ class LoginViewController: UIViewController {
     }
 
     @objc func login() {
+        loginRequest { response in
+            DispatchQueue.main.async {
+                print(response)
+            }
+        }
+    }
+    
+    func loginRequest(completion: @escaping(Bool) -> Void) {
         if emailTextField.text! != "" && passwordTextField.text! != "" {
             var parameters = ["email" : emailTextField.text!, "password" : passwordTextField.text!]
             print("http://35.190.171.42/api/login/")
-            Alamofire.request("http://35.190.171.42/api/login/", method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
+            Alamofire.request("http://35.190.171.42/api/login/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
                 switch response.result {
                 case .success(let data):
                     if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{
+                        let decoder = JSONDecoder()
+                        do {
+                            var decodedData = try? decoder.decode(LoginResponse.self, from: data)
+                            print("success")
+                            completion(decodedData!.success)
+                        } catch {
+                            completion(false)
+                        }
                         print(json)
                         if let success = json["success"] as! Bool? {
                             print("success")

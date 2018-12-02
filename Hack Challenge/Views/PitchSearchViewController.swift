@@ -156,7 +156,7 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     @objc func back() {
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func performSearch() {
