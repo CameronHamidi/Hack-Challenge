@@ -245,6 +245,37 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         return CGSize(width: width, height: height)
     }
     
+    //Alert Pop-up
+    func displayMyAlertMessage(userMessage:String){
+        let myAlert = UIAlertController(title: "Oops!", message: userMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+        myAlert.addAction(okAction)
+        self.present(myAlert, animated: true, completion: nil)
+    }
+    
+    //Function called when form is submitted
+    @objc func postSubmit() {
+        
+        // Alerts user if required fields are empty on submit
+        guard let titleText = titleInput.text, !titleText.isEmpty else {
+            displayMyAlertMessage(userMessage: "Please input a title.")
+            return
+        }
+        guard let descrText = descrInput.text, !descrText.isEmpty else {
+            displayMyAlertMessage(userMessage: "Please fill out the description.")
+            return
+        }
+        guard let tagText = tagInput.text, !tagText.isEmpty else {
+            displayMyAlertMessage(userMessage: "Please add tags.")
+            return
+        }
+        
+        //Delegate to another view
+        //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
+        //        navigationController?.popViewController(animated: true)
+    }
+    
+    
     func setupConstraints() {
         
         scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true

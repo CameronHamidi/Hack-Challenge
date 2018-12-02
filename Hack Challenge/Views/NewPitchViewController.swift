@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class NewPitchViewController: UIViewController {
     
@@ -42,7 +43,7 @@ class NewPitchViewController: UIViewController {
         let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
         navigationItem.leftBarButtonItem = backButton
         
-        let postButton = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: #selector(dismissViewControllerAndSaveText))
+        let postButton = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: #selector(postSubmit))
         navigationItem.rightBarButtonItem = postButton
         
         scrollView = UIScrollView()
@@ -126,10 +127,6 @@ class NewPitchViewController: UIViewController {
         scrollView.addSubview(tagInput)
         
         setupConstraints()
-    }
-    
-    @objc func back() {
-        dismiss(animated: true, completion: nil)
     }
     
     func setupConstraints() {
@@ -216,52 +213,59 @@ class NewPitchViewController: UIViewController {
             ])
     }
     
-    @objc func dismissViewController() {
+    @objc func back() {
         dismiss(animated: true, completion: nil)
     }
     
     //Alert Pop-up
     func displayMyAlertMessage(userMessage:String){
-        
         let myAlert = UIAlertController(title: "Oops!", message: userMessage, preferredStyle: .alert)
-        
         let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
         myAlert.addAction(okAction)
-        
         self.present(myAlert, animated: true, completion: nil)
     }
     
-    @objc func dismissViewControllerAndSaveText() {
+    //Function called when form is submitted
+    @objc func postSubmit() {
         
-        // Alerts user if title is empty on submit
+        // Alerts user if required fields are empty on submit
         guard let titleText = titleInput.text, !titleText.isEmpty else {
             displayMyAlertMessage(userMessage: "Please input a title.")
             return
         }
-        
-        // Alerts user if description is empty on submit
         guard let descrText = descrInput.text, !descrText.isEmpty else {
             displayMyAlertMessage(userMessage: "Please fill out the description.")
             return
         }
+        guard let tagText = tagInput.text, !tagText.isEmpty else {
+            displayMyAlertMessage(userMessage: "Please add tags.")
+            return
+        }
         
+        back()
         //Delegate to another view
         //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
         //        navigationController?.popViewController(animated: true)
     }
     
+    @objc func postToServer(token: Int, title: String, tags: String, role: String, text: String, kind: Int, course: String, group_size: String, skills: String) {
+        let urlString = "http://35.190.171.42/api/posts/"
+        
+        //fields: *token, *title, *tags, role, *text, kind, course, group_size, skills
+        //* required
+        
+        Alamofire.request(urlString, method: .post, parameters: [token : title : tags : role : text : kind : course : group_size : skills],encoding: JSONEncoding.default, headers: nil).responseJSON {
+            response in
+            switch response.result {
+                case .success:
+                print(response)
+                
+                break
+                case .failure(let error):
+                
+                print(error)
+            }
+        }
+    }
+    
 }
-
-//to give UITextFields a bottom border (underline) - does not work
-//    extension UITextField {
-//
-//        func underlined(){
-//            let border = CALayer()
-//            let width = CGFloat(1.0)
-//            border.borderColor = UIColor.lightGray.cgColor
-//            border.frame = CGRect(x: 0, y: self.frame.size.height - width, width:  self.frame.size.width, height: self.frame.size.height)
-//            border.borderWidth = width
-//            self.layer.addSublayer(border)
-//            self.layer.masksToBounds = true
-//        }
-//}

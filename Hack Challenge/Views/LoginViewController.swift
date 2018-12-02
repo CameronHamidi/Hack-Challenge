@@ -67,7 +67,7 @@ class LoginViewController: UIViewController {
         createAccountButton.setTitleColor(.white, for: .normal)
         createAccountButton.backgroundColor = .black
         createAccountButton.layer.cornerRadius = 10
-        createAccountButton.addTarget(self, action: #selector(showCreateProfileView), for: .touchUpInside)
+//        createAccountButton.addTarget(self, action: #selector(showCreateProfileView), for: .touchUpInside)
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
         createAccountButton.addTarget(self, action: #selector(createAccount), for: .touchUpInside)
         view.addSubview(createAccountButton)
