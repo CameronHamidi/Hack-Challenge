@@ -194,7 +194,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
         
     }
     
-    static func sendSearchRequest(completion: @escaping([Post]) -> Void) {
+    func sendSearchRequest(completion: @escaping([Post]) -> Void) {
         var parameters = [
             "kind" : 1,
             "skills" : self.skills.join(","),

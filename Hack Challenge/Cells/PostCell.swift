@@ -68,11 +68,11 @@ class PostCell: UITableViewCell {
     }
     
     func configure(for post: Post) {
-        iconView.image = post.icon
-        nameLabel.text = post.name
-        dateLabel.text = post.date
-        titleLabel.text = post.title
-        blurbText.text = post.blurb
+//        iconView.image = post.icon
+//        nameLabel.text = post.name
+//        dateLabel.text = post.date
+//        titleLabel.text = post.title
+//        blurbText.text = post.blurb
     }
     
     func setConstraints() {

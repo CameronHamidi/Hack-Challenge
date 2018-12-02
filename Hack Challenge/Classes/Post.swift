@@ -28,6 +28,15 @@ import UIKit
 //    }
 //}
 
+struct LoginResponse: Codable {
+    var success: Bool
+    var data: ResponseData
+}
+
+struct ResponseData: Codable {
+    var token: Int
+    var uid: Int
+}
 
 
 struct Post: Codable {
