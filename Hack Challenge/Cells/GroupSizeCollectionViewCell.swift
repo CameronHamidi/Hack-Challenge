@@ -17,7 +17,8 @@ class GroupSizeCollectionViewCell: UICollectionViewCell {
         sizeLabel = UILabel()
         sizeLabel.font = UIFont.systemFont(ofSize: 15)
         sizeLabel.textAlignment = .center
-        sizeLabel.textColor = UIColor(displayP3Red: 151, green: 151, blue: 151, alpha: 1)
+//        sizeLabel.textColor = UIColor(displayP3Red: 151, green: 151, blue: 151, alpha: 1)
+        sizeLabel.textColor = .gray
         sizeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(sizeLabel)
@@ -48,7 +49,8 @@ class GroupSizeCollectionViewCell: UICollectionViewCell {
             } else {
 //                contentView.alpha = 0.35
                 contentView.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-                sizeLabel.textColor = UIColor(displayP3Red: 151, green: 151, blue: 151, alpha: 1)
+//                sizeLabel.textColor = UIColor(displayP3Red: 151, green: 151, blue: 151, alpha: 1)
+                sizeLabel.textColor = .gray
             }
         }
     }

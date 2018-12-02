@@ -20,7 +20,8 @@ class SkillsCollectionViewCell: UICollectionViewCell {
         skillLabel.textColor = .gray
         skillLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(skillLabel)
-        contentView.backgroundColor = .lightGray
+//        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         
         contentView.layer.cornerRadius = 2.5
     }
