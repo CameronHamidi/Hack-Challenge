@@ -28,34 +28,41 @@ import UIKit
 //    }
 //}
 
-class Post {
-    
-    var icon: UIImage
-    var name: String
-    var date: String
+
+
+struct Post: Codable {
+    var id: Int
+    var uid: Int
     var title: String
-    var blurb: String
-    
-    init(icon: UIImage, name: String, date: String, title: String, blurb: String) {
-        self.icon = icon
-        self.name = name
-        self.date = date
-        self.title = title
-        self.blurb = blurb
-    }
-    
-//    var tags: [String]
-//    var size: Int //group size
-//    var positions: [Position] //e.g backend, designer, etc...
-//    var descr: String //description
-//    var status: Bool //open or closed
-    
-//    init(title: String, tags: [String], size: Int, positions: [Position], descr: String, status: Bool) {
-//        self.title = title
-//        self.tags = tags
-//        self.size = size
-//        self.positions = positions
-//        self.descr = descr
-//        self.status = status
-//    }
+    var tags: String
+    var role: String
+    var text: String
+    var active: Bool
+    var creation_time: Float
+    var kind: Int
+    var course: String?
+    var group_size: String?
+    var skills: String?
 }
+
+struct PostResponse: Codable {
+    var data: Post
+    var success: Bool
+}
+    
+    
+    
+    //    var tags: [String]
+    //    var size: Int //group size
+    //    var positions: [Position] //e.g backend, designer, etc...
+    //    var descr: String //description
+    //    var status: Bool //open or closed
+    
+    //    init(title: String, tags: [String], size: Int, positions: [Position], descr: String, status: Bool) {
+    //        self.title = title
+    //        self.tags = tags
+    //        self.size = size
+    //        self.positions = positions
+    //        self.descr = descr
+    //        self.status = status
+    //    }
