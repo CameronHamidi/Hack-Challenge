@@ -242,20 +242,27 @@ class NewPitchViewController: UIViewController {
             return
         }
         
+        //token ??
+        postToServer(0, titleText, tagText, descrText)
         back()
         //Delegate to another view
         //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
         //        navigationController?.popViewController(animated: true)
     }
     
-    @objc func postToServer(token: Int, title: String, tags: String, role: String, text: String, kind: Int, course: String, group_size: String, skills: String) {
-        let urlString = "http://35.190.171.42/api/posts/"
-        
+    @objc func postToServer(token: Int, title: String, tags: String, text: String) {
         //fields: *token, *title, *tags, role, *text, kind, course, group_size, skills
         //* required
+        let parameters: [String : Any] = [
+            "token" : token,
+            "title" : title,
+            "tags" : tags,
+            "text" : text,
+            "kind" : 2
+            ]
         
-        Alamofire.request(urlString, method: .post, parameters: [token : title : tags : role : text : kind : course : group_size : skills],encoding: JSONEncoding.default, headers: nil).responseJSON {
-            response in
+        let urlString = "http://35.190.171.42/api/posts/"
+        Alamofire.request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
             switch response.result {
                 case .success:
                 print(response)

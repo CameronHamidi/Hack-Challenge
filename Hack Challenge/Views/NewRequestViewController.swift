@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 //Layout would be the same as NewPitchViewController - will be added here later
 //With the addition of 'group size' and 'roles' options
@@ -270,9 +271,40 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             return
         }
         
+        //token?? role??
+        postToServer(0, titleText, tagText, "", descrText, group_size)
+        back()
+        
         //Delegate to another view
         //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
         //        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func postToServer(token: Int, title: String, tags: String, role: String, text: String, group_size: String) {
+        //fields: *token, *title, *tags, *role, *text, kind, course, *group_size, skills
+        //* required
+        let parameters: [String : Any] = [
+            "token" : token,
+            "title" : title,
+            "tags" : tags,
+            "role" : role,
+            "text" : text,
+            "kind" : 1,
+            "group_size" : group_size
+        ]
+        
+        let urlString = "http://35.190.171.42/api/posts/"
+        Alamofire.request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
+            switch response.result {
+            case .success:
+                print(response)
+                
+                break
+            case .failure(let error):
+                
+                print(error)
+            }
+        }
     }
     
     
