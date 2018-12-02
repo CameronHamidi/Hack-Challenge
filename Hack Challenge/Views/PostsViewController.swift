@@ -12,6 +12,8 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var postPreviewsTableView: UITableView!
     var posts: [Post]!
     
+    let padding: CGFloat = 32
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,10 +34,10 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            postPreviewsTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            postPreviewsTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
             postPreviewsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            postPreviewsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            postPreviewsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            postPreviewsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            postPreviewsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
             ])
     }
     

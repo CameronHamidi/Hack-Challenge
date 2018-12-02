@@ -64,11 +64,11 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         
         openLabel = UILabel()
         openLabel.text = "  Open   "
-        openLabel.backgroundColor = .green
+        openLabel.backgroundColor = UIColor(displayP3Red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
         openLabel.textColor = .white
         openLabel.layer.masksToBounds = true
         openLabel.font = UIFont.systemFont(ofSize: 12)
-        openLabel.layer.cornerRadius = 5
+        openLabel.layer.cornerRadius = 7.5
         openLabel.textAlignment = .center
         openLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(openLabel)
@@ -93,7 +93,7 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
         blurb.numberOfLines = 3
         blurb.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(blurb)
-        blurb.text = "Hello, I am looking for a prtner. This should be quite a long blurb, because I need to see fi the constraints are working. Here is some additional random text, I am very obviously good with swift but I can also use Java, SQL, C++, MIPS, and I know backend design as well. Please reach out to me if you would like to work together on a project."
+        blurb.text = "Hello, I am looking for a prtner. This should be quite a long blurb, because I need to see if the constraints are working. Here is some additional random text, I am very obviously good with swift but I can also use Java, SQL, C++, MIPS, and I know backend design as well. Please reach out to me if you would like to work together on a project."
         
         var tagViewLayout = UICollectionViewFlowLayout()
         tagViewLayout.scrollDirection = .horizontal
@@ -196,8 +196,9 @@ class PostPreviewTableViewCell: UITableViewCell, UICollectionViewDelegate, UICol
             titleLabel.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 3),
             titleLabel.trailingAnchor.constraint(equalTo: openLabel.leadingAnchor, constant: -10),
             
-            openLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            openLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+            openLabel.topAnchor.constraint(equalTo: monthLabel.topAnchor),
+            openLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            openLabel.heightAnchor.constraint(equalToConstant: 16)
             ])
         NSLayoutConstraint.activate([
             postDataCollectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),

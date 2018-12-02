@@ -503,7 +503,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             ])
         
         // Some maths to align labels on either side of line separator
-        let coor: CGFloat = view.bounds.width/4
+//        let coor: CGFloat = view.bounds.width/4
 
         NSLayoutConstraint.activate([
             roleSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
@@ -736,10 +736,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == infoViewsTableView {
             if indexPath.row == 0 {
-                var aboutView = AboutViewController()
+                let aboutView = AboutViewController()
                 navigationController?.pushViewController(aboutView, animated: true)
             } else if indexPath.row == 1 {
-                var postsView = PostsViewController()
+                let postsView = PostsViewController()
                 navigationController?.pushViewController(postsView, animated: true)
             }
         }
