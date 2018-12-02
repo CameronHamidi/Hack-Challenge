@@ -29,6 +29,7 @@
 		E681886421B32A8800333A8E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E681886321B32A8700333A8E /* LoginViewController.swift */; };
 		E6B5DDD921AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B5DDD821AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift */; };
 		E6D5285B21B0CBE200415946 /* InfoViewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D5285A21B0CBE200415946 /* InfoViewsTableViewCell.swift */; };
+		E6DC74E121B48F2100EECF3E /* Responses.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DC74E021B48F2100EECF3E /* Responses.swift */; };
 		E6DCBCDB21A64FF5001A35F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCBCDA21A64FF5001A35F8 /* AppDelegate.swift */; };
 		E6DCBCDD21A64FF5001A35F8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCBCDC21A64FF5001A35F8 /* HomeViewController.swift */; };
 		E6DCBCE221A64FF7001A35F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6DCBCE121A64FF7001A35F8 /* Assets.xcassets */; };
@@ -139,6 +140,7 @@
 		E681886321B32A8700333A8E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E6B5DDD821AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSizeCollectionViewCell.swift; sourceTree = "<group>"; };
 		E6D5285A21B0CBE200415946 /* InfoViewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewsTableViewCell.swift; sourceTree = "<group>"; };
+		E6DC74E021B48F2100EECF3E /* Responses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responses.swift; sourceTree = "<group>"; };
 		E6DCBCD721A64FF5001A35F8 /* Hack Challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hack Challenge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6DCBCDA21A64FF5001A35F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6DCBCDC21A64FF5001A35F8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				18456D6A21A8817D00BFDDD8 /* Profile.swift */,
+				E6DC74E021B48F2100EECF3E /* Responses.swift */,
 				18456D6C21A883FA00BFDDD8 /* Post.swift */,
 				18456D6E21A88D8E00BFDDD8 /* Project.swift */,
 				18D0A61221AB16C600D0A079 /* CheckBox.swift */,
@@ -474,6 +477,7 @@
 				E6DD029621B2242C00F7E754 /* PostPreviewTableViewCell.swift in Sources */,
 				18D0A60D21AA44AE00D0A079 /* NewPitchViewController.swift in Sources */,
 				E6DCBCDD21A64FF5001A35F8 /* HomeViewController.swift in Sources */,
+				E6DC74E121B48F2100EECF3E /* Responses.swift in Sources */,
 				E6DD029821B22B0A00F7E754 /* PostDataCollectionViewCell.swift in Sources */,
 				E6B5DDD921AB23ED00E86D71 /* GroupSizeCollectionViewCell.swift in Sources */,
 				E6DCBCDB21A64FF5001A35F8 /* AppDelegate.swift in Sources */,

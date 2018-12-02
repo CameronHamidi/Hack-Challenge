@@ -400,7 +400,11 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         //        navigationController?.popViewController(animated: true)
     }
     
-    @objc func postToServer(token: Int, title: String, role: String, text: String, group_size: String) {
+    @objc func search() {
+        
+    }
+    
+    @objc func postToServer(token: Int, title: String, tags: String, role: String, text: String, group_size: String) {
         //fields: *token, *title, *tags, *role, *text, kind, course, *group_size, skills
         //* required
         let parameters: [String : Any] = [

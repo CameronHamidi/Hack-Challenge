@@ -75,7 +75,7 @@ class LoginViewController: UIViewController {
         if let email = defaults.string(forKey: "email"), let password = defaults.string(forKey: "password") {
             emailTextField.text = email
             passwordTextField.text = password
-            login()
+//            login()
         }
 
         setupConstraints()
@@ -130,7 +130,17 @@ class LoginViewController: UIViewController {
     @objc func login() {
         loginRequest { response in
             DispatchQueue.main.async {
-                print(response)
+                if response {
+                    print(response)
+                    var newView = HomeViewController()
+                    self.present(newView, animated: true, completion: nil)
+                } else {
+                    print("Invalid Response Data")
+                    let alert = UIAlertController(title: "Invalid Password", message: "Please try again.", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                }
             }
         }
     }
@@ -147,26 +157,22 @@ class LoginViewController: UIViewController {
                         do {
                             var decodedData = try? decoder.decode(LoginResponse.self, from: data)
                             print("success")
-                            completion(decodedData!.success)
+                            if decodedData!.success {
+                                print("success")
+                                self.defaults.set(self.emailTextField.text, forKey: "email")
+                                self.defaults.set(self.passwordTextField.text, forKey: "password")
+                                self.defaults.set(json["token"], forKey: "token")
+                                self.defaults.set(json["uid"], forKey: "uid")
+                                completion(decodedData!.success)
+                            } else {
+                                completion(false)
+                            }
                         } catch {
                             completion(false)
                         }
                         print(json)
-                        if let success = json["success"] as! Bool? {
-                            print("success")
-                            self.defaults.set(self.emailTextField.text, forKey: "email")
-                            self.defaults.set(self.passwordTextField.text, forKey: "password")
-                            self.defaults.set(json["token"], forKey: "token")
-                            self.defaults.set(json["uid"], forKey: "uid")
-                            var newView = HomeViewController()
-                            self.present(newView, animated: true, completion: nil)
-                        }
                     } else {
-                        print("Invalid Response Data")
-                        let alert = UIAlertController(title: "Invalid Password", message: "Please try again.", preferredStyle: .alert)
-                        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                        alert.addAction(action)
-                        self.present(alert, animated: true)
+                        completion(false)
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -183,7 +189,7 @@ class LoginViewController: UIViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             loginTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            loginTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
 
             emailTextField.topAnchor.constraint(equalTo: loginTitle.bottomAnchor, constant: 15),
             emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
