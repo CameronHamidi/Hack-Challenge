@@ -11,8 +11,13 @@ import UIKit
 
 class CreateProfileViewController: UIViewController {
     
+    var scrollView: UIScrollView!
+    
     var nameLabel: UILabel!
     var nameInput: UITextField!
+    
+    var emailLabel: UILabel!
+    var emailInput: UITextField!
     
     var netLabel: UILabel! //net ID
     var netInput: UITextField!
@@ -20,20 +25,23 @@ class CreateProfileViewController: UIViewController {
     var yearLabel: UILabel! //Gradaution year
     var yearInput: UITextField!
     
+    var passLabel: UILabel! //password
+    var passInput: UITextField!
+    
     var majorLabel: UILabel!
     var majorInput: UITextField!
     
     var minorLabel: UILabel!
     var minorInput: UITextField!
     
-    var roleLabel: UILabel!
-    var roleInput: UITextField!
-    
-    var emailLabel: UILabel!
-    var emailInput: UITextField!
+    var blurbLabel: UILabel! //can act as 'caption' in the profile view
+    var blurbInput: UITextField!
     
     var skillsLabel: UILabel!
     var skillsInput: UITextField!
+    
+    var roleLabel: UILabel!
+    var roleInput: UITextField!
     
     var photoLabel: UILabel! //profile photo
 //    var photoInput: UITextView!
@@ -55,57 +63,140 @@ class CreateProfileViewController: UIViewController {
         let postButton = UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(back))
         navigationItem.rightBarButtonItem = postButton
         
+        scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        
         nameLabel = UILabel()
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.text = "Name"
         nameLabel.font = .boldSystemFont(ofSize: labelHeight)
-        view.addSubview(nameLabel)
+        scrollView.addSubview(nameLabel)
         
         nameInput = UITextField()
         nameInput.translatesAutoresizingMaskIntoConstraints = false
         nameInput.placeholder = "Your name"
         nameInput.font = .systemFont(ofSize: textSize)
         nameInput.borderStyle = .roundedRect
-        view.addSubview(nameInput)
+        scrollView.addSubview(nameInput)
+        
+        emailLabel = UILabel()
+        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+        emailLabel.text = "E-mail"
+        emailLabel.font = .boldSystemFont(ofSize: labelHeight)
+        scrollView.addSubview(emailLabel)
+        
+        emailInput = UITextField()
+        emailInput.translatesAutoresizingMaskIntoConstraints = false
+        emailInput.placeholder = "Enter email"
+        emailInput.font = .systemFont(ofSize: textSize)
+        emailInput.borderStyle = .roundedRect
+        scrollView.addSubview(emailInput)
         
         netLabel = UILabel()
         netLabel.translatesAutoresizingMaskIntoConstraints = false
         netLabel.text = "Net ID"
         netLabel.font = .boldSystemFont(ofSize: labelHeight)
-        view.addSubview(netLabel)
+        scrollView.addSubview(netLabel)
         
         netInput = UITextField()
         netInput.translatesAutoresizingMaskIntoConstraints = false
         netInput.placeholder = "Cornell Net ID"
         netInput.font = .systemFont(ofSize: textSize)
         netInput.borderStyle = .roundedRect
-        view.addSubview(netInput)
+        scrollView.addSubview(netInput)
+        
+        yearLabel = UILabel()
+        yearLabel.translatesAutoresizingMaskIntoConstraints = false
+        yearLabel.text = "Class Of"
+        yearLabel.font = .boldSystemFont(ofSize: labelHeight)
+        scrollView.addSubview(yearLabel)
+        
+        yearInput = UITextField()
+        yearInput.translatesAutoresizingMaskIntoConstraints = false
+        yearInput.placeholder = "Graduation Year"
+        yearInput.font = .systemFont(ofSize: textSize)
+        yearInput.borderStyle = .roundedRect
+        scrollView.addSubview(yearInput)
+        
+        passLabel = UILabel()
+        passLabel.translatesAutoresizingMaskIntoConstraints = false
+        passLabel.text = "Password"
+        passLabel.font = .boldSystemFont(ofSize: labelHeight)
+        scrollView.addSubview(passLabel)
+        
+        passInput = UITextField()
+        passInput.translatesAutoresizingMaskIntoConstraints = false
+        passInput.placeholder = "Enter password"
+        //TODO - display as dots
+//        passInput.font = .systemFont(ofSize: textSize)
+        passInput.borderStyle = .roundedRect
+        scrollView.addSubview(passInput)
         
         majorLabel = UILabel()
         majorLabel.translatesAutoresizingMaskIntoConstraints = false
         majorLabel.text = "Major"
         majorLabel.font = .boldSystemFont(ofSize: labelHeight)
-        view.addSubview(majorLabel)
+        scrollView.addSubview(majorLabel)
         
         majorInput = UITextField()
         majorInput.translatesAutoresizingMaskIntoConstraints = false
         majorInput.placeholder = "Enter your major"
         majorInput.font = .systemFont(ofSize: textSize)
         majorInput.borderStyle = .roundedRect
-        view.addSubview(majorInput)
+        scrollView.addSubview(majorInput)
+        
+        minorLabel = UILabel()
+        minorLabel.translatesAutoresizingMaskIntoConstraints = false
+        minorLabel.text = "Major"
+        minorLabel.font = .boldSystemFont(ofSize: labelHeight)
+        scrollView.addSubview(minorLabel)
+        
+        minorInput = UITextField()
+        minorInput.translatesAutoresizingMaskIntoConstraints = false
+        minorInput.placeholder = "Enter your major"
+        minorInput.font = .systemFont(ofSize: textSize)
+        minorInput.borderStyle = .roundedRect
+        scrollView.addSubview(minorInput)
+        
+        blurbLabel = UILabel()
+        blurbLabel.translatesAutoresizingMaskIntoConstraints = false
+        blurbLabel.text = "About"
+        blurbLabel.font = .boldSystemFont(ofSize: labelHeight)
+        scrollView.addSubview(blurbLabel)
+        
+        blurbInput = UITextField()
+        blurbInput.translatesAutoresizingMaskIntoConstraints = false
+        blurbInput.placeholder = "Let others know about you"
+        blurbInput.font = .systemFont(ofSize: textSize)
+        blurbInput.borderStyle = .roundedRect
+        scrollView.addSubview(blurbInput)
+        
+        skillsLabel = UILabel()
+        skillsLabel.translatesAutoresizingMaskIntoConstraints = false
+        skillsLabel.text = "Skills"
+        skillsLabel.font = .boldSystemFont(ofSize: labelHeight)
+        scrollView.addSubview(skillsLabel)
+        
+        skillsInput = UITextField()
+        skillsInput.translatesAutoresizingMaskIntoConstraints = false
+        skillsInput.placeholder = "Separate with a comma"
+        skillsInput.font = .systemFont(ofSize: textSize)
+        skillsInput.borderStyle = .roundedRect
+        scrollView.addSubview(skillsInput)
         
         roleLabel = UILabel()
         roleLabel.translatesAutoresizingMaskIntoConstraints = false
         roleLabel.text = "Primary Role"
         roleLabel.font = .boldSystemFont(ofSize: labelHeight)
-        view.addSubview(roleLabel)
+        scrollView.addSubview(roleLabel)
         
         roleInput = UITextField()
         roleInput.translatesAutoresizingMaskIntoConstraints = false
         roleInput.placeholder = "Enter your primary role"
         roleInput.font = .systemFont(ofSize: textSize)
         roleInput.borderStyle = .roundedRect
-        view.addSubview(roleInput)
+        scrollView.addSubview(roleInput)
         
         setupConstraints()
         
@@ -119,8 +210,15 @@ class CreateProfileViewController: UIViewController {
     func setupConstraints() {
         
         NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding*2),
-            nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding*2)
+            nameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding*2)
             ])
         
         NSLayoutConstraint.activate([
