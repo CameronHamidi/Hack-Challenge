@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class PitchSearchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
     
@@ -25,10 +26,10 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
     var selectedRoles = [String]()
     var rolesTextField: UITextField!
     
-    var keywordsLabel: UILabel!
-    var keywordsCollectionView: UICollectionView!
-    var keywords = [String]()
-    var keywordsTextField: UITextField!
+    var tagsLabel: UILabel!
+    var tagsCollectionView: UICollectionView!
+    var tags = [String]()
+    var tagsTextField: UITextField!
     
     var submitButton: UIButton!
     
@@ -107,36 +108,36 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
         rolesTextField.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(rolesTextField)
         
-        keywordsLabel = UILabel()
-        keywordsLabel.text = "Keywords"
-        keywordsLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
-        keywordsLabel.textAlignment = .left
-        keywordsLabel.textColor = .black
-        keywordsLabel.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(keywordsLabel)
+        tagsLabel = UILabel()
+        tagsLabel.text = "Keywords"
+        tagsLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
+        tagsLabel.textAlignment = .left
+        tagsLabel.textColor = .black
+        tagsLabel.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(tagsLabel)
         
-        var keywordsLayout = UICollectionViewFlowLayout()
-        keywordsLayout.scrollDirection = .horizontal
-        keywordsLayout.minimumLineSpacing = 4
-        keywordsLayout.minimumInteritemSpacing = 4
-        keywordsLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        keywordsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: keywordsLayout)
-        keywordsCollectionView.delegate = self
-        keywordsCollectionView.dataSource = self
-        keywordsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "keyword")
-        keywordsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        keywordsCollectionView.backgroundColor = .white
-        keywordsCollectionView.allowsMultipleSelection = true
-        scrollView.addSubview(keywordsCollectionView)
+        var tagsLayout = UICollectionViewFlowLayout()
+        tagsLayout.scrollDirection = .horizontal
+        tagsLayout.minimumLineSpacing = 4
+        tagsLayout.minimumInteritemSpacing = 4
+        tagsLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tagsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: tagsLayout)
+        tagsCollectionView.delegate = self
+        tagsCollectionView.dataSource = self
+        tagsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "tag")
+        tagsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        tagsCollectionView.backgroundColor = .white
+        tagsCollectionView.allowsMultipleSelection = true
+        scrollView.addSubview(tagsCollectionView)
         
-        keywordsTextField = UITextField()
-        keywordsTextField.placeholder = " ex. freshmen, 2020, internship"
-        keywordsTextField.textColor = .gray
-        keywordsTextField.font = UIFont.systemFont(ofSize: 15.0)
-        keywordsTextField.borderStyle = .roundedRect
-        keywordsTextField.delegate = self
-        keywordsTextField.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(keywordsTextField)
+        tagsTextField = UITextField()
+        tagsTextField.placeholder = " ex. freshmen, 2020, internship"
+        tagsTextField.textColor = .gray
+        tagsTextField.font = UIFont.systemFont(ofSize: 15.0)
+        tagsTextField.borderStyle = .roundedRect
+        tagsTextField.delegate = self
+        tagsTextField.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(tagsTextField)
         
         submitButton = UIButton()
         submitButton.setTitle("Search pitches", for: .normal)
@@ -160,7 +161,43 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     @objc func performSearch() {
-        
+        sendSearchRequest { postIds in
+            DispatchQueue.main.async {
+                var newView = PostsViewController()
+                newView.postIds = postIds
+                self.navigationController?.pushViewController(newView, animated: true)
+            }
+        }
+    }
+    
+    func sendSearchRequest(completion: @escaping([Int]) -> Void) {
+        var parameters: [String: Any] = [
+            "kind" : 2,
+            "skills" : self.skills.joined(separator: ","),
+            "role" : self.selectedRoles.joined(separator: ","),
+            "tags" : self.tags.joined(separator: ",")
+        ]
+        Alamofire.request("http://35.190.171.42/api/login/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{
+                    let decoder = JSONDecoder()
+                    do {
+                        var decodedData = try? decoder.decode(SearchResponse.self, from: data)
+                        print("success")
+                        if decodedData!.success {
+                            completion(decodedData!.data)
+                        } else {
+                            completion([])
+                        }
+                    } catch {
+                        completion([])
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -175,9 +212,9 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
             rolesCollectionView.reloadData()
             textField.text = ""
             return true
-        } else if textField == keywordsTextField {
-            keywords.append(textField.text!)
-            keywordsCollectionView.reloadData()
+        } else if textField == tagsTextField {
+            tags.append(textField.text!)
+            tagsCollectionView.reloadData()
             textField.text = ""
             return true
         } else {
@@ -190,8 +227,8 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
             return skills.count
         } else if collectionView == rolesCollectionView {
             return roles.count
-        } else if collectionView == keywordsCollectionView {
-            return keywords.count
+        } else if collectionView == tagsCollectionView {
+            return tags.count
         } else {
             return 0
         }
@@ -216,8 +253,8 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
                     }
                 }
             }
-        } else if collectionView == keywordsCollectionView {
-            keywords.remove(at: indexPath.row)
+        } else if collectionView == tagsCollectionView {
+            tags.remove(at: indexPath.row)
             collectionView.reloadData()
         }
     }
@@ -233,9 +270,9 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
             var cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "role", for: indexPath) as! RolesCollectionViewCell
             cell.configure(roleName: roles[indexPath.row])
             return cell
-        } else if collectionView == keywordsCollectionView {
-            var cell = keywordsCollectionView.dequeueReusableCell(withReuseIdentifier: "keyword", for: indexPath) as! SkillsCollectionViewCell
-            cell.configure(skillName: keywords[indexPath.row])
+        } else if collectionView == tagsCollectionView {
+            var cell = tagsCollectionView.dequeueReusableCell(withReuseIdentifier: "tag", for: indexPath) as! SkillsCollectionViewCell
+            cell.configure(skillName: tags[indexPath.row])
             return cell
         } else {
             return UICollectionViewCell()
@@ -252,8 +289,8 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
             var width = collectionView.frame.width
             var height = CGFloat(integerLiteral: 25)
             return CGSize(width: width, height: height)
-        } else if collectionView == keywordsCollectionView {
-            var width = ceil((Double)(keywords[indexPath.row].count) / 10.0 * 75.0 + 10.0)
+        } else if collectionView == tagsCollectionView {
+            var width = ceil((Double)(tags[indexPath.row].count) / 10.0 * 75.0 + 10.0)
             return CGSize(width: width, height: 25.0)
         } else {
             return CGSize()
@@ -308,26 +345,26 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
             ])
         
         NSLayoutConstraint.activate([
-            keywordsLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: 25),
-            keywordsLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-            keywordsLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
+            tagsLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: 25),
+            tagsLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            tagsLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
             ])
         
         NSLayoutConstraint.activate([
-            keywordsCollectionView.topAnchor.constraint(equalTo: keywordsLabel.bottomAnchor, constant: 8),
-            keywordsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-            keywordsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
-            keywordsCollectionView.heightAnchor.constraint(equalToConstant: 25)
+            tagsCollectionView.topAnchor.constraint(equalTo: tagsLabel.bottomAnchor, constant: 8),
+            tagsCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            tagsCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding),
+            tagsCollectionView.heightAnchor.constraint(equalToConstant: 25)
             ])
         
         NSLayoutConstraint.activate([
-            keywordsTextField.topAnchor.constraint(equalTo: keywordsCollectionView.bottomAnchor, constant: 8),
-            keywordsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
-            keywordsTextField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
+            tagsTextField.topAnchor.constraint(equalTo: tagsCollectionView.bottomAnchor, constant: 8),
+            tagsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: padding),
+            tagsTextField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -1 * padding)
             ])
         
         NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: keywordsTextField.bottomAnchor, constant: 20),
+            submitButton.topAnchor.constraint(equalTo: tagsTextField.bottomAnchor, constant: 20),
             submitButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             submitButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             submitButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),

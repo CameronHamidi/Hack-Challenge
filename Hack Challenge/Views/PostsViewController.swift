@@ -11,6 +11,7 @@ import UIKit
 class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var postPreviewsTableView: UITableView!
     var posts: [Post]!
+    var postIds: [Int]!
     
     let padding: CGFloat = 32
     
