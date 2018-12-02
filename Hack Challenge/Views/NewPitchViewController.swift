@@ -243,7 +243,7 @@ class NewPitchViewController: UIViewController {
         }
         
         //token ??
-        postToServer(0, titleText, tagText, descrText)
+        postToServer(token: 0, title: titleText, tags: tagText, text: descrText)
         back()
         //Delegate to another view
         //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
@@ -269,8 +269,7 @@ class NewPitchViewController: UIViewController {
                 
                 break
                 case .failure(let error):
-                
-                print(error)
+                    print(error.localizedDescription)
             }
         }
     }

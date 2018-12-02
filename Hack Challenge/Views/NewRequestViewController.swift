@@ -270,9 +270,10 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             displayMyAlertMessage(userMessage: "Please add tags.")
             return
         }
+        let groupSizeText = sizeLabel.text!
         
         //token?? role??
-        postToServer(0, titleText, tagText, "", descrText, group_size)
+        postToServer(token: 0, title: titleText, tags: tagText, role: "", text: descrText, group_size: groupSizeText)
         back()
         
         //Delegate to another view
@@ -298,11 +299,10 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             switch response.result {
             case .success:
                 print(response)
-                
                 break
-            case .failure(let error):
                 
-                print(error)
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
