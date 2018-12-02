@@ -43,8 +43,14 @@ class CreateProfileViewController: UIViewController {
     var roleLabel: UILabel!
     var roleInput: UITextField!
     
+    var emailLabel: UILabel!
+    var emailInput: UITextField!
+    
+    var skillsLabel: UILabel!
+    var skillsInput: UITextField!
+    
     var photoLabel: UILabel! //profile photo
-//    var photoInput: UITextView!
+    //    var photoInput: UITextView!
     
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
@@ -53,7 +59,7 @@ class CreateProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         title = "Create Account"
         
@@ -201,7 +207,7 @@ class CreateProfileViewController: UIViewController {
         setupConstraints()
         
     }
-
+    
     @objc func back() {
         dismiss(animated: true, completion: nil)
     }
