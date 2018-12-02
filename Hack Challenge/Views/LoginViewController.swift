@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         view.backgroundColor = .white
+        title = "CollabIT"
 
         loginTitle = UILabel()
         loginTitle.textColor = .black
@@ -170,6 +171,7 @@ class LoginViewController: UIViewController {
                         completion(false)
                     }
                 case .failure(let error):
+                    self.displayMyAlertMessage(userMessage: "Account credentials do not match.")
                     print(error.localizedDescription)
                 }
             }
@@ -180,7 +182,15 @@ class LoginViewController: UIViewController {
             self.present(alert, animated: true)
         }
     }
-
+    
+    //Alert Pop-up
+    func displayMyAlertMessage(userMessage:String){
+        let myAlert = UIAlertController(title: "Oops!", message: userMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+        myAlert.addAction(okAction)
+        self.present(myAlert, animated: true, completion: nil)
+    }
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             loginTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
