@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class NewPitchViewController: UIViewController {
+class NewPitchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
     
     var scrollView: UIScrollView!
     
@@ -26,8 +26,12 @@ class NewPitchViewController: UIViewController {
     var cameraLabel: UILabel!
     var libLabel: UILabel!
     
-    var tagLabel: UILabel!
-    var tagInput: UITextField!
+//    var tagLabel: UILabel!
+//    var tagInput: UITextField!
+    var keywordsLabel: UILabel!
+    var keywordsCollectionView: UICollectionView!
+    var keywords = [String]()
+    var keywordsTextField: UITextField!
     
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
@@ -113,18 +117,49 @@ class NewPitchViewController: UIViewController {
         libLabel.font = .systemFont(ofSize: textSize)
         scrollView.addSubview(libLabel)
         
-        tagLabel = UILabel()
-        tagLabel.translatesAutoresizingMaskIntoConstraints = false
-        tagLabel.text = "Add Tags"
-        tagLabel.font = .boldSystemFont(ofSize: labelHeight)
-        scrollView.addSubview(tagLabel)
+        keywordsLabel = UILabel()
+        keywordsLabel.text = "Keywords"
+        keywordsLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
+        keywordsLabel.textAlignment = .left
+        keywordsLabel.textColor = .black
+        keywordsLabel.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(keywordsLabel)
         
-        tagInput = UITextField()
-        tagInput.translatesAutoresizingMaskIntoConstraints = false
-        tagInput.placeholder = "Separate tags with commas"
-        tagInput.font = .systemFont(ofSize: textSize)
-        tagInput.borderStyle = .roundedRect
-        scrollView.addSubview(tagInput)
+        var keywordsLayout = UICollectionViewFlowLayout()
+        keywordsLayout.scrollDirection = .horizontal
+        keywordsLayout.minimumLineSpacing = 4
+        keywordsLayout.minimumInteritemSpacing = 4
+        keywordsLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        keywordsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: keywordsLayout)
+        keywordsCollectionView.delegate = self
+        keywordsCollectionView.dataSource = self
+        keywordsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "keyword")
+        keywordsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        keywordsCollectionView.backgroundColor = .white
+        keywordsCollectionView.allowsMultipleSelection = true
+        scrollView.addSubview(keywordsCollectionView)
+        
+        keywordsTextField = UITextField()
+        keywordsTextField.placeholder = " ex. freshmen, 2020, internship"
+        keywordsTextField.textColor = .gray
+        keywordsTextField.font = UIFont.systemFont(ofSize: 15.0)
+        keywordsTextField.borderStyle = .roundedRect
+        keywordsTextField.delegate = self
+        keywordsTextField.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(keywordsTextField)
+        
+//        tagLabel = UILabel()
+//        tagLabel.translatesAutoresizingMaskIntoConstraints = false
+//        tagLabel.text = "Add Tags"
+//        tagLabel.font = .boldSystemFont(ofSize: labelHeight)
+//        scrollView.addSubview(tagLabel)
+//
+//        tagInput = UITextField()
+//        tagInput.translatesAutoresizingMaskIntoConstraints = false
+//        tagInput.placeholder = "Separate tags with commas"
+//        tagInput.font = .systemFont(ofSize: textSize)
+//        tagInput.borderStyle = .roundedRect
+//        scrollView.addSubview(tagInput)
         
         setupConstraints()
     }
@@ -200,17 +235,77 @@ class NewPitchViewController: UIViewController {
             ])
         
         NSLayoutConstraint.activate([
-            tagLabel.topAnchor.constraint(equalTo: libLabel.bottomAnchor, constant: padding*2),
-            tagLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+            keywordsLabel.topAnchor.constraint(equalTo: libLabel.bottomAnchor, constant: padding*2),
+            keywordsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            
+            keywordsCollectionView.topAnchor.constraint(equalTo: keywordsLabel.bottomAnchor, constant: padding),
+            keywordsCollectionView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            keywordsCollectionView.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+            keywordsCollectionView.heightAnchor.constraint(equalToConstant: 25),
+            
+            keywordsTextField.topAnchor.constraint(equalTo: keywordsCollectionView.bottomAnchor, constant: padding),
+            keywordsTextField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            keywordsTextField.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+            keywordsTextField.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
             ])
         
-        NSLayoutConstraint.activate([
-            tagInput.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: padding),
-            tagInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            tagInput.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
-            tagInput.heightAnchor.constraint(equalToConstant: 32),
-            tagInput.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
-            ])
+//        NSLayoutConstraint.activate([
+//            tagLabel.topAnchor.constraint(equalTo: libLabel.bottomAnchor, constant: padding*2),
+//            tagLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+//
+//            tagInput.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: padding),
+//            tagInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+//            tagInput.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+//            tagInput.heightAnchor.constraint(equalToConstant: 32),
+//            tagInput.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
+//            ])
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == keywordsTextField {
+            keywords.append(textField.text!)
+            keywordsCollectionView.reloadData()
+            textField.text = ""
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    //Functions for role collection view
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            return keywords.count
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == keywordsCollectionView {
+            keywords.remove(at: indexPath.row)
+            collectionView.reloadData()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == keywordsCollectionView {
+            var cell = keywordsCollectionView.dequeueReusableCell(withReuseIdentifier: "keyword", for: indexPath) as! SkillsCollectionViewCell
+            cell.configure(skillName: keywords[indexPath.row])
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == keywordsCollectionView {
+            var width = ceil((Double)(keywords[indexPath.row].count) / 10.0 * 75.0 + 10.0)
+            return CGSize(width: width, height: 25.0)
+        }
+        else {
+            return CGSize()
+        }
     }
     
     @objc func back() {
@@ -237,26 +332,22 @@ class NewPitchViewController: UIViewController {
             displayMyAlertMessage(userMessage: "Please fill out the description.")
             return
         }
-        guard let tagText = tagInput.text, !tagText.isEmpty else {
-            displayMyAlertMessage(userMessage: "Please add tags.")
-            return
-        }
         
         //token ??
-        postToServer(token: 0, title: titleText, tags: tagText, text: descrText)
+        postToServer(token: 0, title: titleText, text: descrText)
         back()
         //Delegate to another view
         //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
         //        navigationController?.popViewController(animated: true)
     }
     
-    @objc func postToServer(token: Int, title: String, tags: String, text: String) {
+    @objc func postToServer(token: Int, title: String, text: String) {
         //fields: *token, *title, *tags, role, *text, kind, course, group_size, skills
         //* required
         let parameters: [String : Any] = [
             "token" : token,
             "title" : title,
-            "tags" : tags,
+            "tags" : keywords.joined(separator: ","),
             "text" : text,
             "kind" : 2
         ]

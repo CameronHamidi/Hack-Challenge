@@ -12,7 +12,7 @@ import Alamofire
 //Layout would be the same as NewPitchViewController - will be added here later
 //With the addition of 'group size' and 'roles' options
 
-class NewRequestViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class NewRequestViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
     
     var scrollView: UIScrollView!
     
@@ -32,9 +32,14 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
     //    var tagLabel: UILabel!
     //    var tagInput:
     
-    var groupLabel: UILabel!
-    var sizeLabel: UILabel!
-    var stepper: UIStepper!
+    var groupSizeLabel: UILabel!
+    var groupSizeCollectionView: UICollectionView!
+    var groupSizes = ["1-2", "2-4", "5+"]
+    var selectedSizes = [String]()
+    
+//    var groupLabel: UILabel!
+//    var sizeLabel: UILabel!
+//    var stepper: UIStepper!
     
     var roleLabel: UILabel!
     //    var roleTableView: UITableView!
@@ -44,8 +49,12 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
     var selectedRoles = [String]()
     var rolesTextField: UITextField!
     
-    var tagLabel: UILabel!
-    var tagInput: UITextField!
+//    var tagLabel: UILabel!
+//    var tagInput: UITextField!
+    var keywordsLabel: UILabel!
+    var keywordsCollectionView: UICollectionView!
+    var keywords = [String]()
+    var keywordsTextField: UITextField!
     
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
@@ -133,30 +142,48 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         scrollView.addSubview(libLabel)
         
         // Group Size
-        groupLabel = UILabel()
-        groupLabel.translatesAutoresizingMaskIntoConstraints = false
-        groupLabel.text = "Group Size"
-        groupLabel.font = .boldSystemFont(ofSize: labelHeight)
-        scrollView.addSubview(groupLabel)
+        groupSizeLabel = UILabel()
+        groupSizeLabel.text = "Group Size"
+        groupSizeLabel.font = UIFont.boldSystemFont(ofSize: labelHeight)
+        groupSizeLabel.textAlignment = .left
+        groupSizeLabel.textColor = .black
+        groupSizeLabel.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(groupSizeLabel)
         
-        sizeLabel = UILabel()
-        sizeLabel.translatesAutoresizingMaskIntoConstraints = false
-        sizeLabel.text = "1"
-        sizeLabel.font = .systemFont(ofSize: labelHeight)
-        scrollView.addSubview(sizeLabel)
+        let groupSizeLayout = UICollectionViewFlowLayout()
+        groupSizeLayout.scrollDirection = .horizontal
+        groupSizeLayout.minimumLineSpacing = 4
+        groupSizeLayout.minimumInteritemSpacing = 4
+        groupSizeLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        groupSizeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: groupSizeLayout)
+        groupSizeCollectionView.register(GroupSizeCollectionViewCell.self, forCellWithReuseIdentifier: "size")
+        groupSizeCollectionView.backgroundColor = .white
+        groupSizeCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        groupSizeCollectionView.delegate = self
+        groupSizeCollectionView.dataSource = self
+        groupSizeCollectionView.allowsMultipleSelection = true
+        scrollView.addSubview(groupSizeCollectionView)
         
-        stepper = UIStepper()
-        stepper.translatesAutoresizingMaskIntoConstraints = false
-        stepper.wraps = true
-        stepper.autorepeat = true
-        stepper.stepValue = 1
-        stepper.minimumValue = 1
-        stepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
-        scrollView.addSubview(stepper)
+//        groupLabel = UILabel()
+//        groupLabel.translatesAutoresizingMaskIntoConstraints = false
+//        groupLabel.text = "Group Size"
+//        groupLabel.font = .boldSystemFont(ofSize: labelHeight)
+//        scrollView.addSubview(groupLabel)
         
-        // TODO - Roles
-        //UITableview for roles select
-        //CheckBox Input
+//        sizeLabel = UILabel()
+//        sizeLabel.translatesAutoresizingMaskIntoConstraints = false
+//        sizeLabel.text = "1"
+//        sizeLabel.font = .systemFont(ofSize: labelHeight)
+//        scrollView.addSubview(sizeLabel)
+//
+//        stepper = UIStepper()
+//        stepper.translatesAutoresizingMaskIntoConstraints = false
+//        stepper.wraps = true
+//        stepper.autorepeat = true
+//        stepper.stepValue = 1
+//        stepper.minimumValue = 1
+//        stepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
+//        scrollView.addSubview(stepper)
         
         roleLabel = UILabel()
         roleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -183,22 +210,53 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         rolesTextField.textColor = .gray
         rolesTextField.font = UIFont.systemFont(ofSize: 15.0)
         rolesTextField.borderStyle = .roundedRect
-        //        rolesTextField.delegate = self
+        rolesTextField.delegate = self
         rolesTextField.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(rolesTextField)
         
-        tagLabel = UILabel()
-        tagLabel.translatesAutoresizingMaskIntoConstraints = false
-        tagLabel.text = "Add Tags"
-        tagLabel.font = .boldSystemFont(ofSize: labelHeight)
-        scrollView.addSubview(tagLabel)
+        keywordsLabel = UILabel()
+        keywordsLabel.text = "Keywords"
+        keywordsLabel.font = UIFont.boldSystemFont(ofSize: labelHeight)
+        keywordsLabel.textAlignment = .left
+        keywordsLabel.textColor = .black
+        keywordsLabel.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(keywordsLabel)
         
-        tagInput = UITextField()
-        tagInput.translatesAutoresizingMaskIntoConstraints = false
-        tagInput.placeholder = "Separate tags with commas"
-        tagInput.font = .systemFont(ofSize: textSize)
-        tagInput.borderStyle = .roundedRect
-        scrollView.addSubview(tagInput)
+        let keywordsLayout = UICollectionViewFlowLayout()
+        keywordsLayout.scrollDirection = .horizontal
+        keywordsLayout.minimumLineSpacing = 4
+        keywordsLayout.minimumInteritemSpacing = 4
+        keywordsLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        keywordsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: keywordsLayout)
+        keywordsCollectionView.delegate = self
+        keywordsCollectionView.dataSource = self
+        keywordsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "keyword")
+        keywordsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        keywordsCollectionView.backgroundColor = .white
+        keywordsCollectionView.allowsMultipleSelection = true
+        scrollView.addSubview(keywordsCollectionView)
+        
+        keywordsTextField = UITextField()
+        keywordsTextField.placeholder = " ex. freshmen, 2020, internship"
+        keywordsTextField.textColor = .gray
+        keywordsTextField.font = UIFont.systemFont(ofSize: 15.0)
+        keywordsTextField.borderStyle = .roundedRect
+        keywordsTextField.delegate = self
+        keywordsTextField.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(keywordsTextField)
+        
+//        tagLabel = UILabel()
+//        tagLabel.translatesAutoresizingMaskIntoConstraints = false
+//        tagLabel.text = "Add Tags"
+//        tagLabel.font = .boldSystemFont(ofSize: labelHeight)
+//        scrollView.addSubview(tagLabel)
+//
+//        tagInput = UITextField()
+//        tagInput.translatesAutoresizingMaskIntoConstraints = false
+//        tagInput.placeholder = "Separate tags with commas"
+//        tagInput.font = .systemFont(ofSize: textSize)
+//        tagInput.borderStyle = .roundedRect
+//        scrollView.addSubview(tagInput)
         
         setupConstraints()
         
@@ -208,13 +266,36 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func stepperValueChanged(_ sender:UIStepper!){
-        sizeLabel.text = String(Int(sender.value))
+//    @objc func stepperValueChanged(_ sender:UIStepper!){
+//        sizeLabel.text = String(Int(sender.value))
+//    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == rolesTextField {
+            roles.append(textField.text!)
+            rolesCollectionView.reloadData()
+            textField.text = ""
+            return true
+        } else if textField == keywordsTextField {
+            keywords.append(textField.text!)
+            keywordsCollectionView.reloadData()
+            textField.text = ""
+            return true
+        } else {
+            return false
+        }
     }
     
-    //Functions for role collection view
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return roles.count
+        if collectionView == rolesCollectionView {
+            return roles.count
+        } else if collectionView == keywordsCollectionView {
+            return keywords.count
+        } else if collectionView == groupSizeCollectionView {
+            return groupSizes.count
+        } else {
+            return 0
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -222,28 +303,66 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if selectedRoles.count == 0 || !selectedRoles.contains(roles[indexPath.row]) {
-            selectedRoles.append(roles[indexPath.row])
-        } else {
-            for i in 0..<selectedRoles.count {
-                if selectedRoles[i] == roles[indexPath.row] {
-                    selectedRoles.remove(at: i)
-                    break
+        if collectionView == rolesCollectionView {
+            if selectedRoles.count == 0 || !selectedRoles.contains(roles[indexPath.row]) {
+                selectedRoles.append(roles[indexPath.row])
+            } else {
+                for i in 0..<selectedRoles.count {
+                    if selectedRoles[i] == roles[indexPath.row] {
+                        selectedRoles.remove(at: i)
+                        break
+                    }
+                }
+            }
+        } else if collectionView == keywordsCollectionView {
+            keywords.remove(at: indexPath.row)
+            collectionView.reloadData()
+        } else if collectionView == groupSizeCollectionView {
+            if selectedSizes.count == 0 || !selectedSizes.contains(groupSizes[indexPath.row]) {
+                selectedSizes.append(groupSizes[indexPath.row])
+            } else {
+                for i in 0..<selectedSizes.count {
+                    if selectedSizes[i] == groupSizes[indexPath.row] {
+                        selectedSizes.remove(at: i)
+                    }
                 }
             }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "role", for: indexPath) as! RolesCollectionViewCell
-        cell.configure(roleName: roles[indexPath.row])
-        return cell
+        if collectionView == rolesCollectionView {
+            var cell = rolesCollectionView.dequeueReusableCell(withReuseIdentifier: "role", for: indexPath) as! RolesCollectionViewCell
+            cell.configure(roleName: roles[indexPath.row])
+            return cell
+        } else if collectionView == keywordsCollectionView {
+            var cell = keywordsCollectionView.dequeueReusableCell(withReuseIdentifier: "keyword", for: indexPath) as! SkillsCollectionViewCell
+            cell.configure(skillName: keywords[indexPath.row])
+            return cell
+        } else if collectionView == groupSizeCollectionView {
+            var cell = groupSizeCollectionView.dequeueReusableCell(withReuseIdentifier: "size", for: indexPath) as! GroupSizeCollectionViewCell
+            cell.configure(sizeName: groupSizes[indexPath.row])
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width*2
-        let height = CGFloat(integerLiteral: 32)
-        return CGSize(width: width, height: height)
+        if collectionView == rolesCollectionView {
+            var width = collectionView.frame.width
+            var height = CGFloat(integerLiteral: 25)
+            return CGSize(width: width, height: height)
+        } else if collectionView == keywordsCollectionView {
+            var width = ceil((Double)(keywords[indexPath.row].count) / 10.0 * 75.0 + 10.0)
+            return CGSize(width: width, height: 25.0)
+        } else if collectionView == groupSizeCollectionView {
+            var width = (groupSizeCollectionView.frame.width - (CGFloat)((groupSizes.count - 1) * 4)) / (CGFloat)(groupSizes.count)
+            return CGSize(width: width, height: 25.0)
+        }
+        else {
+            return CGSize()
+        }
     }
     
     //Alert Pop-up
@@ -266,14 +385,14 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             displayMyAlertMessage(userMessage: "Please fill out the description.")
             return
         }
-        guard let tagText = tagInput.text, !tagText.isEmpty else {
-            displayMyAlertMessage(userMessage: "Please add tags.")
-            return
-        }
-        let groupSizeText = sizeLabel.text!
+//        guard let tags = keywords.joined(separator: ","), tags.characters.count > 0 else {
+//            displayMyAlertMessage(userMessage: "Please add tags.")
+//            return
+//        }
+//        let groupSizeText = sizeLabel.text!
         
         //token?? role??
-        postToServer(token: 0, title: titleText, tags: tagText, role: "", text: descrText, group_size: groupSizeText)
+//        postToServer(token: 0, title: titleText, role: "", text: descrText, group_size: groupSizeText)
         back()
         
         //Delegate to another view
@@ -281,13 +400,13 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         //        navigationController?.popViewController(animated: true)
     }
     
-    @objc func postToServer(token: Int, title: String, tags: String, role: String, text: String, group_size: String) {
+    @objc func postToServer(token: Int, title: String, role: String, text: String, group_size: String) {
         //fields: *token, *title, *tags, *role, *text, kind, course, *group_size, skills
         //* required
         let parameters: [String : Any] = [
             "token" : token,
             "title" : title,
-            "tags" : tags,
+            "tags" : keywords.joined(separator: ","),
             "role" : role,
             "text" : text,
             "kind" : 1,
@@ -379,24 +498,34 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             ])
         
         NSLayoutConstraint.activate([
-            groupLabel.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: padding*2),
-            groupLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+            groupSizeLabel.topAnchor.constraint(equalTo: libLabel.bottomAnchor, constant: padding*2),
+            groupSizeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            
+            groupSizeCollectionView.topAnchor.constraint(equalTo: groupSizeLabel.bottomAnchor, constant: padding),
+            groupSizeCollectionView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            groupSizeCollectionView.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+            groupSizeCollectionView.heightAnchor.constraint(equalToConstant: 25)
             ])
         
-        NSLayoutConstraint.activate([
-            sizeLabel.topAnchor.constraint(equalTo: groupLabel.bottomAnchor, constant: padding),
-            sizeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 50)
-            ])
+//        NSLayoutConstraint.activate([
+//            groupLabel.topAnchor.constraint(equalTo: lineSeparator.bottomAnchor, constant: padding*2),
+//            groupLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+//            ])
+//        
+//        NSLayoutConstraint.activate([
+//            sizeLabel.topAnchor.constraint(equalTo: groupLabel.bottomAnchor, constant: padding),
+//            sizeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 50)
+//            ])
+//        
+//        NSLayoutConstraint.activate([
+//            stepper.topAnchor.constraint(equalTo: sizeLabel.topAnchor),
+//            stepper.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+//            stepper.widthAnchor.constraint(equalToConstant: 124),
+//            stepper.heightAnchor.constraint(equalToConstant: 48)
+//            ])
         
         NSLayoutConstraint.activate([
-            stepper.topAnchor.constraint(equalTo: sizeLabel.topAnchor),
-            stepper.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
-            stepper.widthAnchor.constraint(equalToConstant: 124),
-            stepper.heightAnchor.constraint(equalToConstant: 48)
-            ])
-        
-        NSLayoutConstraint.activate([
-            roleLabel.topAnchor.constraint(equalTo: sizeLabel.bottomAnchor, constant: padding*2),
+            roleLabel.topAnchor.constraint(equalTo: groupSizeCollectionView.bottomAnchor, constant: padding*2),
             roleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
             ])
         
@@ -415,17 +544,30 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             ])
         
         NSLayoutConstraint.activate([
-            tagLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: padding*2),
-            tagLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+            keywordsLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: padding*2),
+            keywordsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            
+            keywordsCollectionView.topAnchor.constraint(equalTo: keywordsLabel.bottomAnchor, constant: padding),
+            keywordsCollectionView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            keywordsCollectionView.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+            keywordsCollectionView.heightAnchor.constraint(equalToConstant: 25),
+            
+            keywordsTextField.topAnchor.constraint(equalTo: keywordsCollectionView.bottomAnchor, constant: padding),
+            keywordsTextField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            keywordsTextField.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+            keywordsTextField.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
             ])
         
-        NSLayoutConstraint.activate([
-            tagInput.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: padding),
-            tagInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            tagInput.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
-            tagInput.heightAnchor.constraint(equalToConstant: 32),
-            tagInput.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
-            ])
+//        NSLayoutConstraint.activate([
+//            tagLabel.topAnchor.constraint(equalTo: rolesTextField.bottomAnchor, constant: padding*2),
+//            tagLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+//
+//            tagInput.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: padding),
+//            tagInput.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+//            tagInput.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
+//            tagInput.heightAnchor.constraint(equalToConstant: 32),
+//            tagInput.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48)
+//            ])
     }
     
 }

@@ -195,12 +195,12 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
     }
     
     func sendSearchRequest(completion: @escaping([Post]) -> Void) {
-        var parameters = [
+        let parameters:[String:Any] = [
             "kind" : 1,
-            "skills" : self.skills.join(","),
-            "role" : self.selectedRoles.join(","),
-            "group_size" : self.selectedSizes.join(","),
-            "tags" : self.tags.join(",")
+            "skills" : self.skills.joined(separator: ","),
+            "role" : self.selectedRoles.joined(separator: ","),
+            "group_size" : self.selectedSizes.joined(separator: ","),
+//            "tags" : self.tags.joined(",")
         ]
         Alamofire.request("http://35.190.171.42/api/posts/search/", method: .get, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
             switch response.result {
@@ -208,7 +208,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{
                     print(json)
                     if let success = json["success"] as! Bool? {
-                        var postIds =
+//                        var postIds =
                     }
                 } else {
                     print("Invalid Response Data")
