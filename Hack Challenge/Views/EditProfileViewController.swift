@@ -43,6 +43,9 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var semesters = ["Spring", "Fall"]
     
     var hasNavController: Bool?
+    
+    var blurbLabel: UILabel!
+    var blurbTextView: UITextView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -196,7 +199,28 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
         skillsTextField.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(skillsTextField)
         
+        blurbLabel = UILabel()
+        blurbLabel.text = "Blurb"
+        blurbLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
+        blurbLabel.textAlignment = .left
+        blurbLabel.textColor = .black
+        blurbLabel.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(blurbLabel)
+        
+        blurbTextView = UITextView()
+        blurbTextView.textColor = .black
+        blurbTextView.font = UIFont.systemFont(ofSize: 14)
+        blurbLabel.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(blurbTextView)
+        
         setupConstraints()
+        
+        var backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(close))
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    @objc func close() {
+        navigationController?.popViewController(animated: true)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -399,8 +423,16 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
             skillsTextField.topAnchor.constraint(equalTo: skillsCollectionView.bottomAnchor, constant: 5),
             skillsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
             skillsTextField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -15),
-            skillsTextField.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -15)
             
+            blurbLabel.topAnchor.constraint(equalTo: skillsTextField.bottomAnchor, constant: 25),
+            blurbLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
+            blurbLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -15),
+            
+            blurbTextView.topAnchor.constraint(equalTo: blurbLabel.bottomAnchor, constant: 5),
+            blurbTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
+            blurbTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -15),
+            blurbTextView.heightAnchor.constraint(equalToConstant: 75),
+            blurbTextView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 25)
         ])
     }
 

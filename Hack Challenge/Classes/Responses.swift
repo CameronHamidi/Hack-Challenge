@@ -10,13 +10,13 @@ import Foundation
 
 
 struct LoginResponse: Codable {
-    var success: Bool
-    var data: LoginResponseData
+    var success: Bool?
+    var data: LoginResponseData?
 }
 
 struct LoginResponseData: Codable {
-    var token: Int
-    var uid: Int
+    var token: Int?
+    var uid: Int?
 }
 
 struct SearchResponse: Codable {
@@ -24,4 +24,7 @@ struct SearchResponse: Codable {
     var data: [Int]
 }
 
-
+struct ErrorResponse: Codable {
+    var success: Bool
+    var error: String
+}
