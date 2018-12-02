@@ -65,6 +65,7 @@ class LoginViewController: UIViewController {
         createAccountButton.setTitleColor(.white, for: .normal)
         createAccountButton.backgroundColor = .black
         createAccountButton.layer.cornerRadius = 10
+        createAccountButton.addTarget(self, action: #selector(showCreateProfileView), for: .touchUpInside)
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(createAccountButton)
         
@@ -73,6 +74,11 @@ class LoginViewController: UIViewController {
     
     @objc func login() {
         // TODO
+    }
+    
+    @objc func showCreateProfileView() {
+        let createProfileView = UINavigationController(rootViewController: CreateProfileViewController())
+        present(createProfileView, animated: true)
     }
     
     func setupConstraints() {
