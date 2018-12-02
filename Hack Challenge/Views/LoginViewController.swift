@@ -28,7 +28,8 @@ class LoginViewController: UIViewController {
         loginTitle.textColor = .black
         loginTitle.textAlignment = .center
         loginTitle.font = UIFont.systemFont(ofSize: 17)
-        loginTitle.text = "Login"
+//        loginTitle.text = "Login" //Having the login show up twice is repetitive
+        loginTitle.text = "Welcome" //maybe we could display our app's name here
         loginTitle.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginTitle)
         
@@ -49,19 +50,21 @@ class LoginViewController: UIViewController {
         view.addSubview(passwordTextField)
         
         loginButton = UIButton()
-        loginButton.backgroundColor = .green
+        loginButton.backgroundColor = UIColor(displayP3Red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
         loginButton.setTitle("Login", for: .normal)
-        loginButton.titleLabel!.font = UIFont.systemFont(ofSize: 17)
-        loginButton.layer.cornerRadius = 15
+        loginButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 17)
+        loginButton.layer.cornerRadius = 10
         loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
-        loginButton.setTitleColor(.green, for: .normal)
+        loginButton.setTitleColor(.white, for: .normal)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginButton)
         
         createAccountButton = UIButton()
         createAccountButton.setTitle("Create Account", for: .normal)
-        createAccountButton.titleLabel!.font = UIFont.systemFont(ofSize: 15)
-        createAccountButton.setTitleColor(.black, for: .normal)
+        createAccountButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 17)
+        createAccountButton.setTitleColor(.white, for: .normal)
+        createAccountButton.backgroundColor = .black
+        createAccountButton.layer.cornerRadius = 10
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(createAccountButton)
         
@@ -69,13 +72,13 @@ class LoginViewController: UIViewController {
     }
     
     @objc func login() {
-        
+        // TODO
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
             loginTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+            loginTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
             
             emailTextField.topAnchor.constraint(equalTo: loginTitle.bottomAnchor, constant: 15),
             emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -87,10 +90,13 @@ class LoginViewController: UIViewController {
             
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 30),
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.widthAnchor.constraint(equalToConstant: 30),
+            loginButton.heightAnchor.constraint(equalToConstant: 35),
+            loginButton.widthAnchor.constraint(equalToConstant: 200),
             
-            createAccountButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 25),
-            createAccountButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            createAccountButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 50),
+            createAccountButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            createAccountButton.heightAnchor.constraint(equalToConstant: 35),
+            createAccountButton.widthAnchor.constraint(equalToConstant: 200)
             ])
     }
 
