@@ -41,6 +41,8 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
 
     var years = ["2018", "2019", "2020", "2021", "2022"]
     var semesters = ["Spring", "Fall"]
+    
+    var hasNavController: Bool?
 
     override func viewDidLoad() {
         super.viewDidLoad()

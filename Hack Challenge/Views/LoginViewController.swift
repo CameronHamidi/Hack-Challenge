@@ -17,6 +17,8 @@ class LoginViewController: UIViewController {
     var loginButton: UIButton!
     var createAccountButton: UIButton!
     
+    var defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,7 +56,7 @@ class LoginViewController: UIViewController {
         loginButton.titleLabel!.font = UIFont.systemFont(ofSize: 17)
         loginButton.layer.cornerRadius = 15
         loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
-        loginButton.setTitleColor(.green, for: .normal)
+        loginButton.setTitleColor(.white, for: .normal)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginButton)
         
@@ -63,13 +65,99 @@ class LoginViewController: UIViewController {
         createAccountButton.titleLabel!.font = UIFont.systemFont(ofSize: 15)
         createAccountButton.setTitleColor(.black, for: .normal)
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
+        createAccountButton.addTarget(self, action: #selector(createAccount), for: .touchUpInside)
         view.addSubview(createAccountButton)
+        
+        if let email = defaults.string(forKey: "email"), let password = defaults.string(forKey: "password") {
+            emailTextField.text = email
+            passwordTextField.text = password
+            login()
+        }
         
         setupConstraints()
     }
     
+    @objc func createAccount() {
+        requestCreateAccount { (responseData) in
+            DispatchQueue.main.async {
+                var newView = UINavigationController(rootViewController: EditProfileViewController())
+                self.present(newView, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    static func requestCreateAccount(completion: @escaping([String: String]) -> Void) {
+        if emailTextField.text! != "" && passwordTextField.text! != "" {
+            var parameters = ["email" : emailTextField.text!, "password" : passwordTextField.text!]
+            print("http://35.190.171.42/api/login/")
+            Alamofire.request("http://35.190.171.42/api/login/create/", method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
+                switch response.result {
+                case .success(let data):
+                    if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{
+                        print(json)
+                        if let success = json["success"] as! Bool? {
+                            print("success")
+                            self.defaults.set(self.emailTextField.text, forKey: "email")
+                            self.defaults.set(self.passwordTextField.text, forKey: "password")
+                            self.defaults.set(json["token"], forKey: "token")
+                            self.defaults.set(json["uid"], forKey: "uid")
+                            var newView = HomeViewController()
+                            self.present(newView, animated: true, completion: nil)
+                        }
+                    } else {
+                        print("Invalid Response Data")
+                        let alert = UIAlertController(title: "Invalid Password", message: "Please try again.", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alert.addAction(action)
+                        self.present(alert, animated: true)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        } else {
+            let alert = UIAlertController(title: "Invalid Data", message: "Please enter both your email address, and the password to use with your account.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            self.present(alert, animated: true)
+        }
+    }
+    
     @objc func login() {
-        
+        if emailTextField.text! != "" && passwordTextField.text! != "" {
+            var parameters = ["email" : emailTextField.text!, "password" : passwordTextField.text!]
+            print("http://35.190.171.42/api/login/")
+            Alamofire.request("http://35.190.171.42/api/login/", method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
+                switch response.result {
+                case .success(let data):
+                    if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{
+                        print(json)
+                        if let success = json["success"] as! Bool? {
+                            print("success")
+                            self.defaults.set(self.emailTextField.text, forKey: "email")
+                            self.defaults.set(self.passwordTextField.text, forKey: "password")
+                            self.defaults.set(json["token"], forKey: "token")
+                            self.defaults.set(json["uid"], forKey: "uid")
+                            var newView = HomeViewController()
+                            self.present(newView, animated: true, completion: nil)
+                        }
+                    } else {
+                        print("Invalid Response Data")
+                        let alert = UIAlertController(title: "Invalid Password", message: "Please try again.", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alert.addAction(action)
+                        self.present(alert, animated: true)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        } else {
+            let alert = UIAlertController(title: "Invalid Data", message: "Please enter both your email address, and your password.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            self.present(alert, animated: true)
+        }
     }
     
     func setupConstraints() {
@@ -87,7 +175,8 @@ class LoginViewController: UIViewController {
             
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 30),
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.widthAnchor.constraint(equalToConstant: 30),
+            loginButton.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
             
             createAccountButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 25),
             createAccountButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)

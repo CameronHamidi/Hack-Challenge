@@ -17,14 +17,26 @@ class CreateProfileViewController: UIViewController {
     var netLabel: UILabel! //net ID
     var netInput: UITextField!
     
+    var yearLabel: UILabel! //Gradaution year
+    var yearInput: UITextField!
+    
     var majorLabel: UILabel!
     var majorInput: UITextField!
+    
+    var minorLabel: UILabel!
+    var minorInput: UITextField!
     
     var roleLabel: UILabel!
     var roleInput: UITextField!
     
-    var imgLabel: UILabel!
-//    var imgInput: UITextView!
+    var emailLabel: UILabel!
+    var emailInput: UITextField!
+    
+    var skillsLabel: UILabel!
+    var skillsInput: UITextField!
+    
+    var photoLabel: UILabel! //profile photo
+    //    var photoInput: UITextView!
     
     let padding: CGFloat = 16
     let labelHeight: CGFloat = 18
@@ -33,9 +45,9 @@ class CreateProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
-        title = "Create Profile"
+        title = "Create Account"
         
         let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
         navigationItem.leftBarButtonItem = backButton
@@ -98,7 +110,7 @@ class CreateProfileViewController: UIViewController {
         setupConstraints()
         
     }
-
+    
     @objc func back() {
         dismiss(animated: true, completion: nil)
     }
