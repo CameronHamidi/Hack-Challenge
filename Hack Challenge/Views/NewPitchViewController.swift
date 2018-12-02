@@ -262,7 +262,7 @@ class NewPitchViewController: UIViewController {
         ]
         
         let urlString = "http://35.190.171.42/api/posts/"
-        Alamofire.request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
+        Alamofire.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
             switch response.result {
             case .success:
                 print(response)

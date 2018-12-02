@@ -177,7 +177,7 @@ class PitchSearchViewController: UIViewController, UICollectionViewDataSource, U
             "role" : self.selectedRoles.joined(separator: ","),
             "tags" : self.tags.joined(separator: ",")
         ]
-        Alamofire.request("http://35.190.171.42/api/login/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
+        Alamofire.request("http://35.190.171.42/api/posts/search/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{

@@ -84,46 +84,41 @@ class LoginViewController: UIViewController {
     @objc func createAccount() {
         requestCreateAccount { (responseData) in
             DispatchQueue.main.async {
-                var newView = UINavigationController(rootViewController: EditProfileViewController())
-                self.present(newView, animated: true, completion: nil)
+                if responseData == "" {
+                    var newView = EditProfileViewController()
+                    self.navigationController?.pushViewController(newView, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "Error", message: responseData, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                }
             }
         }
     }
 
-    func requestCreateAccount(completion: @escaping([String: String]) -> Void) {
+    func requestCreateAccount(completion: @escaping(String) -> Void) {
         if emailTextField.text! != "" && passwordTextField.text! != "" {
             var parameters = ["email" : emailTextField.text!, "password" : passwordTextField.text!]
-            print("http://35.190.171.42/api/login/")
-            Alamofire.request("http://35.190.171.42/api/login/create/", method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
+            Alamofire.request("http://35.190.171.42/api/login/create/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
                 switch response.result {
                 case .success(let data):
-                    if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{
-                        print(json)
-                        if let success = json["success"] as! Bool? {
-                            print("success")
-                            self.defaults.set(self.emailTextField.text, forKey: "email")
-                            self.defaults.set(self.passwordTextField.text, forKey: "password")
-                            self.defaults.set(json["token"], forKey: "token")
-                            self.defaults.set(json["uid"], forKey: "uid")
-                            var newView = HomeViewController()
-                            self.present(newView, animated: true, completion: nil)
+                    let decoder = JSONDecoder()
+                    do {
+                        var decodedData = try? decoder.decode(LoginResponse.self, from: data)
+                        if decodedData!.success! {
+                            completion("")
+                        } else {
+                            completion("Unknown error")
                         }
-                    } else {
-                        print("Invalid Response Data")
-                        let alert = UIAlertController(title: "Invalid Password", message: "Please try again.", preferredStyle: .alert)
-                        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                        alert.addAction(action)
-                        self.present(alert, animated: true)
+                    } catch {
+                        completion("Unknown error")
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
+                    completion(error.localizedDescription)
                 }
             }
-        } else {
-            let alert = UIAlertController(title: "Invalid Data", message: "Please enter both your email address, and the password to use with your account.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(action)
-            self.present(alert, animated: true)
         }
     }
 
@@ -157,13 +152,13 @@ class LoginViewController: UIViewController {
                         do {
                             var decodedData = try? decoder.decode(LoginResponse.self, from: data)
                             print("success")
-                            if decodedData!.success {
+                            if decodedData!.success! {
                                 print("success")
                                 self.defaults.set(self.emailTextField.text, forKey: "email")
                                 self.defaults.set(self.passwordTextField.text, forKey: "password")
                                 self.defaults.set(json["token"], forKey: "token")
                                 self.defaults.set(json["uid"], forKey: "uid")
-                                completion(decodedData!.success)
+                                completion(decodedData!.success!)
                             } else {
                                 completion(false)
                             }
@@ -189,7 +184,7 @@ class LoginViewController: UIViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             loginTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            loginTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
 
             emailTextField.topAnchor.constraint(equalTo: loginTitle.bottomAnchor, constant: 15),
             emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
