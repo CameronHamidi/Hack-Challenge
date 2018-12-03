@@ -208,6 +208,7 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
             "group_size" : self.selectedSizes.joined(separator: ","),
             "tags" : self.tags.joined(separator: ",")
         ]
+        print(parameters)
         Alamofire.request("http://35.190.171.42/api/posts/search/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
             switch response.result {
             case .success(let data):
