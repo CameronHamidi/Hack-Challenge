@@ -214,7 +214,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //TODO - wip
-    func getUserInfo(completion: @escaping (Bool) -> Void) {
+    static func getUserInfo(completion: @escaping (Bool) -> Void) {
         Alamofire.request("http://35.190.171.42/api/users/self)").validate().responseData { (response) in
             switch response.result {
             case .success(let data):
@@ -228,8 +228,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                     self.roleLabel.text =
                     self.netLabel.text =
                 }
-//                let jsonDecoder = JSONDecoder()
-                //TODO - set fields/labels to match user's info
+                let jsonDecoder = JSONDecoder()
+            //TODO - set fields/labels to match user's info
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -426,14 +426,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             ])
     }
     
-//    func createPosts() {
-        //        let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-        //        let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-        //        let vanillaIcecream = Post(icon: UIImage(named: "icon_placeholder")!, name: "FoodWiki", date: "2h", title: "Ice cream, vanilla facts and history - testing if this title will wrap", blurb: "Vanilla is frequently used to flavor ice cream, especially in North America and Europe. Vanilla ice cream, like other flavors of ice cream, was originally created by cooling a mixture made of cream, sugar")
-        //        let test = Post(icon: UIImage(named: "icon_placeholder")!, name: "test", date: "Nov 27", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-        //
-        //        postsArray = [newPost, ezraCornell, vanillaIcecream, test]
-//    }
+    //    func createPosts() {
+    //        let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+    //        let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+    //        let vanillaIcecream = Post(icon: UIImage(named: "icon_placeholder")!, name: "FoodWiki", date: "2h", title: "Ice cream, vanilla facts and history - testing if this title will wrap", blurb: "Vanilla is frequently used to flavor ice cream, especially in North America and Europe. Vanilla ice cream, like other flavors of ice cream, was originally created by cooling a mixture made of cream, sugar")
+    //        let test = Post(icon: UIImage(named: "icon_placeholder")!, name: "test", date: "Nov 27", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+    //
+    //        postsArray = [newPost, ezraCornell, vanillaIcecream, test]
+    //    }
     
     // MARK: - TABLEVIEW METHODS
     

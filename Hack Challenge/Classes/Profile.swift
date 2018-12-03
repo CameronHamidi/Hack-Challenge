@@ -20,26 +20,28 @@ enum Skill: String { //wip
     case C
 }
 
-class Profile {
+class Profile: Codable {
     
-    var name: String
-    var picture: UIImage
-    var major: String
-    
-    var email: String
-    var skills: [Skill]
-    var posts: [Post]
+    var name: String?
+    var contact_info: String?
+    var major: String?
+    var class_year: String?
+    var skills: String?
+    var role: String?
+    var courses_take: String?
+    var blurb: String?
+    var profile_photo: String?
     
 //    var projects: [Project]
     
-    init(name: String, picture: UIImage, major: String, email: String, skills: [Skill], posts: [Post]) {
-        self.name = name
-        self.picture = picture
-        self.major = major
-        self.email = email
-        self.skills = skills
-        self.posts = posts
-    }
+//    init(name: String, picture: UIImage, major: String, email: String, skills: [Skill], posts: [Post]) {
+//        self.name = name
+//        self.picture = picture
+//        self.major = major
+//        self.email = email
+//        self.skills = skills
+//        self.posts = posts
+//    }
     
 //    func updateInfo() {}
     

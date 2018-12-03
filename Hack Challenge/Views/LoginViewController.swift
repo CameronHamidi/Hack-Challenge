@@ -88,7 +88,8 @@ class LoginViewController: UIViewController {
         requestCreateAccount { (responseData) in
             DispatchQueue.main.async {
                 if responseData == "" {
-                    var newView = EditProfileViewController()
+                    var newView = CreateProfileViewController()
+//                    newView.newProfile = true
                     self.navigationController?.pushViewController(newView, animated: true)
                 } else {
                     let alert = UIAlertController(title: "Error", message: responseData, preferredStyle: .alert)
@@ -110,10 +111,6 @@ class LoginViewController: UIViewController {
                     do {
                         var decodedData = try? decoder.decode(LoginResponse.self, from: data)
                         if decodedData!.success! {
-                            self.defaults.set(self.emailTextField.text, forKey: "email")
-                            self.defaults.set(self.passwordTextField.text, forKey: "password")
-                            self.defaults.set(decodedData!.data!.token, forKey: "token")
-                            self.defaults.set(decodedData!.data!.token, forKey: "uid")
                             completion("")
                         } else {
                             completion("Unknown error")
