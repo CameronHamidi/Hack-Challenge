@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Alamofire
 
 class PostViewController: UIViewController {
 
     var scrollView: UIScrollView!
+    var defaults = UserDefaults.standard
     
     var iconView: UIImageView!
     var nameLabel: UILabel!
@@ -42,6 +44,7 @@ class PostViewController: UIViewController {
         iconView = UIImageView()
         iconView.translatesAutoresizingMaskIntoConstraints = false
         //        iconView.contentMode = .scaleAspectFill
+        iconView.image = UIImage(named: "img_profileicon")
         iconView.backgroundColor = .lightGray
         iconView.layer.cornerRadius = iconSize/2
         scrollView.addSubview(iconView)
@@ -99,6 +102,23 @@ class PostViewController: UIViewController {
         scrollView.addSubview(descrText)
         
         setConstraints()
+    }
+    
+    //TODO- wip
+    static func getPostInfo(completion: @escaping (Bool) -> Void) {
+        //how to get post id?
+        Alamofire.request("http://35.190.171.42/api/posts/\(post_id)!)").validate().responseData { (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                    print(json)
+                }
+                let jsonDecoder = JSONDecoder()
+            //TODO - set fields/labels to match user's info
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func setConstraints() {

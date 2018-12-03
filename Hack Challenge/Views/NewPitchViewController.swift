@@ -12,6 +12,7 @@ import Alamofire
 class NewPitchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
     
     var scrollView: UIScrollView!
+    var defaults = UserDefaults.standard
     
     var titleLabel: UILabel!
     var titleInput: UITextField!
