@@ -34,24 +34,24 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var logoutButton: UIButton!
     
-//    var lineSeparator2: UIView!
-//    var majorsSubLabel: UILabel! //Primary Role
-//    var majorsLabel: UILabel!
-//    var netSubLabel: UILabel! //Cornell Net ID
-//    var netLabel: UILabel!
-//    var roleIcon: UIImageView!
-//    var netIcon: UIImageView!
+    //    var lineSeparator2: UIView!
+    //    var majorsSubLabel: UILabel! //Primary Role
+    //    var majorsLabel: UILabel!
+    //    var netSubLabel: UILabel! //Cornell Net ID
+    //    var netLabel: UILabel!
+    //    var roleIcon: UIImageView!
+    //    var netIcon: UIImageView!
     
     var postsTableView: UITableView!
     var postsArray: [Post] = [Post]()
-//    var tableview: UITableView!
+    //    var tableview: UITableView!
     
     var segControl: UISegmentedControl!
-//    var containerView: UIView!
+    //    var containerView: UIView!
     var aboutContainer: UIView!
     var projectsContainer: UIView!
     var postsContainer: UIView!
-//    var segmentedControlContainer: UIView!
+    //    var segmentedControlContainer: UIView!
     
     var aboutOpenConstraint: NSLayoutConstraint!
     var aboutClosedConstraint: NSLayoutConstraint!
@@ -106,11 +106,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // TODO - revamp to get profile info from backend
         avatar = UIImageView()
-        avatar.backgroundColor = .gray
-        avatar.image = UIImage(named: "img_profileicon")
+        //        let avatar = UIView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
         avatar.translatesAutoresizingMaskIntoConstraints = false
-//        avatar.layer.borderWidth = 1
-//        avatar.layer.masksToBounds = false
+        //        avatar.layer.borderWidth = 1
+        //        avatar.layer.masksToBounds = false
+        avatar.backgroundColor = .gray
         avatar.layer.cornerRadius = avatarSize/2
         avatar.clipsToBounds = true
         scrollView.addSubview(avatar)
@@ -139,7 +139,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         activeLabel.font = UIFont.systemFont(ofSize: 14)
         activeLabel.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(activeLabel)
-    
+        
         lineSeparator = UIView()
         lineSeparator.translatesAutoresizingMaskIntoConstraints = false
         lineSeparator.backgroundColor = .lightGray
@@ -189,7 +189,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         contactCollectionView.delegate = self
         contactCollectionView.dataSource = self
         contactCollectionView.register(ContactCollectionViewCell.self, forCellWithReuseIdentifier: "contact")
-//        contactCollectionView.backgroundColor = UIColor(displayP3Red: 241, green: 241, blue: 241, alpha: 1.0)
+        //        contactCollectionView.backgroundColor = UIColor(displayP3Red: 241, green: 241, blue: 241, alpha: 1.0)
         contactCollectionView.backgroundColor = UIColor(displayP3Red: 241/255, green: 241/255, blue: 241/255, alpha: 1.0)
         contactCollectionView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contactCollectionView)
@@ -242,7 +242,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             NSLayoutConstraint.activate([skillsCollectionViewOpenConstraint])
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == contactCollectionView  {
             return 2
@@ -345,14 +345,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             ])
         
         // Some maths to align labels on either side of line separator
-//        let coor: CGFloat = view.bounds.width/4
-
+        //        let coor: CGFloat = view.bounds.width/4
+        
         NSLayoutConstraint.activate([
             roleSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
             roleSubLabel.trailingAnchor.constraint(equalTo: lineSeparator.leadingAnchor, constant: -32)
             //roleSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -coor)
-//            roleSubLabel.centerYAnchor.constraint(equalTo: roleIcon.centerYAnchor),
-//            roleSubLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor, constant: 10)
+            //            roleSubLabel.centerYAnchor.constraint(equalTo: roleIcon.centerYAnchor),
+            //            roleSubLabel.leadingAnchor.constraint(equalTo: roleIcon.trailingAnchor, constant: 10)
             ])
         
         NSLayoutConstraint.activate([
@@ -380,13 +380,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             netSubLabel.topAnchor.constraint(equalTo: lineSeparator.topAnchor),
             netSubLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor, constant: 10)
             //netSubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: coor)
-//            netSubLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor, constant: 10),
-//            netSubLabel.centerYAnchor.constraint(equalTo: netIcon.centerYAnchor)
+            //            netSubLabel.leadingAnchor.constraint(equalTo: netIcon.trailingAnchor, constant: 10),
+            //            netSubLabel.centerYAnchor.constraint(equalTo: netIcon.centerYAnchor)
             ])
         
         NSLayoutConstraint.activate([
             netLabel.topAnchor.constraint(equalTo: netSubLabel.bottomAnchor, constant: padding/2),
-//            netLabel.centerXAnchor.constraint(equalTo: netSubLabel.centerXAnchor)
+            //            netLabel.centerXAnchor.constraint(equalTo: netSubLabel.centerXAnchor)
             netLabel.leadingAnchor.constraint(equalTo: netSubLabel.leadingAnchor)
             ])
         
@@ -402,7 +402,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             contactCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contactCollectionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contactCollectionView.heightAnchor.constraint(equalToConstant: 30)
-        ])
+            ])
         
         NSLayoutConstraint.activate([
             infoViewsTableView.topAnchor.constraint(equalTo: contactCollectionView.bottomAnchor, constant: 5),
@@ -420,12 +420,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func createPosts() {
-//        let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-//        let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-//        let vanillaIcecream = Post(icon: UIImage(named: "icon_placeholder")!, name: "FoodWiki", date: "2h", title: "Ice cream, vanilla facts and history - testing if this title will wrap", blurb: "Vanilla is frequently used to flavor ice cream, especially in North America and Europe. Vanilla ice cream, like other flavors of ice cream, was originally created by cooling a mixture made of cream, sugar")
-//        let test = Post(icon: UIImage(named: "icon_placeholder")!, name: "test", date: "Nov 27", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-//        
-//        postsArray = [newPost, ezraCornell, vanillaIcecream, test]
+        //        let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+        //        let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+        //        let vanillaIcecream = Post(icon: UIImage(named: "icon_placeholder")!, name: "FoodWiki", date: "2h", title: "Ice cream, vanilla facts and history - testing if this title will wrap", blurb: "Vanilla is frequently used to flavor ice cream, especially in North America and Europe. Vanilla ice cream, like other flavors of ice cream, was originally created by cooling a mixture made of cream, sugar")
+        //        let test = Post(icon: UIImage(named: "icon_placeholder")!, name: "test", date: "Nov 27", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+        //
+        //        postsArray = [newPost, ezraCornell, vanillaIcecream, test]
     }
     
     // MARK: - TABLEVIEW METHODS
@@ -441,7 +441,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             let cell = tableView.dequeueReusableCell(withIdentifier: "postCellID", for: indexPath) as! PostCell
             let post = postsArray[indexPath.row]
             cell.configure(for: post)
-    //        cell.backgroundColor = .white
+            //        cell.backgroundColor = .white
             cell.selectionStyle = .none
             return cell
         } else {
@@ -483,12 +483,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.aboutContainer.alpha = 1
                 self.projectsContainer.alpha = 0
                 self.postsContainer.alpha = 0
-                })
+            })
             NSLayoutConstraint.deactivate([
                 aboutClosedConstraint,
                 projectsOpenConstraint,
                 postsOpenConstraint
-            ])
+                ])
             aboutOpenConstraint.isActive = true
         }
         else if(sender.selectedSegmentIndex == 1) {

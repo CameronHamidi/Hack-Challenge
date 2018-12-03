@@ -191,13 +191,17 @@ class ProjectSearchViewController: UIViewController, UICollectionViewDataSource,
     }
     
     @objc func performSearch() {
-        sendSearchRequest { postIds in
-            DispatchQueue.main.async {
-                var newView = PostsViewController()
-                newView.postIds = postIds
-                self.navigationController?.pushViewController(newView, animated: true)
-            }
-        }
+        //        sendSearchRequest { postIds in
+        //            DispatchQueue.main.async {
+        //                var newView = PostsViewController()
+        //                newView.postIds = postIds
+        //                self.navigationController?.pushViewController(newView, animated: true)
+        //            }
+        //        }
+        let alert = UIAlertController(title: "No results found", message: "No posts were found with those specifications.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
     
     func sendSearchRequest(completion: @escaping([Int]) -> Void) {
