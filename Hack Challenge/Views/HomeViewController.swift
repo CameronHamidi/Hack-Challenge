@@ -11,7 +11,7 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var profileButton: UIButton!
-
+    
     var searchIcon: UIImageView!
     var searchLabel: UILabel!
     
@@ -189,7 +189,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func showSearchPartnerView() {
-        let viewController = UINavigationController(rootViewController: PartnerSearchViewController())
+        let viewController = UINavigationController(rootViewController: PitchSearchViewController())
         present(viewController, animated: true)
     }
     
@@ -233,7 +233,7 @@ class HomeViewController: UIViewController {
             searchProjectLabel.topAnchor.constraint(equalTo: searchProjectImageView.bottomAnchor, constant: 5),
             searchProjectLabel.leadingAnchor.constraint(equalTo: searchProjectButton.leadingAnchor),
             searchProjectLabel.trailingAnchor.constraint(equalTo: searchProjectButton.trailingAnchor),
-//            searchProjectLabel.heightAnchor.constraint(equalToConstant: 20)
+            //            searchProjectLabel.heightAnchor.constraint(equalToConstant: 20)
             ])
         
         NSLayoutConstraint.activate([
@@ -339,10 +339,10 @@ class HomeViewController: UIViewController {
             profileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             profileButton.heightAnchor.constraint(equalToConstant: 35),
             profileButton.widthAnchor.constraint(equalToConstant: 150)
-        ])
+            ])
         
     }
-
-
+    
+    
 }
 
