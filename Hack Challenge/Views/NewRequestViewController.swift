@@ -161,7 +161,7 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         groupSizeCollectionView.translatesAutoresizingMaskIntoConstraints = false
         groupSizeCollectionView.delegate = self
         groupSizeCollectionView.dataSource = self
-        groupSizeCollectionView.allowsMultipleSelection = true
+        groupSizeCollectionView.allowsMultipleSelection = false
         scrollView.addSubview(groupSizeCollectionView)
         
 //        groupLabel = UILabel()
@@ -392,7 +392,7 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
 //        let groupSizeText = sizeLabel.text!
         
         //token?? role??
-//        postToServer(token: 0, title: titleText, role: "", text: descrText, group_size: groupSizeText)
+        postToServer(token: 0, title: titleText, text: descrText)
         back()
         
         //Delegate to another view
@@ -404,17 +404,17 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         
     }
     
-    @objc func postToServer(token: Int, title: String, tags: String, role: String, text: String, group_size: String) {
+    @objc func postToServer(token: Int, title: String, text: String) {
         //fields: *token, *title, *tags, *role, *text, kind, course, *group_size, skills
         //* required
         let parameters: [String : Any] = [
             "token" : token,
             "title" : title,
             "tags" : keywords.joined(separator: ","),
-            "role" : role,
+            "role" : selectedRoles.joined(separator: ","),
             "text" : text,
             "kind" : 1,
-            "group_size" : group_size
+            "group_size" : selectedSizes.joined(separator: ",")
         ]
         
         let urlString = "http://35.190.171.42/api/posts/"

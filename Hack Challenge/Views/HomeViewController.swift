@@ -44,6 +44,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = .white
+        title = "CollabIT"
         
         searchIcon = UIImageView()
         searchIcon.image = UIImage(named: "miniSearch")
