@@ -105,21 +105,21 @@ class PostViewController: UIViewController {
     }
     
     //TODO- wip
-    static func getPostInfo(completion: @escaping (Bool) -> Void) {
-        //how to get post id?
-        Alamofire.request("http://35.190.171.42/api/posts/\(post_id)!)").validate().responseData { (response) in
-            switch response.result {
-            case .success(let data):
-                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-                    print(json)
-                }
-                let jsonDecoder = JSONDecoder()
-            //TODO - set fields/labels to match user's info
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
+//    static func getPostInfo(completion: @escaping (Bool) -> Void) {
+//        //how to get post id?
+//        Alamofire.request("http://35.190.171.42/api/posts/\(post_id)!)").validate().responseData { (response) in
+//            switch response.result {
+//            case .success(let data):
+//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+//                    print(json)
+//                }
+//                let jsonDecoder = JSONDecoder()
+//            //TODO - set fields/labels to match user's info
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
     
     func setConstraints() {
     

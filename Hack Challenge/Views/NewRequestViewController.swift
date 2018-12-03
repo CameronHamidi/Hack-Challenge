@@ -105,43 +105,6 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
         descrInput.borderStyle = .roundedRect
         scrollView.addSubview(descrInput)
         
-//        imageLabel = UILabel()
-//        imageLabel.translatesAutoresizingMaskIntoConstraints = false
-//        imageLabel.text = "Images"
-//        imageLabel.font = .boldSystemFont(ofSize: labelHeight)
-//        scrollView.addSubview(imageLabel)
-//
-//        lineSeparator = UIView()
-//        lineSeparator.translatesAutoresizingMaskIntoConstraints = false
-//        lineSeparator.backgroundColor = .lightGray
-//        scrollView.addSubview(lineSeparator)
-//
-//        cameraButton = UIButton()
-//        cameraButton.translatesAutoresizingMaskIntoConstraints = false
-//        cameraButton.setImage(UIImage(named: "img_cam"), for: .normal)
-//        cameraButton.setTitle("Camera", for: .normal)
-//        scrollView.addSubview(cameraButton)
-//
-//        libButton = UIButton()
-//        libButton.translatesAutoresizingMaskIntoConstraints = false
-//        libButton.setImage(UIImage(named: "img_lib"), for: .normal)
-//        libButton.setTitle("Library", for: .normal)
-//        scrollView.addSubview(libButton)
-//
-//        cameraLabel = UILabel()
-//        cameraLabel.translatesAutoresizingMaskIntoConstraints = false
-//        cameraLabel.text = "Camera"
-//        cameraLabel.textAlignment = .center
-//        cameraLabel.font = .systemFont(ofSize: textSize)
-//        scrollView.addSubview(cameraLabel)
-//
-//        libLabel = UILabel()
-//        libLabel.translatesAutoresizingMaskIntoConstraints = false
-//        libLabel.text = "Gallery"
-//        libLabel.textAlignment = .center
-//        libLabel.font = .systemFont(ofSize: textSize)
-//        scrollView.addSubview(libLabel)
-        
         // Group Size
         groupSizeLabel = UILabel()
         groupSizeLabel.text = "Group Size"

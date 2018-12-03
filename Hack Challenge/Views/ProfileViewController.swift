@@ -214,14 +214,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //TODO - wip
-    static func getUserInfo(completion: @escaping (Bool) -> Void) {
+    func getUserInfo(completion: @escaping (Bool) -> Void) {
         Alamofire.request("http://35.190.171.42/api/users/self)").validate().responseData { (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
                     print(json)
+//                    guard let blurb = json["blurb"] as? String else {
+//                        return
+//                    }
+                    self.name.text =
+                    self.caption.text =
+                    self.roleLabel.text =
+                    self.netLabel.text =
                 }
-                let jsonDecoder = JSONDecoder()
+//                let jsonDecoder = JSONDecoder()
                 //TODO - set fields/labels to match user's info
             case .failure(let error):
                 print(error.localizedDescription)
