@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import Alamofire
 
 class PostViewController: UIViewController {
-
+    
+    var postId: String!
+    
     var scrollView: UIScrollView!
+    var defaults = UserDefaults.standard
     
     var iconView: UIImageView!
     var nameLabel: UILabel!
@@ -31,7 +35,7 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-//        title = "Post"
+        //        title = "Post"
         
         //Scroll view
         scrollView = UIScrollView()
@@ -42,6 +46,7 @@ class PostViewController: UIViewController {
         iconView = UIImageView()
         iconView.translatesAutoresizingMaskIntoConstraints = false
         //        iconView.contentMode = .scaleAspectFill
+        iconView.image = UIImage(named: "img_profileicon")
         iconView.backgroundColor = .lightGray
         iconView.layer.cornerRadius = iconSize/2
         scrollView.addSubview(iconView)
@@ -101,8 +106,26 @@ class PostViewController: UIViewController {
         setConstraints()
     }
     
-    func setConstraints() {
+    //TODO- wip
+    func getPostInfo(completion: @escaping (Bool) -> Void) {
+        //how to get post id?
+//        var post_id = post.id
+        Alamofire.request("http://35.190.171.42/api/posts/\(post_id)!)").validate().responseData { (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                    print(json)
+                }
+                let jsonDecoder = JSONDecoder()
+            //TODO - set fields/labels to match user's info
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
     
+    func setConstraints() {
+        
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -144,7 +167,7 @@ class PostViewController: UIViewController {
             descrText.leadingAnchor.constraint(equalTo: iconView.leadingAnchor),
             descrText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
             descrText.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -padding)
-        ])
+            ])
     }
-
+    
 }

@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Alamofire
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var scrollView: UIScrollView!
+    var defaults = UserDefaults.standard
     
     var avatar: UIImageView! //user's picture
     var caption: UILabel! //major, minor, or any one-line intro user wants to display
@@ -104,10 +106,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // TODO - revamp to get profile info from backend
         avatar = UIImageView()
-        //        let avatar = UIView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
         avatar.translatesAutoresizingMaskIntoConstraints = false
         //        avatar.layer.borderWidth = 1
         //        avatar.layer.masksToBounds = false
+        avatar.image = UIImage(named: "img_profileicon")
         avatar.backgroundColor = .gray
         avatar.layer.cornerRadius = avatarSize/2
         avatar.clipsToBounds = true
@@ -179,7 +181,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         netIcon.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(netIcon)
         
-        var contactLayout = UICollectionViewFlowLayout()
+        let contactLayout = UICollectionViewFlowLayout()
         contactLayout.minimumInteritemSpacing = 16
         contactLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         contactLayout.scrollDirection = .horizontal
@@ -207,6 +209,24 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         logoutButton.layer.cornerRadius = 5
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(logoutButton)
+        
+        setupConstraints()
+    }
+    
+    //TODO - wip
+    static func getUserInfo(completion: @escaping (Bool) -> Void) {
+        Alamofire.request("http://35.190.171.42/api/users/self)").validate().responseData { (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                    print(json)
+                }
+                let jsonDecoder = JSONDecoder()
+            //TODO - set fields/labels to match user's info
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     @objc func openCloseSkillsView() {
@@ -399,14 +419,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             ])
     }
     
-    func createPosts() {
-        //        let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-        //        let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-        //        let vanillaIcecream = Post(icon: UIImage(named: "icon_placeholder")!, name: "FoodWiki", date: "2h", title: "Ice cream, vanilla facts and history - testing if this title will wrap", blurb: "Vanilla is frequently used to flavor ice cream, especially in North America and Europe. Vanilla ice cream, like other flavors of ice cream, was originally created by cooling a mixture made of cream, sugar")
-        //        let test = Post(icon: UIImage(named: "icon_placeholder")!, name: "test", date: "Nov 27", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
-        //
-        //        postsArray = [newPost, ezraCornell, vanillaIcecream, test]
-    }
+    //    func createPosts() {
+    //        let newPost = Post(icon: UIImage(named: "icon_placeholder")!, name: "Name here", date: "Nov 25", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+    //        let ezraCornell = Post(icon: UIImage(named: "icon_placeholder")!, name: "Extra Cornell", date: "A.D 1865", title: "Any Person Any Goals", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+    //        let vanillaIcecream = Post(icon: UIImage(named: "icon_placeholder")!, name: "FoodWiki", date: "2h", title: "Ice cream, vanilla facts and history - testing if this title will wrap", blurb: "Vanilla is frequently used to flavor ice cream, especially in North America and Europe. Vanilla ice cream, like other flavors of ice cream, was originally created by cooling a mixture made of cream, sugar")
+    //        let test = Post(icon: UIImage(named: "icon_placeholder")!, name: "test", date: "Nov 27", title: "Title here", blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar gravida justo at massa nunc")
+    //
+    //        postsArray = [newPost, ezraCornell, vanillaIcecream, test]
+    //    }
     
     // MARK: - TABLEVIEW METHODS
     

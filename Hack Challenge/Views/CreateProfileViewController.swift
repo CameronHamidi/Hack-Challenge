@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 //wip
 
 class CreateProfileViewController: UIViewController {
@@ -46,6 +47,8 @@ class CreateProfileViewController: UIViewController {
     var photoLabel: UILabel! //profile photo
     //    var photoInput: UITextView!
     
+    var defaults = UserDefaults.standard
+    
     let padding: CGFloat = 12
     let labelHeight: CGFloat = 18
     let textInputHeight: CGFloat = 32
@@ -60,7 +63,7 @@ class CreateProfileViewController: UIViewController {
         let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(back))
         navigationItem.leftBarButtonItem = backButton
         
-        let postButton = UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(back))
+        let postButton = UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(makePost))
         navigationItem.rightBarButtonItem = postButton
         
         scrollView = UIScrollView()
@@ -203,15 +206,65 @@ class CreateProfileViewController: UIViewController {
     }
     
     @objc func back() {
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
+    @objc func makePost() {
+        sendPostRequest { profile in
+            if profile == nil {
+                var alert = UIAlertController(title: "Invalid data", message: "Please make sure all forms are filled out", preferredStyle: .alert)
+                var action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+            }
+        }
+    }
+    
+    func sendPostRequest(completion: @escaping(Profile?) -> Void) {
+        if nameInput.text! == "" || emailInput.text! == "" {
+            completion(nil)
+        }
+        var parameters = [
+            "name" : nameInput.text!,
+            "contact_info" : emailInput.text!,
+            "class_year" : yearInput.text!,
+            "skills" : skillsInput.text!,
+            "roles" : roleInput.text!,
+            "token" : defaults.string(forKey: "token"),
+            "major" : majorInput.text!,
+            "minor" : minorInput.text!
+            ]
+//        if minorInput.text! != "" {
+//            parameters["major"] = majorInput.text! + ", " + minorInput.text!
+//        } else {
+//            parameters["major"] = majorInput.text!
+//        }
+        Alamofire.request("http://35.190.171.42/api/login/create/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
+            switch response.result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                do {
+                    var decodedData = try? decoder.decode(UserProfileResponse.self, from: data)
+                    if decodedData!.success {
+                        completion(decodedData!.data)
+                    } else {
+                        completion(nil)
+                    }
+                } catch {
+                    completion(nil)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
+            }
+        }
+    }
     
     func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ])

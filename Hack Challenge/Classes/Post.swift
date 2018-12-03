@@ -29,15 +29,15 @@ import UIKit
 //}
 
 struct Post: Codable {
-    var id: Int
-    var uid: Int
-    var title: String
-    var tags: String
-    var role: String
-    var text: String
-    var active: Bool
-    var creation_time: Float
-    var kind: Int
+    var id: Int?
+    var uid: Int?
+    var title: String?
+    var tags: String?
+    var role: String?
+    var text: String?
+    var active: Bool?
+    var creation_time: Float?
+    var kind: Int?
     var course: String?
     var group_size: String?
     var skills: String?

@@ -88,7 +88,8 @@ class LoginViewController: UIViewController {
         requestCreateAccount { (responseData) in
             DispatchQueue.main.async {
                 if responseData == "" {
-                    var newView = EditProfileViewController()
+                    var newView = CreateProfileViewController()
+//                    newView.newProfile = true
                     self.navigationController?.pushViewController(newView, animated: true)
                 } else {
                     let alert = UIAlertController(title: "Error", message: responseData, preferredStyle: .alert)

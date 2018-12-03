@@ -33,3 +33,8 @@ struct PostResponse: Codable {
     var data: Post
     var success: Bool
 }
+
+struct UserProfileResponse: Codable {
+    var data: Profile
+    var success: Bool
+}

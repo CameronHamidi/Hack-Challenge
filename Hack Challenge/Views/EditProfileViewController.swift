@@ -12,6 +12,8 @@ import UIKit
 
 class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
 
+    var newProfile = false
+    
     var scrollView: UIScrollView!
 
     var gradYearTitle: UILabel!
