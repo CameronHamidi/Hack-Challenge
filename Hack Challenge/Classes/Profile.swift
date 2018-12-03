@@ -25,10 +25,11 @@ class Profile: Codable {
     var name: String?
     var contact_info: String?
     var major: String?
+    var minor: String?
     var class_year: String?
     var skills: String?
     var role: String?
-    var courses_take: String?
+    var courses_taken: String?
     var blurb: String?
     var profile_photo: String?
     

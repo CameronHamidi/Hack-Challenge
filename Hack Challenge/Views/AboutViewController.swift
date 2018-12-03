@@ -11,6 +11,7 @@ import UIKit
 class AboutViewController: UIViewController {
 
     var scrollView: UIScrollView!
+    var profile: Profile!
     
     var gradYearView: AboutView!
     var majorsView: AboutView!
@@ -33,31 +34,55 @@ class AboutViewController: UIViewController {
         view.addSubview(scrollView)
         
         gradYearView = AboutView(frame: .zero, viewType: .gradYear)
-        gradYearView.mainLabel.text = "May 2021"
+        gradYearView.mainLabel.text = profile.class_year
         gradYearView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(gradYearView)
         
         majorsView = AboutView(frame: .zero, viewType: .majors)
-        majorsView.mainLabel.text = "Computer Science\nInformation Science"
+        var splitArray = profile.major!.components(separatedBy: " ")
+        var spaceString = splitArray.joined(separator: "\n")
+        var splitArray2 = profile.minor!.components(separatedBy: " ")
+        var spaceString2 = splitArray.joined(separator: "\n")
+        majorsView.mainLabel.text = spaceString + "\n" + spaceString2
         majorsView.mainLabel.sizeToFit()
         majorsView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(majorsView)
         
         rolesView = AboutView(frame: .zero, viewType: .roles)
-        rolesView.mainLabel.text = "Developer\nDesigner\nBackend Developer"
+        splitArray = profile.role!.components(separatedBy: " ")
+        spaceString = splitArray.joined(separator: "\n")
+        rolesView.mainLabel.text = spaceString
         rolesView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(rolesView)
         
         coursesView = AboutView(frame: .zero, viewType: .courses)
         coursesView.translatesAutoresizingMaskIntoConstraints = false
-        coursesView.mainLabel.text = "CS 1110\nCS 2110\nCS 2800"
-        coursesView.secondaryLabel!.text = "CS 3410\nCS 3110"
+        splitArray = profile.courses_taken!.components(separatedBy: " ")
+        spaceString = ""
+        for i in 0..<(Int)(splitArray.count / 2) {
+            spaceString += splitArray[i] + "\n"
+        }
+        coursesView.mainLabel.text = spaceString
+        spaceString = ""
+        for i in (Int)(splitArray.count / 2)..<splitArray.count {
+            spaceString += splitArray[i] + "\n"
+        }
+        coursesView.secondaryLabel!.text = spaceString
         scrollView.addSubview(coursesView)
         
         skillsView = AboutView(frame: .zero, viewType: .skills)
         skillsView.translatesAutoresizingMaskIntoConstraints = false
-        skillsView.mainLabel.text = "Adobe Illustrator\nAdobe Photoshop\nBalsamiq\nBootstrap\nC\nCSS\nHTML"
-        skillsView.secondaryLabel!.text = "InVision\nJava\nJavaScript\nOcaml\nPython\nSketch\nSwift"
+        splitArray = profile.skills!.components(separatedBy: " ")
+        spaceString = ""
+        for i in 0..<(Int)(splitArray.count / 2) {
+            spaceString += splitArray[i] + "\n"
+        }
+        skillsView.mainLabel.text = spaceString
+        spaceString = ""
+        for i in (Int)(splitArray.count / 2)..<splitArray.count {
+            spaceString += splitArray[i] + "\n"
+        }
+        skillsView.secondaryLabel!.text = spaceString
         scrollView.addSubview(skillsView)
         
         updateConstraints()

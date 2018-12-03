@@ -11,6 +11,9 @@ import Alamofire
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    var id: Int!
+    var profile: Profile!
+    
     var scrollView: UIScrollView!
     var defaults = UserDefaults.standard
     
@@ -165,7 +168,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         netSubLabel = UILabel()
         netSubLabel.translatesAutoresizingMaskIntoConstraints = false
-        netSubLabel.text = "Net ID"
+        netSubLabel.text = "Email"
         netSubLabel.font = .systemFont(ofSize: subTextSize)
         netSubLabel.textColor = .gray
         scrollView.addSubview(netSubLabel)
@@ -173,7 +176,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         netLabel = UILabel()
         netLabel.translatesAutoresizingMaskIntoConstraints = false
         netLabel.text = "jd123"
-        netLabel.font = .systemFont(ofSize: normTextSize)
+        netLabel.font = .systemFont(ofSize: 12)
         scrollView.addSubview(netLabel)
         
         netIcon = UIImageView()
@@ -211,11 +214,25 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         scrollView.addSubview(logoutButton)
         
         setupConstraints()
+        
+        fetchInfo()
+    }
+    
+    func fetchInfo() {
+        getUserInfo { profile in
+            DispatchQueue.main.async {
+                self.profile = profile
+                self.name.text = profile?.name
+                self.roleLabel.text = profile?.role
+                self.netLabel.text = profile?.contact_info
+                self.descriptionView.text = profile?.blurb
+            }
+        }
     }
     
     //TODO - wip
-    static func getUserInfo(completion: @escaping (Profile?) -> Void) {
-        Alamofire.request("http://35.190.171.42/api/users/self)").validate().responseData { (response) in
+    func getUserInfo(completion: @escaping (Profile?) -> Void) {
+        Alamofire.request("http://35.190.171.42/api/users/profile/\(id)/", method: .get, encoding: URLEncoding.default).validate().responseData { (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -251,7 +268,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == contactCollectionView  {
-            return 2
+//            return 2
+            return 0
         } else if collectionView == skillsCollectionView {
             return skills.count
         } else {
@@ -461,7 +479,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == infoViewsTableView {
-            return infoViews.count
+//            return infoViews.count
+            return 1
         }
         return postsArray.count
     }

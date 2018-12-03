@@ -44,6 +44,8 @@ class HomeViewController: UIViewController {
     
     let padding: CGFloat = 12
     
+    var defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -179,7 +181,10 @@ class HomeViewController: UIViewController {
     }
     
     @objc func showProfileView() {
-        let viewController = UINavigationController(rootViewController: ProfileViewController())
+        let newView = ProfileViewController()
+        newView.id = defaults.integer(forKey: "uid")
+        print("calling show profile: id = \(newView.id)")
+        let viewController = UINavigationController(rootViewController: newView)
         present(viewController, animated: true)
     }
     

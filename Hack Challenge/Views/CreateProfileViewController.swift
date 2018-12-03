@@ -216,6 +216,8 @@ class CreateProfileViewController: UIViewController {
                 var action = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alert.addAction(action)
                 self.present(alert, animated: true)
+            } else {
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }

@@ -17,7 +17,6 @@ enum AboutViewType {
 }
 
 class AboutView: UIView {
-
     var icon: UIImageView!
     var title: UILabel!
 //    var editButton: UIImageView!

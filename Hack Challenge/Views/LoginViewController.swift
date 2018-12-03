@@ -149,7 +149,7 @@ class LoginViewController: UIViewController {
         if emailTextField.text! != "" && passwordTextField.text! != "" {
             var parameters = ["email" : emailTextField.text!, "password" : passwordTextField.text!]
             print(parameters)
-            Alamofire.request("http://35.190.171.42/api/login/", method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
+            Alamofire.request("http://35.190.171.42/api/login/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
                 switch response.result {
                 case .success(let data):
                     if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{
@@ -162,7 +162,7 @@ class LoginViewController: UIViewController {
                                 self.defaults.set(self.emailTextField.text, forKey: "email")
                                 self.defaults.set(self.passwordTextField.text, forKey: "password")
                                 self.defaults.set(decodedData!.data!.token, forKey: "token")
-                                self.defaults.set(decodedData!.data!.token, forKey: "uid")
+                                self.defaults.set(decodedData!.data!.uid, forKey: "uid")
                                 completion("")
                             } else {
                                 completion("Invalid login information.")
@@ -180,8 +180,9 @@ class LoginViewController: UIViewController {
 //                    completion("An unknown error occured.")
                     print(error.localizedDescription)
                     let decoder = JSONDecoder()
-                    let decodedData = try? decoder.decode(ErrorResponse.self, from: data)
-                    completion(decodedData!.error)
+                    completion("An unknown error occured.")
+//                    let decodedData = try? decoder.decode(ErrorResponse.self, from: data)
+//                    completion(decodedData!.error)
                 }
             }
         } else {
