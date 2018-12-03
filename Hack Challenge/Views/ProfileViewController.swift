@@ -104,11 +104,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // TODO - revamp to get profile info from backend
         avatar = UIImageView()
-//        let avatar = UIView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
+        avatar.backgroundColor = .gray
+        avatar.image = UIImage(named: "img_profileicon")
         avatar.translatesAutoresizingMaskIntoConstraints = false
 //        avatar.layer.borderWidth = 1
 //        avatar.layer.masksToBounds = false
-        avatar.backgroundColor = .gray
         avatar.layer.cornerRadius = avatarSize/2
         avatar.clipsToBounds = true
         scrollView.addSubview(avatar)

@@ -330,12 +330,12 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate([
             horizontalDivider2.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: padding),
             horizontalDivider2.heightAnchor.constraint(equalToConstant: 1),
-            horizontalDivider2.leadingAnchor.constraint(equalTo: horizontalDivider2.leadingAnchor),
-            horizontalDivider2.trailingAnchor.constraint(equalTo: horizontalDivider2.trailingAnchor)
+            horizontalDivider2.leadingAnchor.constraint(equalTo: horizontalDivider1.leadingAnchor),
+            horizontalDivider2.trailingAnchor.constraint(equalTo: horizontalDivider1.trailingAnchor)
             ])
         
         NSLayoutConstraint.activate([
-            profileButton.topAnchor.constraint(equalTo: horizontalDivider2.bottomAnchor, constant: 50),
+            profileButton.topAnchor.constraint(equalTo: horizontalDivider2.bottomAnchor, constant: 72),
             profileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             profileButton.heightAnchor.constraint(equalToConstant: 35),
             profileButton.widthAnchor.constraint(equalToConstant: 150)

@@ -19,12 +19,12 @@ class NewPitchViewController: UIViewController, UICollectionViewDataSource, UICo
     var descrLabel: UILabel!
     var descrInput: UITextField!
     
-    var imageLabel: UILabel!
-    var cameraButton: UIButton!
-    var libButton: UIButton! //library
-    var lineSeparator: UIView!
-    var cameraLabel: UILabel!
-    var libLabel: UILabel!
+//    var imageLabel: UILabel!
+//    var cameraButton: UIButton!
+//    var libButton: UIButton! //library
+//    var lineSeparator: UIView!
+//    var cameraLabel: UILabel!
+//    var libLabel: UILabel!
     
 //    var tagLabel: UILabel!
 //    var tagInput: UITextField!
@@ -80,42 +80,42 @@ class NewPitchViewController: UIViewController, UICollectionViewDataSource, UICo
         descrInput.borderStyle = .roundedRect
         scrollView.addSubview(descrInput)
         
-        imageLabel = UILabel()
-        imageLabel.translatesAutoresizingMaskIntoConstraints = false
-        imageLabel.text = "Images"
-        imageLabel.font = .boldSystemFont(ofSize: labelHeight)
-        scrollView.addSubview(imageLabel)
-        
-        lineSeparator = UIView()
-        lineSeparator.translatesAutoresizingMaskIntoConstraints = false
-        lineSeparator.backgroundColor = .lightGray
-        scrollView.addSubview(lineSeparator)
-        
-        cameraButton = UIButton()
-        cameraButton.translatesAutoresizingMaskIntoConstraints = false
-        cameraButton.setImage(UIImage(named: "img_cam"), for: .normal)
-        cameraButton.setTitle("Camera", for: .normal)
-        scrollView.addSubview(cameraButton)
-        
-        libButton = UIButton()
-        libButton.translatesAutoresizingMaskIntoConstraints = false
-        libButton.setImage(UIImage(named: "img_lib"), for: .normal)
-        libButton.setTitle("Library", for: .normal)
-        scrollView.addSubview(libButton)
-        
-        cameraLabel = UILabel()
-        cameraLabel.translatesAutoresizingMaskIntoConstraints = false
-        cameraLabel.text = "Camera"
-        cameraLabel.textAlignment = .center
-        cameraLabel.font = .systemFont(ofSize: textSize)
-        scrollView.addSubview(cameraLabel)
-        
-        libLabel = UILabel()
-        libLabel.translatesAutoresizingMaskIntoConstraints = false
-        libLabel.text = "Gallery"
-        libLabel.textAlignment = .center
-        libLabel.font = .systemFont(ofSize: textSize)
-        scrollView.addSubview(libLabel)
+//        imageLabel = UILabel()
+//        imageLabel.translatesAutoresizingMaskIntoConstraints = false
+//        imageLabel.text = "Images"
+//        imageLabel.font = .boldSystemFont(ofSize: labelHeight)
+//        scrollView.addSubview(imageLabel)
+//
+//        lineSeparator = UIView()
+//        lineSeparator.translatesAutoresizingMaskIntoConstraints = false
+//        lineSeparator.backgroundColor = .lightGray
+//        scrollView.addSubview(lineSeparator)
+//
+//        cameraButton = UIButton()
+//        cameraButton.translatesAutoresizingMaskIntoConstraints = false
+//        cameraButton.setImage(UIImage(named: "img_cam"), for: .normal)
+//        cameraButton.setTitle("Camera", for: .normal)
+//        scrollView.addSubview(cameraButton)
+//
+//        libButton = UIButton()
+//        libButton.translatesAutoresizingMaskIntoConstraints = false
+//        libButton.setImage(UIImage(named: "img_lib"), for: .normal)
+//        libButton.setTitle("Library", for: .normal)
+//        scrollView.addSubview(libButton)
+//
+//        cameraLabel = UILabel()
+//        cameraLabel.translatesAutoresizingMaskIntoConstraints = false
+//        cameraLabel.text = "Camera"
+//        cameraLabel.textAlignment = .center
+//        cameraLabel.font = .systemFont(ofSize: textSize)
+//        scrollView.addSubview(cameraLabel)
+//
+//        libLabel = UILabel()
+//        libLabel.translatesAutoresizingMaskIntoConstraints = false
+//        libLabel.text = "Gallery"
+//        libLabel.textAlignment = .center
+//        libLabel.font = .systemFont(ofSize: textSize)
+//        scrollView.addSubview(libLabel)
         
         keywordsLabel = UILabel()
         keywordsLabel.text = "Keywords"
@@ -195,47 +195,47 @@ class NewPitchViewController: UIViewController, UICollectionViewDataSource, UICo
             descrInput.heightAnchor.constraint(equalToConstant: 200)
             ])
         
-        NSLayoutConstraint.activate([
-            imageLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
-            imageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-            ])
+//        NSLayoutConstraint.activate([
+//            imageLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
+//            imageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+//            ])
+//
+//        NSLayoutConstraint.activate([
+//            lineSeparator.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: padding),
+//            lineSeparator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            lineSeparator.widthAnchor.constraint(equalToConstant: 1),
+//            lineSeparator.heightAnchor.constraint(equalToConstant: 72)
+//            ])
+//
+//        // Some maths to align buttons
+//        let buttonPadding: CGFloat = view.bounds.width/4 - buttonSize/2
+//
+//        NSLayoutConstraint.activate([
+//            cameraButton.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: padding),
+//            cameraButton.trailingAnchor.constraint(equalTo: lineSeparator.leadingAnchor, constant: -buttonPadding),
+//            cameraButton.widthAnchor.constraint(equalToConstant: buttonSize),
+//            cameraButton.heightAnchor.constraint(equalTo: cameraButton.widthAnchor)
+//            ])
+//
+//        NSLayoutConstraint.activate([
+//            cameraLabel.topAnchor.constraint(equalTo: cameraButton.bottomAnchor, constant: padding),
+//            cameraLabel.centerXAnchor.constraint(equalTo: cameraButton.centerXAnchor)
+//            ])
+//
+//        NSLayoutConstraint.activate([
+//            libButton.topAnchor.constraint(equalTo: cameraButton.topAnchor),
+//            libButton.leadingAnchor.constraint(equalTo: lineSeparator.trailingAnchor, constant: buttonPadding),
+//            libButton.widthAnchor.constraint(equalTo: cameraButton.widthAnchor),
+//            libButton.heightAnchor.constraint(equalTo: cameraButton.heightAnchor)
+//            ])
+//
+//        NSLayoutConstraint.activate([
+//            libLabel.topAnchor.constraint(equalTo: cameraLabel.topAnchor),
+//            libLabel.centerXAnchor.constraint(equalTo: libButton.centerXAnchor)
+//            ])
         
         NSLayoutConstraint.activate([
-            lineSeparator.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: padding),
-            lineSeparator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lineSeparator.widthAnchor.constraint(equalToConstant: 1),
-            lineSeparator.heightAnchor.constraint(equalToConstant: 72)
-            ])
-        
-        // Some maths to align buttons
-        let buttonPadding: CGFloat = view.bounds.width/4 - buttonSize/2
-        
-        NSLayoutConstraint.activate([
-            cameraButton.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: padding),
-            cameraButton.trailingAnchor.constraint(equalTo: lineSeparator.leadingAnchor, constant: -buttonPadding),
-            cameraButton.widthAnchor.constraint(equalToConstant: buttonSize),
-            cameraButton.heightAnchor.constraint(equalTo: cameraButton.widthAnchor)
-            ])
-        
-        NSLayoutConstraint.activate([
-            cameraLabel.topAnchor.constraint(equalTo: cameraButton.bottomAnchor, constant: padding),
-            cameraLabel.centerXAnchor.constraint(equalTo: cameraButton.centerXAnchor)
-            ])
-        
-        NSLayoutConstraint.activate([
-            libButton.topAnchor.constraint(equalTo: cameraButton.topAnchor),
-            libButton.leadingAnchor.constraint(equalTo: lineSeparator.trailingAnchor, constant: buttonPadding),
-            libButton.widthAnchor.constraint(equalTo: cameraButton.widthAnchor),
-            libButton.heightAnchor.constraint(equalTo: cameraButton.heightAnchor)
-            ])
-        
-        NSLayoutConstraint.activate([
-            libLabel.topAnchor.constraint(equalTo: cameraLabel.topAnchor),
-            libLabel.centerXAnchor.constraint(equalTo: libButton.centerXAnchor)
-            ])
-        
-        NSLayoutConstraint.activate([
-            keywordsLabel.topAnchor.constraint(equalTo: libLabel.bottomAnchor, constant: padding*2),
+            keywordsLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
             keywordsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             
             keywordsCollectionView.topAnchor.constraint(equalTo: keywordsLabel.bottomAnchor, constant: padding),
