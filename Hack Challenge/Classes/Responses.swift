@@ -28,3 +28,8 @@ struct ErrorResponse: Codable {
     var success: Bool
     var error: String
 }
+
+struct PostResponse: Codable {
+    var data: Post
+    var success: Bool
+}

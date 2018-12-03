@@ -42,11 +42,6 @@ struct Post: Codable {
     var group_size: String?
     var skills: String?
 }
-
-struct PostResponse: Codable {
-    var data: Post
-    var success: Bool
-}
     
     
     

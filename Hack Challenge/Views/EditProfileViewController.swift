@@ -210,7 +210,8 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
         blurbTextView = UITextView()
         blurbTextView.textColor = .black
         blurbTextView.font = UIFont.systemFont(ofSize: 14)
-        blurbLabel.translatesAutoresizingMaskIntoConstraints = false
+        blurbTextView.translatesAutoresizingMaskIntoConstraints = false
+        blurbTextView.layer.borderWidth = 1
         scrollView.addSubview(blurbTextView)
         
         setupConstraints()
@@ -423,6 +424,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
             skillsTextField.topAnchor.constraint(equalTo: skillsCollectionView.bottomAnchor, constant: 5),
             skillsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
             skillsTextField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -15),
+//            skillsTextField.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
             
             blurbLabel.topAnchor.constraint(equalTo: skillsTextField.bottomAnchor, constant: 25),
             blurbLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
@@ -431,8 +433,8 @@ class EditProfileViewController: UIViewController, UIPickerViewDelegate, UIPicke
             blurbTextView.topAnchor.constraint(equalTo: blurbLabel.bottomAnchor, constant: 5),
             blurbTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
             blurbTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -15),
-            blurbTextView.heightAnchor.constraint(equalToConstant: 75),
-            blurbTextView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 25)
+            blurbTextView.heightAnchor.constraint(equalToConstant: 150),
+            blurbTextView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -25)
         ])
     }
 

@@ -20,6 +20,7 @@ class PartnerSearchViewController: UIViewController {
         view.backgroundColor = .white
         
         var closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(close))
+        navigationItem.leftBarButtonItem = closeButton
         
         mainLabel = UILabel()
         mainLabel.text = "Find a partner by"

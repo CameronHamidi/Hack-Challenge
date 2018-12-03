@@ -44,6 +44,7 @@ class LoginViewController: UIViewController {
         view.addSubview(emailTextField)
 
         passwordTextField = UITextField()
+        passwordTextField.isSecureTextEntry = true
         passwordTextField.borderStyle = .roundedRect
         passwordTextField.font = UIFont.systemFont(ofSize: 15)
         passwordTextField.textColor = .black
