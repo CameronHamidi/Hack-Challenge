@@ -39,3 +39,5 @@ Backend
 - Project uses SQLAlchemy to model user data, posts, authentication information, etc.
 - Uses GET, POST, DELETE requests for all those.
 - Has been deployed to Google Cloud.
+
+Note: Due to some difficulties with integrating the API with the frontend, certain data had to be harcoded into the app. We ask the TAs for help in solving these issues, but we were unable to fix them together.
