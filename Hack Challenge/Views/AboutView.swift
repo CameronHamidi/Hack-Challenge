@@ -30,7 +30,8 @@ class AboutView: UIView {
         
         self.viewType = viewType
         
-        self.backgroundColor = UIColor(displayP3Red: 241, green: 241, blue: 241, alpha: 1)
+//        self.backgroundColor = UIColor(displayP3Red: 241, green: 241, blue: 241, alpha: 1)
+        self.backgroundColor = .lightGray
         self.layer.cornerRadius = 5
         
         icon = UIImageView()
