@@ -49,6 +49,7 @@ class LoginViewController: UIViewController {
         passwordTextField.font = UIFont.systemFont(ofSize: 15)
         passwordTextField.textColor = .black
         passwordTextField.placeholder = "Enter your password"
+        passwordTextField.isSecureTextEntry = true //password mask
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passwordTextField)
 

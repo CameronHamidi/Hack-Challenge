@@ -20,6 +20,7 @@ class PartnerSearchViewController: UIViewController {
         view.backgroundColor = .white
         
         var closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(close))
+        navigationItem.leftBarButtonItem = closeButton
         
         mainLabel = UILabel()
         mainLabel.text = "Find a partner by"
@@ -58,7 +59,7 @@ class PartnerSearchViewController: UIViewController {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            mainLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            mainLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150),
             mainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             pitchesButton.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 15),
