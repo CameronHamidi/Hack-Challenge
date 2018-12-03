@@ -14,7 +14,6 @@ class NewPitchViewController: UIViewController, UICollectionViewDataSource, UICo
     var defaults = UserDefaults.standard
     
     var scrollView: UIScrollView!
-    var defaults = UserDefaults.standard
     
     var titleLabel: UILabel!
     var titleInput: UITextField!

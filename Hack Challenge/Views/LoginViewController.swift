@@ -111,6 +111,7 @@ class LoginViewController: UIViewController {
                     do {
                         var decodedData = try? decoder.decode(LoginResponse.self, from: data)
                         if decodedData!.success! {
+                            self.defaults.set(decodedData!.data?.token!, forKey: "token")
                             completion("")
                         } else {
                             completion("Unknown error")
@@ -129,13 +130,13 @@ class LoginViewController: UIViewController {
     @objc func login() {
         loginRequest { response in
             DispatchQueue.main.async {
-                if response {
+                if response == "" {
                     print(response)
                     var newView = HomeViewController()
                     self.present(newView, animated: true, completion: nil)
                 } else {
                     print("Invalid Response Data")
-                    let alert = UIAlertController(title: "Invalid Password", message: "Please try again.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: response, message: "Please try again.", preferredStyle: .alert)
                     let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                     alert.addAction(action)
                     self.present(alert, animated: true)
@@ -144,11 +145,11 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func loginRequest(completion: @escaping(Bool) -> Void) {
+    func loginRequest(completion: @escaping(String) -> Void) {
         if emailTextField.text! != "" && passwordTextField.text! != "" {
             var parameters = ["email" : emailTextField.text!, "password" : passwordTextField.text!]
-            print("http://35.190.171.42/api/login/")
-            Alamofire.request("http://35.190.171.42/api/login/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
+            print(parameters)
+            Alamofire.request("http://35.190.171.42/api/login/", method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseData { (response) in
                 switch response.result {
                 case .success(let data):
                     if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]{
@@ -162,20 +163,25 @@ class LoginViewController: UIViewController {
                                 self.defaults.set(self.passwordTextField.text, forKey: "password")
                                 self.defaults.set(decodedData!.data!.token, forKey: "token")
                                 self.defaults.set(decodedData!.data!.token, forKey: "uid")
-                                completion(decodedData!.success!)
+                                completion("")
                             } else {
-                                completion(false)
+                                completion("Invalid login information.")
                             }
                         } catch {
-                            completion(false)
+                            var decodedData = try? decoder.decode(ErrorResponse.self, from: data)
+                            completion(decodedData!.error)
                         }
                         print(json)
                     } else {
-                        completion(false)
+                        completion("An unknown error occurred.")
                     }
                 case .failure(let error):
-                    self.displayMyAlertMessage(userMessage: "Account credentials do not match.")
+//                    self.displayMyAlertMessage(userMessage: "Account credentials do not match.")
+//                    completion("An unknown error occured.")
                     print(error.localizedDescription)
+                    let decoder = JSONDecoder()
+                    let decodedData = try? decoder.decode(ErrorResponse.self, from: data)
+                    completion(decodedData!.error)
                 }
             }
         } else {
