@@ -110,7 +110,7 @@ class PostViewController: UIViewController {
     func getPostInfo(completion: @escaping (Bool) -> Void) {
         //how to get post id?
 //        var post_id = post.id
-        Alamofire.request("http://35.190.171.42/api/posts/\(post_id)!)").validate().responseData { (response) in
+        Alamofire.request("http://35.190.171.42/api/posts/\(postId)/!)").validate().responseData { (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {

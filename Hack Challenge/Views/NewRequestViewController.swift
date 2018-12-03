@@ -423,7 +423,6 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             case .success:
                 print(response)
                 break
-
             case .failure(let error):
                 print(error.localizedDescription)
             }

@@ -239,8 +239,10 @@ class CreateProfileViewController: UIViewController {
 //        } else {
 //            parameters["major"] = majorInput.text!
 //        }
-        Alamofire.request("http://35.190.171.42/api/login/create/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
+        Alamofire.request("http://35.190.171.42/api/users/", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
+            print(parameters)
             switch response.result {
+                
             case .success(let data):
                 let decoder = JSONDecoder()
                 do {

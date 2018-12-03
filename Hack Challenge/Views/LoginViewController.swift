@@ -111,10 +111,6 @@ class LoginViewController: UIViewController {
                     do {
                         var decodedData = try? decoder.decode(LoginResponse.self, from: data)
                         if decodedData!.success! {
-                            self.defaults.set(self.emailTextField.text, forKey: "email")
-                            self.defaults.set(self.passwordTextField.text, forKey: "password")
-                            self.defaults.set(decodedData!.data!.token, forKey: "token")
-                            self.defaults.set(decodedData!.data!.token, forKey: "uid")
                             completion("")
                         } else {
                             completion("Unknown error")
