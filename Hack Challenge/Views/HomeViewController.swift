@@ -9,6 +9,8 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    
+    var profileButton: UIButton!
 
     var searchIcon: UIImageView!
     var searchLabel: UILabel!
@@ -40,11 +42,12 @@ class HomeViewController: UIViewController {
     
     var horizontalDivider2: UIView!
     
+    let padding: CGFloat = 12
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = .white
-        title = "CollabIT"
         
         searchIcon = UIImageView()
         searchIcon.image = UIImage(named: "miniSearch")
@@ -162,7 +165,22 @@ class HomeViewController: UIViewController {
         horizontalDivider2.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(horizontalDivider2)
         
+        profileButton = UIButton()
+        profileButton.setTitle("My Profile", for: .normal)
+        profileButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 17)
+        profileButton.setTitleColor(.white, for: .normal)
+        profileButton.backgroundColor = .black
+        profileButton.layer.cornerRadius = 10
+        profileButton.addTarget(self, action: #selector(showProfileView), for: .touchUpInside)
+        profileButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(profileButton)
+        
         setupConstraints()
+    }
+    
+    @objc func showProfileView() {
+        let viewController = UINavigationController(rootViewController: ProfileViewController())
+        present(viewController, animated: true)
     }
     
     @objc func showSearchProjectView() {
@@ -189,7 +207,7 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate([
             searchIcon.heightAnchor.constraint(equalToConstant: 25),
             searchIcon.widthAnchor.constraint(equalToConstant: 25),
-            searchIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            searchIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
             searchIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
             ])
         
@@ -245,10 +263,10 @@ class HomeViewController: UIViewController {
             ])
         
         NSLayoutConstraint.activate([
-            horizontalDivider1.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 5),
-            horizontalDivider1.heightAnchor.constraint(equalToConstant: 5),
-            horizontalDivider1.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            horizontalDivider1.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            horizontalDivider1.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: padding),
+            horizontalDivider1.heightAnchor.constraint(equalToConstant: 1),
+            horizontalDivider1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding*2),
+            horizontalDivider1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding*2)
             ])
         
         NSLayoutConstraint.activate([
@@ -310,12 +328,19 @@ class HomeViewController: UIViewController {
             ])
         
         NSLayoutConstraint.activate([
-            horizontalDivider2.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: 5),
-            horizontalDivider2.heightAnchor.constraint(equalToConstant: 5),
-            horizontalDivider2.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            horizontalDivider2.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            horizontalDivider2.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: padding),
+            horizontalDivider2.heightAnchor.constraint(equalToConstant: 1),
+            horizontalDivider2.leadingAnchor.constraint(equalTo: horizontalDivider2.leadingAnchor),
+            horizontalDivider2.trailingAnchor.constraint(equalTo: horizontalDivider2.trailingAnchor)
             ])
-    
+        
+        NSLayoutConstraint.activate([
+            profileButton.topAnchor.constraint(equalTo: horizontalDivider2.bottomAnchor, constant: 50),
+            profileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            profileButton.heightAnchor.constraint(equalToConstant: 35),
+            profileButton.widthAnchor.constraint(equalToConstant: 150)
+        ])
+        
     }
 
 
