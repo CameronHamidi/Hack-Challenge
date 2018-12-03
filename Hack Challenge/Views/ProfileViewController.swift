@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Alamofire
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var scrollView: UIScrollView!
+    var defaults = UserDefaults.standard
     
     var avatar: UIImageView! //user's picture
     var caption: UILabel! //major, minor, or any one-line intro user wants to display
@@ -179,7 +181,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         netIcon.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(netIcon)
         
-        var contactLayout = UICollectionViewFlowLayout()
+        let contactLayout = UICollectionViewFlowLayout()
         contactLayout.minimumInteritemSpacing = 16
         contactLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         contactLayout.scrollDirection = .horizontal
@@ -208,183 +210,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(logoutButton)
         
-//        segControl = UISegmentedControl(items: ["About", "Projects", "Posts"])
-//        segControl.translatesAutoresizingMaskIntoConstraints = false
-////        control.addTarget(self, action: #selector(sortList), for: .valueChanged)
-//        segControl.addTarget(self, action: #selector(self.showComponents(sender:)), for: .valueChanged)
-//        segControl.backgroundColor = .white
-//        scrollView.addSubview(segControl)
-//        segControl.selectedSegmentIndex = 0
-//
-//        // add container
-////        containerView = UIView()
-////        containerView.translatesAutoresizingMaskIntoConstraints = false
-////        scrollView.addSubview(containerView)
-////
-////        let controller = storyboard!.instantiateViewController(withIdentifier: "Second")
-////        addChild(controller)
-////        controller.view.translatesAutoresizingMaskIntoConstraints = false
-////        containerView.addSubview(controller.view)
-////
-////        controller.didMove(toParent: self)
-//
-//        //Segmented subviews
-//        aboutContainer = UIView()
-//        aboutContainer.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.addSubview(aboutContainer)
-//
-//
-//
-//        majorIcon = UIImageView()
-//        majorIcon.translatesAutoresizingMaskIntoConstraints = false
-//        aboutContainer.addSubview(majorIcon)
-//
-//        majorTitleLabel = UILabel()
-//        majorTitleLabel.text = "Major(s)/Minor(s)"
-//        majorTitleLabel.textColor = .lightGray
-//        majorTitleLabel.font = UIFont.systemFont(ofSize: 10)
-//        majorTitleLabel.textAlignment = .left
-//        majorTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        aboutContainer.addSubview(majorTitleLabel)
-//
-//        majorLabel = UILabel()
-//        majorLabel.text = "Computer Science, Information Science"
-//        majorLabel.textColor = .black
-//        majorLabel.font = UIFont.systemFont(ofSize: 12)
-//        majorLabel.textAlignment = .left
-//        majorLabel.translatesAutoresizingMaskIntoConstraints = false
-//        aboutContainer.addSubview(majorLabel)
-//
-//        minorLabel = UILabel()
-//        minorLabel.text = "Computer Science, Information Science"
-//        minorLabel.textColor = .black
-//        minorLabel.font = UIFont.systemFont(ofSize: 12)
-//        minorLabel.textAlignment = .left
-//        minorLabel.translatesAutoresizingMaskIntoConstraints = false
-//        aboutContainer.addSubview(minorLabel)
-//
-//        gradIcon = UIImageView()
-//        gradIcon.translatesAutoresizingMaskIntoConstraints = false
-//        aboutContainer.addSubview(gradIcon)
-//
-//        gradTitle = UILabel()
-//        gradTitle.text = "Graduation Year"
-//        gradTitle.textColor = .lightGray
-//        gradTitle.font = UIFont.systemFont(ofSize: 10)
-//        gradTitle.textAlignment = .left
-//        gradTitle.translatesAutoresizingMaskIntoConstraints = false
-//        aboutContainer.addSubview(gradTitle)
-//
-//        gradYear = UILabel()
-//        gradYear.text = "May 2021"
-//        gradYear.textColor = .black
-//        gradYear.font = UIFont.systemFont(ofSize: 12)
-//        gradYear.textAlignment = .left
-//        gradYear.translatesAutoresizingMaskIntoConstraints = false
-//        aboutContainer.addSubview(gradYear)
-//
-//        lineSeparator2 = UIView()
-//        lineSeparator2.translatesAutoresizingMaskIntoConstraints = false
-//        lineSeparator2.backgroundColor = .lightGray
-//        aboutContainer.addSubview(lineSeparator2)
-//
-//        skillsButton = UIButton()
-//        skillsButton.setTitle("Show skills", for: .normal)
-//        skillsButton.translatesAutoresizingMaskIntoConstraints = false
-//        skillsButton.setTitleColor(.black, for: .normal)
-//        skillsButton.layer.cornerRadius = 9
-//        skillsButton.layer.borderWidth = 1
-//        skillsButton.layer.borderColor = UIColor.black.cgColor
-//        skillsButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-//        skillsButton.translatesAutoresizingMaskIntoConstraints = false
-//        skillsButton.addTarget(self, action: #selector(openCloseSkillsView), for: .touchUpInside)
-//        aboutContainer.addSubview(skillsButton)
-//
-//        var skillsLayout = UICollectionViewFlowLayout()
-//        skillsLayout.scrollDirection = .horizontal
-//        skillsLayout.minimumLineSpacing = 4
-//        skillsLayout.minimumInteritemSpacing = 4
-//        skillsLayout.sectionInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
-//        //skillsLayout.estimatedItemSize = CGSize(width: 50, height: 25)
-//        skillsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: skillsLayout)
-//        skillsCollectionView.delegate = self
-//        skillsCollectionView.dataSource = self
-//        skillsCollectionView.backgroundColor = .clear
-//        skillsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "skill")
-//        skillsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-//        aboutContainer.addSubview(skillsCollectionView)
-////        skillsCollectionView.backgroundColor = .white
-//        skillsCollectionViewOpenConstraint = skillsCollectionView.heightAnchor.constraint(equalToConstant: 35)
-//        skillsCollectionViewClosedConstraint = skillsCollectionView.heightAnchor.constraint(equalToConstant: 0)
-//        skillsCollectionView.allowsMultipleSelection = true
-//        skillsCollectionViewClosedConstraint.isActive = true
-//
-//        descriptionView = UITextView()
-//        descriptionView.font = UIFont.systemFont(ofSize: 14)
-//        descriptionView.isSelectable = true
-//        descriptionView.isEditable = false
-//        descriptionView.textColor = .black
-//        descriptionView.translatesAutoresizingMaskIntoConstraints = false
-//        descriptionView.text = "Dr. Pavel, I'm CIA. He wasn't alone. Uhh, you don't get to bring friends. They are not my friends. Don't worry, no charge for them. And why would I want them? They were trying to grab your prize. They work for the mercenary. The masketta man. Bane? Mhmm. Get 'em on board I'll call it in."
-//        aboutContainer.addSubview(descriptionView)
-//
-//        projectsContainer = UIView()
-//        projectsContainer.translatesAutoresizingMaskIntoConstraints = false
-//        projectsContainer.backgroundColor = .green
-//        projectsContainer.alpha = 0
-//        scrollView.addSubview(projectsContainer)
-//
-//        postsContainer = UIView()
-//        postsContainer.translatesAutoresizingMaskIntoConstraints = false
-//        postsContainer.backgroundColor = .blue
-//        postsContainer.alpha = 0
-//        scrollView.addSubview(postsContainer)
-//
-//        //Hardcoded data TODO - get posts info from backend
-//        createPosts()
-//
-//        //Set up and add tableViews to their respective container views
-//        postsTableView = UITableView()
-//        postsTableView.translatesAutoresizingMaskIntoConstraints = false
-//        postsTableView.register(PostCell.self, forCellReuseIdentifier: "postCellID")
-//        postsTableView.backgroundColor = .white
-////        postsTableView.separatorStyle = .none
-//        postsTableView.estimatedRowHeight = 200
-//        postsTableView.rowHeight = UITableView.automaticDimension
-//        postsTableView.delegate = self
-//        postsTableView.dataSource = self
-//        postsContainer.addSubview(postsTableView)
-        
-        //testing out a tableview with dynamic height
-//        tableview = UITableView()
-//        tableview.translatesAutoresizingMaskIntoConstraints = false
-//        tableview.estimatedRowHeight = 100
-//        tableview.rowHeight = UITableView.automaticDimension
-//        tableview.register(PostCell.self, forCellReuseIdentifier: "postCellID")
-//        aboutContainer.addSubview(tableview) //for testing purposes
-        
-//        segmentedControlContainer = UIView()
-//        segmentedControlContainer.backgroundColor = UIColor.white
-//        scrollView.addSubview(segmentedControlContainer)
-//        self.segmentedControlContainer = segmentedControlContainer
-        
         setupConstraints()
-//        NSLayoutConstraint.activate([
-//            controller.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-//            controller.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-//            controller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
-//            controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-//            ])
-        
-//        aboutOpenConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 500)
-//        aboutClosedConstraint = aboutContainer.heightAnchor.constraint(equalToConstant: 0)
-////        aboutOpenConstraint.isActive = true
-//
-//        projectsOpenConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 500)
-//        projectsClosedConstraint = projectsContainer.heightAnchor.constraint(equalToConstant: 0)
-//
-//        postsOpenConstraint = postsContainer.heightAnchor.constraint(equalToConstant: 500)
-//        postsClosedConstraint = postsContainer.heightAnchor.constraint(equalToConstant: 0)
+    }
+    
+    static func getUserInfo(completion: @escaping (Bool) -> Void) {
+        //TODO
+        Alamofire.request("http://35.190.171.42/api/users/profile/\(UserDefaults.standard.value(forKey: "uid")!)").validate().responseData { (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                    print(json)
+                }
+                let jsonDecoder = JSONDecoder()
+                //TODO - set fields/labels to match user's info
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     @objc func openCloseSkillsView() {

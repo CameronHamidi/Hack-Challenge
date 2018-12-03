@@ -333,32 +333,29 @@ class NewPitchViewController: UIViewController, UICollectionViewDataSource, UICo
             return
         }
         
-        //token ??
-        postToServer(token: 0, title: titleText, text: descrText)
-        back()
-        //Delegate to another view
-        //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
-        //        navigationController?.popViewController(animated: true)
+        postToServer(title: titleText, text: descrText)
+        back() //TODO - go to the new post
     }
     
-    @objc func postToServer(token: Int, title: String, text: String) {
+    @objc func postToServer(title: String, text: String) {
         //fields: *token, *title, *tags, role, *text, kind, course, group_size, skills
         //* required
         let parameters: [String : Any] = [
-            "token" : token,
+            "token" : defaults.value(forKey: "token")!, //is this correct \( TwT )/
             "title" : title,
             "tags" : keywords.joined(separator: ","),
             "text" : text,
             "kind" : 2
         ]
+        print(parameters)
         
         let urlString = "http://35.190.171.42/api/posts/"
         Alamofire.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
             switch response.result {
             case .success:
-                print(response)
-                
+                print("success")
                 break
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }

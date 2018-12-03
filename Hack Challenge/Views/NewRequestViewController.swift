@@ -15,6 +15,7 @@ import Alamofire
 class NewRequestViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
     
     var scrollView: UIScrollView!
+    var defaults = UserDefaults.standard
     
     var titleLabel: UILabel!
     var titleInput: UITextField!
@@ -391,24 +392,19 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
 //        }
 //        let groupSizeText = sizeLabel.text!
         
-        //token?? role??
-        postToServer(token: 0, title: titleText, text: descrText)
-        back()
-        
-        //Delegate to another view
-        //        delegate?.newPitch(newTitle: titleText, newDescr: descrText)
-        //        navigationController?.popViewController(animated: true)
+        postToServer(title: titleText, text: descrText)
+        back()// display newly created post
     }
     
     @objc func search() {
         
     }
     
-    @objc func postToServer(token: Int, title: String, text: String) {
+    @objc func postToServer(title: String, text: String) {
         //fields: *token, *title, *tags, *role, *text, kind, course, *group_size, skills
         //* required
         let parameters: [String : Any] = [
-            "token" : token,
+            "token" : defaults.value(forKey: "token")!, //is this correct?? \( TwT )/
             "title" : title,
             "tags" : keywords.joined(separator: ","),
             "role" : selectedRoles.joined(separator: ","),
@@ -416,12 +412,13 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             "kind" : 1,
             "group_size" : selectedSizes.joined(separator: ",")
         ]
+        print(parameters)
         
         let urlString = "http://35.190.171.42/api/posts/"
         Alamofire.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
             switch response.result {
             case .success:
-                print(response)
+                print("success")
                 break
 
             case .failure(let error):
@@ -461,45 +458,6 @@ class NewRequestViewController: UIViewController, UICollectionViewDataSource, UI
             descrInput.trailingAnchor.constraint(equalTo: titleInput.trailingAnchor),
             descrInput.heightAnchor.constraint(equalToConstant: 200)
             ])
-        
-//        NSLayoutConstraint.activate([
-//            imageLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
-//            imageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//            lineSeparator.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: padding),
-//            lineSeparator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            lineSeparator.widthAnchor.constraint(equalToConstant: 1),
-//            lineSeparator.heightAnchor.constraint(equalToConstant: 72)
-//            ])
-//
-//        // Some maths to align buttons
-//        let buttonPadding: CGFloat = view.bounds.width/4 - buttonSize/2
-//
-//        NSLayoutConstraint.activate([
-//            cameraButton.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: padding),
-//            cameraButton.trailingAnchor.constraint(equalTo: lineSeparator.leadingAnchor, constant: -buttonPadding),
-//            cameraButton.widthAnchor.constraint(equalToConstant: buttonSize),
-//            cameraButton.heightAnchor.constraint(equalTo: cameraButton.widthAnchor)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//            cameraLabel.topAnchor.constraint(equalTo: cameraButton.bottomAnchor, constant: padding),
-//            cameraLabel.centerXAnchor.constraint(equalTo: cameraButton.centerXAnchor)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//            libButton.topAnchor.constraint(equalTo: cameraButton.topAnchor),
-//            libButton.leadingAnchor.constraint(equalTo: lineSeparator.trailingAnchor, constant: buttonPadding),
-//            libButton.widthAnchor.constraint(equalTo: cameraButton.widthAnchor),
-//            libButton.heightAnchor.constraint(equalTo: cameraButton.heightAnchor)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//            libLabel.topAnchor.constraint(equalTo: cameraLabel.topAnchor),
-//            libLabel.centerXAnchor.constraint(equalTo: libButton.centerXAnchor)
-//            ])
         
         NSLayoutConstraint.activate([
             groupSizeLabel.topAnchor.constraint(equalTo: descrInput.bottomAnchor, constant: padding*2),
